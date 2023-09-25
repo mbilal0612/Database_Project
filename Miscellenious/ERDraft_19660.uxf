@@ -1,0 +1,205 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>2500</x><y>432</y><w>140</w><h>210</h></coordinates><panel_attributes>Student
+--
+Student_ID(PK)
+CNIC_Number(AK)
+First_Name
+Last_Name
+Class_ID(FK)
+Date_Of_Birth
+Gender
+Emergency_Contact
+Admission_Date
+Nationality
+Religion
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>3650</x><y>382</y><w>140</w><h>160</h></coordinates><panel_attributes>Guardian
+--
+Guardian_ID(PK)
+First_Name
+Last_Name
+Phone_number
+CNIC_Number(AK)
+Occupation
+Nationality
+Religion</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>3240</x><y>362</y><w>120</w><h>80</h></coordinates><panel_attributes>Student_Guardian
+--
+Student_ID(FK)
+Guardian_ID(FK)
+Relation_ID (FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2820</x><y>402</y><w>130</w><h>70</h></coordinates><panel_attributes>Relation
+--
+Relation_ID(PK)
+Relation_Type</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2740</x><y>372</y><w>520</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+Student has these Guardian(s) &gt;</panel_attributes><additional_attributes>10;20;500;20</additional_attributes></element><element><id>Relation</id><coordinates><x>3350</x><y>392</y><w>320</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+&lt; Guardian(s) protect this Student</panel_attributes><additional_attributes>10;20;300;20</additional_attributes></element><element><id>Relation</id><coordinates><x>2940</x><y>412</y><w>320</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+Relation of Guardian with Student &gt;</panel_attributes><additional_attributes>300;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2370</x><y>692</y><w>130</w><h>100</h></coordinates><panel_attributes>Class
+--
+Class_ID(PK)
+Strength
+Year
+Section</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2730</x><y>692</y><w>110</w><h>120</h></coordinates><panel_attributes>Class_Course
+--
+Class_ID(FK)
+Course_ID(FK)
+Faculty_ID(FK)
+Day (PK)
+Start_Time (PK)
+End_Time (PK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2230</x><y>512</y><w>290</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..n
+Class Contains Student &gt;</panel_attributes><additional_attributes>10;20;270;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1190</x><y>832</y><w>130</w><h>210</h></coordinates><panel_attributes>Faculty
+--
+Faculty_ID(PK)
+CNIC_Number(AK)
+DOB
+First_Name
+Last_Name
+Religion
+Nationality
+Gender
+Hire_Date
+Full_Time
+Salary
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1310</x><y>842</y><w>200</w><h>80</h></coordinates><panel_attributes> 
+ &gt;
+   
+</panel_attributes><additional_attributes>10;20;180;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1480</x><y>882</y><w>1300</w><h>50</h></coordinates><panel_attributes>lt=-
+m1= 1..1
+m2=1..n
+Teaches the course &gt;
+</panel_attributes><additional_attributes>10;20;1280;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1730</x><y>332</y><w>100</w><h>60</h></coordinates><panel_attributes>ECA
+--
+ECA_ID(PK)
+Name</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>340</x><y>852</y><w>140</w><h>60</h></coordinates><panel_attributes>Qualification
+--
+Qualification_ID(PK)
+Name</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>750</x><y>832</y><w>150</w><h>60</h></coordinates><panel_attributes>Faculty_Qualification
+--
+Faculty_ID(FK)
+Qualification_ID(FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>862</y><w>300</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+Qualification of Faculty &gt;</panel_attributes><additional_attributes>280;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>890</x><y>842</y><w>320</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+&lt; Faculty has Qualification(s)</panel_attributes><additional_attributes>10;20;250;20;300;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2100</x><y>312</y><w>110</w><h>80</h></coordinates><panel_attributes>Student_ECA
+--
+Student_ID(FK)
+ECA_ID(FK)
+Role</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2200</x><y>322</y><w>270</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+&lt; Student that has ECA</panel_attributes><additional_attributes>10;20;250;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1820</x><y>342</y><w>300</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..n
+ECAs Conducted &gt;</panel_attributes><additional_attributes>10;20;280;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>3020</x><y>242</y><w>150</w><h>100</h></coordinates><panel_attributes>Transactions
+--
+Student_ID(FK)
+T_Name
+T_Amount //-ve or +ve
+T_Date
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2740</x><y>252</y><w>300</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=0..1
+Student has these arrears &gt;</panel_attributes><additional_attributes>10;20;280;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>3020</x><y>552</y><w>110</w><h>130</h></coordinates><panel_attributes>Attendance
+--
+Student_ID(FK)
+P_Date (PK)
+Present
+(Student 
+and date create
+composite key)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2740</x><y>562</y><w>300</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..n
+Student present on date &gt;</panel_attributes><additional_attributes>10;20;280;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1460</x><y>142</y><w>140</w><h>140</h></coordinates><panel_attributes>Assessment
+--
+Assessment_ID(PK)
+Course_ID(FK)
+Max_Marks
+Assessment_Date
+Assessment_Type
+Faculty_ID(FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1880</x><y>122</y><w>140</w><h>100</h></coordinates><panel_attributes>Std_Asmnt
+--
+Student_ID(FK)
+Assessment_ID(FK)
+Obtained_Marks
+Submission_Date
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1590</x><y>152</y><w>310</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..n
+Assessment(s) Conducted &gt;</panel_attributes><additional_attributes>10;20;290;20</additional_attributes></element><element><id>Relation</id><coordinates><x>2010</x><y>142</y><w>460</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+&lt; Student participated in these Assessment(s)</panel_attributes><additional_attributes>10;20;440;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>352</y><w>170</w><h>100</h></coordinates><panel_attributes>CLO
+--
+CLO_ID (PK)
+CLO_Name
+CLO_Desc
+Course_ID (FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>70</x><y>242</y><w>170</w><h>70</h></coordinates><panel_attributes>Question_Types
+--
+Question_Type (PK)
+Type_Name
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1060</x><y>142</y><w>170</w><h>60</h></coordinates><panel_attributes>Question_Assessment
+-
+Assessment_ID (FK)
+Question_ID (FK)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>490</x><y>202</y><w>150</w><h>100</h></coordinates><panel_attributes>Question
+--
+Quesiton_ID (PK)
+Question_Desc
+Question_Type (FK)
+Max_Marks
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>252</y><w>280</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+Question has type &gt;</panel_attributes><additional_attributes>260;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>160</x><y>362</y><w>250</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+CLO in Question(s) &gt;</panel_attributes><additional_attributes>230;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>740</x><y>172</y><w>340</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+Question found in Assessment &gt;</panel_attributes><additional_attributes>320;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1220</x><y>152</y><w>260</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..n
+&lt; Assessment has Questions
+</panel_attributes><additional_attributes>240;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1480</x><y>792</y><w>250</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..1
+Class Teacher of Class &gt;</panel_attributes><additional_attributes>10;20;230;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1480</x><y>802</y><w>30</w><h>120</h></coordinates><panel_attributes>lt=-
+</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>3280</x><y>822</y><w>140</w><h>60</h></coordinates><panel_attributes>Course
+--
+Course_ID(PK)
+Course_Name</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2830</x><y>722</y><w>280</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+&lt; Course taught in these classes</panel_attributes><additional_attributes>10;20;260;20</additional_attributes></element><element><id>Relation</id><coordinates><x>3080</x><y>732</y><w>30</w><h>190</h></coordinates><panel_attributes>lt=-
+
+</panel_attributes><additional_attributes>10;170;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2750</x><y>882</y><w>360</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..n
+m2=1..1
+&lt; Course taught by</panel_attributes><additional_attributes>10;20;340;20</additional_attributes></element><element><id>Relation</id><coordinates><x>3080</x><y>832</y><w>220</w><h>50</h></coordinates><panel_attributes>&lt; 
+</panel_attributes><additional_attributes>10;20;200;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1710</x><y>762</y><w>220</w><h>70</h></coordinates><panel_attributes>Class_Teacher
+--
+Class_ID(FK)
+Class_Teacher (AK-&gt;Faculty_ID)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1920</x><y>772</y><w>340</w><h>50</h></coordinates><panel_attributes>lt=-
+m1= 1..n
+m2=1..1
+&lt; Class has Class Teacher(s)</panel_attributes><additional_attributes>10;20;320;20</additional_attributes></element><element><id>Relation</id><coordinates><x>2490</x><y>702</y><w>260</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..n
+Class has these Courses &gt;</panel_attributes><additional_attributes>10;20;240;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>390</x><y>352</y><w>130</w><h>70</h></coordinates><panel_attributes>Question_CLO
+--
+Quesiton_ID (FK)
+CLO_ID (FK)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>510</x><y>362</y><w>260</w><h>50</h></coordinates><panel_attributes>lt=-
+m1=1..1
+m2=1..n
+&lt; Question has CLO(s)</panel_attributes><additional_attributes>240;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>630</x><y>212</y><w>140</w><h>50</h></coordinates><panel_attributes> &gt;
+ </panel_attributes><additional_attributes>120;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>740</x><y>182</y><w>30</w><h>220</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;200;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2230</x><y>522</y><w>30</w><h>290</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;270;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2230</x><y>702</y><w>160</w><h>50</h></coordinates><panel_attributes>&lt; 
+</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>Relation</id><coordinates><x>2740</x><y>262</y><w>30</w><h>340</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;320</additional_attributes></element><element><id>Relation</id><coordinates><x>2630</x><y>442</y><w>140</w><h>40</h></coordinates><panel_attributes> &gt;</panel_attributes><additional_attributes>10;20;120;20</additional_attributes></element><element><id>Relation</id><coordinates><x>2440</x><y>152</y><w>30</w><h>330</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;310</additional_attributes></element><element><id>Relation</id><coordinates><x>2440</x><y>442</y><w>80</w><h>40</h></coordinates><panel_attributes>&lt; </panel_attributes><additional_attributes>60;20;10;20</additional_attributes></element></diagram>
