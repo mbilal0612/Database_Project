@@ -1,11 +1,9 @@
 const express = require("express");
 
-var adminRouter = express.Router();
+var router = express.Router();
 var adminService = require("../services/adminService");
 
-adminRouter.get("/getUser", adminService.getUser);
+router.post("/createAdmin", adminService.createAdmin);
 
 
-module.exports = {
-    adminRouter
-}
+module.exports = router
