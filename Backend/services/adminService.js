@@ -6,6 +6,8 @@ const createAdmin = (req, res) => {
   if (obj.CNIC) {
     //check for regex here
     // return res.status(400).json({message: "CNIC is required!"} )
+  }else{
+    return res.status(400).json({ message: "cnic is required !"})
   }
   if (!obj.firstName) {
     return res.status(400).json({ message: "firstName is required!" });
