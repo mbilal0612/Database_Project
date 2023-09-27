@@ -51,6 +51,7 @@ const createAdmin = (req, res) => {
     },
     function (error, results, fields) {
       if (error) {
+        //TODO: update error response properly
         return res.status(500).send(error);
       } else {
         return res.json({
