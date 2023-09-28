@@ -114,9 +114,7 @@ const createAdmin = (req, res) => {
             }
           }
         );
-        return res.json({
-          message: "Admin Created"
-        });
+       
       }
       // error will be an Error if one occurred during the query
       // results will contain the results of the query
