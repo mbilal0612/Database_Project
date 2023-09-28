@@ -3,9 +3,6 @@ const db = require("../config/db");
 const createStudent = (req,res) =>{
     const obj = req.body;
 
-    if(!obj.studentId){
-        return res.status(400).json({message:"studentId is required!"});
-    }
     if(!obj.firstName){
         return res.status(400).json({message:"firstName is required!"});
     }
@@ -39,11 +36,10 @@ const createStudent = (req,res) =>{
     //TODO: QUERY INTO DATABASE
     db.query(
         {
-            sql:"INSERT INTO ?? (??,??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+            sql:"INSERT INTO ?? (??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?)",
             timeout:40000, //40s
             values:[
                 "STUDENT",
-                "STUDENT_ID",
                 "CNIC",
                 "FIRST_NAME",
                 "LAST_NAME",
@@ -54,7 +50,6 @@ const createStudent = (req,res) =>{
                 "ADMISSION_DATE",
                 "NATIONALITY",
                 "RELIGION",
-                obj.studentId,
                 obj.CNIC,
                 obj.firstName,
                 obj.lastName,
@@ -100,6 +95,33 @@ const createStudent = (req,res) =>{
 
 
 };
+
+const getStudent = (req,res) =>{
+    const obj = req.body;
+
+    if(!obj.studentId){
+        return res.status(400).json({message:"studentId is required!"});
+    }
+    db.query(
+        {
+            sql:"SELECT * FROM ?? WHERE ??=?",
+            timeout:40000, //40s
+            values:[
+                "STUDENT",
+                "STUDENT_ID",
+                obj.studentId,
+            ],
+        },
+
+        function(error,results,fields){
+            if(error){
+                return res.status(500).json({message:"Something went wrong please try again later..."});
+            }else{
+                
+            }
+        }
+    )
+}
 
 module.exports = {
     createStudent
