@@ -1,4 +1,6 @@
-const db = require("../config/db");
+const db = require("../config/db").connection;
+const bcrypt = require('bcrypt');
+const defaultPass = "12345678";
 
 const createStudent = (req,res) =>{
     const obj = req.body;
@@ -28,10 +30,12 @@ const createStudent = (req,res) =>{
         return res.status(400).json({message:"admissionDate is required!"});
     }
     if(!obj.classID){
-        // TODO: check if classID is valid
+        // TODO: THIS NEEDS TO BE CLASS AND SECTION AND WE CHECK ID OURSELVES
         return res.status(400).json({message:"classID is required!"});
     }
-    //todo: add emergencey contact
+    if(!obj.emergencyContact){
+        return res.status(400).json({message:"emergency contact is required!"});
+    }
 
     //TODO: QUERY INTO DATABASE
     db.query(
@@ -44,9 +48,9 @@ const createStudent = (req,res) =>{
                 "FIRST_NAME",
                 "LAST_NAME",
                 "CLASS_ID",
-                "DATE_OF_BIRTH",
+                "DOB",
                 "GENDER",
-                "EMERGENCEY_CONTACT",
+                "EMERGENCY_CONTACT",
                 "ADMISSION_DATE",
                 "NATIONALITY",
                 "RELIGION",
@@ -56,7 +60,7 @@ const createStudent = (req,res) =>{
                 obj.classID,
                 obj.dateOfBirth,
                 obj.gender,
-                obj.emergenceyContact,
+                obj.emergencyContact,
                 obj.admissionDate,
                 obj.nationality,
                 obj.religion,
@@ -66,24 +70,68 @@ const createStudent = (req,res) =>{
         function(error,results,fields){
             if(error){
                 //TODO:UPDATE error response properly
-                return res.status(500).json({message:"Something went wrong please try again later..."});
+                return res.status(500).send(error.message);
             }else{
-                return res.json({
-                    message:"Student Created",
-                    student: {
-                        studentId: obj.studentId,
-                        CNIC: obj.CNIC,
-                        firstName: obj.firstName,
-                        lastName: obj.lastName,
-                        classID: obj.classID,
-                        dateOfBirth:obj.dateOfBirth,
-                        gender: obj.gender,
-                        emergenceyContact: obj.emergenceyContact,
-                        admissionDate: obj.admissionDate,
-                        nationality: obj.nationality,
-                        religion: obj.religion,
-                    },
+                //generate erp for the user
+        db.query(
+            {
+              sql: "SELECT ?? FROM ?? WHERE ?? = ?",
+              timeout: 40000,
+              values: ["STUDENT_ID", "STUDENT", "CNIC", obj.CNIC],
+            },
+            (error1, results1, fields1) => {
+              if (error1) {
+                return res.status(500).send(error1);
+              } else {
+                bcrypt.hash(defaultPass, 10, function (err, hash) {
+                  if (err) return res.status(500).send(err);
+                  else {
+                    console.log(results1);
+                    console.log(fields1);
+                    var userName = results1[0].STUDENT_ID;
+                    
+                    userName = "S" + userName;
+                    db.query({
+                      sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
+                      timeout: 40000,
+                      values: [
+                        "USERS",
+                        "USERNAME",
+                        "PASSWORD",
+                        "STUDENT_ID",
+                        userName,
+                        hash,
+                        results1[0].STUDENT_ID,
+                      ]},
+                      (error,results,fields)=>{
+                        if(error) return res.status(500).send(error);
+                        else{
+                          return res.json({
+                            message:"successfully created and added to users",
+                            username: userName,
+                            password: defaultPass,
+                            student: {
+                                studentID: userName,
+                                CNIC: obj.CNIC,
+                                firstName: obj.firstName,
+                                lastName: obj.lastName,
+                                classID: obj.classID,
+                                DOB: obj.dateOfBirth,
+                                gender: obj.gender,
+                                emergencyContact: obj.emergenceyContact,
+                                admissionDate: obj.admissionDate,
+                                nationality: obj.nationality,
+                                religion: obj.religion
+                            }
+                          })
+                        }
+                      }
+                    );
+                  }
                 });
+              }
+            }
+          );
             }
             // error will be an Error if one occurred during the query
             // results will contain the results of the query

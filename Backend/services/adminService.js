@@ -71,8 +71,8 @@ const createAdmin = (req, res) => {
               bcrypt.hash(defaultPass, saltRounds, function (err, hash) {
                 if (err) return res.status(500).send(err);
                 else {
-                  console.log(results1);
-                  console.log(fields1);
+                  // console.log(results1);
+                  // console.log(fields1);
                   var userName = results1[0].ADMIN_ID;
                   
                   userName = "A" + userName;
@@ -96,6 +96,7 @@ const createAdmin = (req, res) => {
                           username: userName,
                           password: defaultPass,
                           admin: {
+                            admin_ID:userName, 
                             CNIC: obj.CNIC,
                             firstName: obj.firstName,
                             lastName: obj.lastName,
