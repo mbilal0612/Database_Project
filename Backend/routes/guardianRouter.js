@@ -2,8 +2,8 @@ const express = require("express");
 const tryCatch = require("../middleware/tryCatch");
 
 var router = express.Router();
-var parentService = require("../services/parentService");
+var guardianService = require("../services/guardianService");
 
-router.post("/createParent", tryCatch(parentService.createParent));
+router.post("/createGuardian", tryCatch(guardianService.createGuardian));
 
 module.exports = router;
