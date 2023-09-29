@@ -4,6 +4,7 @@ const saltRounds = 10;
 const defaultPass = "12345678";
 
 const createAdmin = (req, res) => {
+
   const obj = req.body;
 
   if (obj.CNIC) {
@@ -123,6 +124,35 @@ const createAdmin = (req, res) => {
     }
   );
 };
+
+const createClass = (req, res) => {
+
+  const obj = req.body;
+
+  if(!obj.Strength){
+    return res.status(400).json({ message: "MissingInputException: Strength is required!" });
+  }
+  if(!obj.Year){
+    return res.status(400).json({ message: "MissingInputException: Year is required!" });
+  }
+  if(!obj.Section){
+    return res.status(400).json({ message: "MissingInputException: Section is required!" });
+  }
+
+  db.query({
+    sql:"INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
+    timeout: 40000,
+    values: ["Class", "Strength", "Year", "Section", "START_YEAR", obj.Strength, obj.Year, obj.Section],
+  }, function(error, results, fields){
+    if (error){
+      return res.status(500).json(error)
+    }else{
+      return res.status(200).json({message: "Row Inserted successfully", RowsAffected: results.RowsAffected})
+    }
+  }
+
+  )
+}
 
 module.exports = {
   createAdmin,

@@ -3,10 +3,6 @@ const db = require("../config/db").connection;
 const createClass = (req, res) => {
     const obj = req.body;
 
-    if(!classId){
-        //TODO:CHECK IF CLASS ID IS UNIQUE
-        return res.status(400).json({message:"classId is required!"});
-    }
     if(!obj.strength){
         return res.status(400).json({message:"strength is required!"});
     }
@@ -17,20 +13,17 @@ const createClass = (req, res) => {
         return res.status(400).json({message:"section is required!"});
     }
 
-
-
-
     db.query(
         {
             sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
             timeout: 40000, // 40s
             values : [
                 "CLASS",
-                "CLASS_ID",
+                "START_YEAR",
                 "STRENGTH",
                 "YEAR",
                 "SECTION",
-                obj.classId,
+                obj.START_YEAR,
                 obj.strength,
                 obj.year,
                 obj.section      
@@ -43,7 +36,7 @@ const createClass = (req, res) => {
                 return res.json({
                     message: "Class Created",
                     class: {
-                        classId: obj.classId,
+                        START_YEAR: obj.START_YEAR,
                         strength: obj.strength,
                         year: obj.year,
                         section: obj.section
@@ -54,3 +47,7 @@ const createClass = (req, res) => {
         }
     )
 }
+
+module.exports = {
+    createClass,
+};
