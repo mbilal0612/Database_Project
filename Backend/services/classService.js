@@ -48,6 +48,36 @@ const createClass = (req, res) => {
     )
 }
 
+const getClassById = (req, res) => {
+    const obj = req.body;
+
+    if(!obj.classId){
+        return res.status(400).json({message:"classId is required!"});
+    }
+
+    db.query(
+        {
+            sql : "SELECT * FROM ?? WHERE ??=?",
+            timeout: 40000, // 40s
+            values : [
+                "CLASS",
+                "CLASS_ID",
+                obj.classId
+            ]
+        },
+        (error,results,fields) => {
+            if(error){
+                return res.status(400).json("something went wrong");
+            }
+
+            return res.json(
+                results
+            );
+        }
+    )
+}
+
 module.exports = {
     createClass,
+    getClassById,
 };

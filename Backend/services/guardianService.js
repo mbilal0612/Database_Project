@@ -124,7 +124,7 @@ const createGuardian = (req, res) => {
     )
 }
 
-const getGuardian = (req, res) => {
+const getGuardians = (req, res) => {
     const obj = req.body;
 
     db.query(
@@ -178,7 +178,7 @@ const getGuardianById = (req, res) => {
 
 module.exports = {
     createGuardian,
-    getGuardian,
+    getGuardians,
     getGuardianById,
 
 }

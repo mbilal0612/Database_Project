@@ -144,7 +144,7 @@ const createStudent = (req,res) =>{
 
 };
 
-const getStudent = (req,res) =>{
+const getStudents = (req,res) =>{
     const obj = req.body;
 
     if(!obj.studentId){
@@ -171,6 +171,40 @@ const getStudent = (req,res) =>{
     )
 }
 
+const getStudentById = (req,res) =>{
+    const obj = req.body;
+
+    if(!obj.studentId){
+        return res.status(400).json({message:"studentId is required!"});
+    }
+
+    db.query(
+        {
+            sql:"SELECT * FROM ?? WHERE ??=?",
+            timeout:4000,
+            values:[
+                "STUDENT",
+                "STUDENT_ID",
+                obj.student
+            ]
+
+        },
+        (error, results,fields)=> {
+            if(error){
+                return res.status(500).json({message:"Something went wrong please try again later..."});
+            }else{
+                return res.json({
+                    results: results
+                });
+            }
+        }
+    )
+}
+
+
 module.exports = {
-    createStudent
+    createStudent,
+    getStudents,
+    getStudentById
+
 }
