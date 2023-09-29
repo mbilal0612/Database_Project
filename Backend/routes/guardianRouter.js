@@ -1,8 +1,8 @@
 const express = require("express");
 
 var router = express.Router();
-var parentService = require("../services/parentService");
+var guardianService = require("../services/guardianService");
 
-router.post("/createParent", parentService.createParent);
+router.post("/createGuardian", guardianService.createGuardian);
 
 module.exports = router;

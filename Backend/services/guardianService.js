@@ -4,7 +4,7 @@ db = require("../config/db").connection;
 bcrypt = require('bcrypt');
 defaultpass="12345678";
 
-const createParent = (req, res) => {
+const createGuardian = (req, res) => {
     const obj = req.body;
 
     if(!obj.firstName){
@@ -124,6 +124,61 @@ const createParent = (req, res) => {
     )
 }
 
+const getGuardian = (req, res) => {
+    const obj = req.body;
+
+    db.query(
+        {
+            sql: "SELECT * FROM ??",
+            timeout: 40000, // 40s
+            values : [
+                "GUARDIAN"
+                ]
+
+        },
+        (error, results, fields) => {
+            if(error){
+                return res.status(500).send(error);
+            }
+            return res.json({
+                results: results
+            });
+        }
+    )
+}
+
+const getGuardianById = (req, res) => {
+    const obj = req.body;
+
+    if(!obj.guardianId){
+        return res.status(400).json({message:"guardianId is required!"});
+    }
+
+    db.query(
+        {
+            sql: "SELECT * FROM ?? WHERE ??=?",
+            timeout:40000,
+            values:[
+                "GUARDIAN",
+                "GUARDIAN_ID",
+                obj.guardianId
+                ]
+
+        },
+        (error, results, fields) => {
+            if(error){
+                return res.status(500).send(error);
+            }
+            return res.json({
+                results: results
+            })
+        })
+}
+
+
 module.exports = {
-    createParent
+    createGuardian,
+    getGuardian,
+    getGuardianById,
+
 }
