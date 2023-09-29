@@ -172,12 +172,13 @@ const getStudents = (req,res) =>{
 }
 
 const getStudentById = (req,res) =>{
-    const obj = req.body;
+    const obj = req.params;
 
-    if(!obj.studentId){
+    if(!obj.id){
         return res.status(400).json({message:"studentId is required!"});
     }
-
+    var temp = parseInt(obj.id.substring(1,obj.id.length));
+    
     db.query(
         {
             sql:"SELECT * FROM ?? WHERE ??=?",
@@ -185,7 +186,7 @@ const getStudentById = (req,res) =>{
             values:[
                 "STUDENT",
                 "STUDENT_ID",
-                obj.student
+                temp
             ]
 
         },
@@ -193,6 +194,7 @@ const getStudentById = (req,res) =>{
             if(error){
                 return res.status(500).json({message:"Something went wrong please try again later..."});
             }else{
+                results[0].STUDENT_ID = 'S' + results[0].STUDENT_ID;
                 return res.json({
                     results: results
                 });
