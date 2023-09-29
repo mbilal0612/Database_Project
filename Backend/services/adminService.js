@@ -3,8 +3,37 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const defaultPass = "12345678";
 
+const createAcademicYear = (req, res) => {
+  const obj = req.body;
+  if (!obj.startYear) {
+    return res.status(400).json({ message: "Start Year is required !" });
+  }
+  if (!obj.desc) {
+    return res.status(400).json({ message: "Description is required !" });
+  }
+  db.query(
+    {
+      sql: "INSERT INTO ?? (??,??) VALUES (?,?)",
+      values: [
+        "ACADEMIC_YEAR",
+        "START_YEAR",
+        "ACADEMIC_DESC",
+        obj.startYear,
+        obj.desc,
+      ],
+    },
+    (error, results, fields) => {
+      if(error) return res.status(500).json({ message: "An unknow error has occured" });
+      else{
+        return res.json({message:"Academic year successfully added",
+      startYear: obj.startYear,
+      description: obj.desc
+    })
+      }
+    }
+  );
+};
 const createAdmin = (req, res) => {
-
   const obj = req.body;
 
   if (obj.CNIC) {
@@ -75,29 +104,31 @@ const createAdmin = (req, res) => {
                   // console.log(results1);
                   // console.log(fields1);
                   var userName = results1[0].ADMIN_ID;
-                  
+
                   userName = "A" + userName;
-                  db.query({
-                    sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
-                    timeout: 40000,
-                    values: [
-                      "USERS",
-                      "USERNAME",
-                      "PASSWORD",
-                      "ADMIN_ID",
-                      userName,
-                      hash,
-                      results1[0].ADMIN_ID,
-                    ]},
-                    (error,results,fields)=>{
-                      if(error) return res.status(500).send(error);
-                      else{
+                  db.query(
+                    {
+                      sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
+                      timeout: 40000,
+                      values: [
+                        "USERS",
+                        "USERNAME",
+                        "PASSWORD",
+                        "ADMIN_ID",
+                        userName,
+                        hash,
+                        results1[0].ADMIN_ID,
+                      ],
+                    },
+                    (error, results, fields) => {
+                      if (error) return res.status(500).send(error);
+                      else {
                         return res.json({
-                          message:"successfully created and added to users",
+                          message: "successfully created and added to users",
                           username: userName,
                           password: defaultPass,
                           admin: {
-                            admin_ID:userName, 
+                            admin_ID: userName,
                             CNIC: obj.CNIC,
                             firstName: obj.firstName,
                             lastName: obj.lastName,
@@ -106,8 +137,8 @@ const createAdmin = (req, res) => {
                             nationality: obj.nationality,
                             religion: obj.religion,
                             salary: obj.salary,
-                          }
-                        })
+                          },
+                        });
                       }
                     }
                   );
@@ -116,7 +147,6 @@ const createAdmin = (req, res) => {
             }
           }
         );
-       
       }
       // error will be an Error if one occurred during the query
       // results will contain the results of the query
@@ -125,35 +155,9 @@ const createAdmin = (req, res) => {
   );
 };
 
-const createClass = (req, res) => {
 
-  const obj = req.body;
-
-  if(!obj.Strength){
-    return res.status(400).json({ message: "MissingInputException: Strength is required!" });
-  }
-  if(!obj.Year){
-    return res.status(400).json({ message: "MissingInputException: Year is required!" });
-  }
-  if(!obj.Section){
-    return res.status(400).json({ message: "MissingInputException: Section is required!" });
-  }
-
-  db.query({
-    sql:"INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
-    timeout: 40000,
-    values: ["Class", "Strength", "Year", "Section", "START_YEAR", obj.Strength, obj.Year, obj.Section],
-  }, function(error, results, fields){
-    if (error){
-      return res.status(500).json(error)
-    }else{
-      return res.status(200).json({message: "Row Inserted successfully", RowsAffected: results.RowsAffected})
-    }
-  }
-
-  )
-}
 
 module.exports = {
   createAdmin,
+  createAcademicYear
 };
