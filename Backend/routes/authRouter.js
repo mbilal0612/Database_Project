@@ -1,9 +1,9 @@
 const express = require("express");
-
+const tryCatch = require("../middleware/tryCatch");
 var router = express.Router();
 
 var authservice = require("../services/authService");
 
-router.get("/createUser",authservice.createUser);
+router.get("/createUser",tryCatch(authservice.createUser));
 
 module.exports = router;
