@@ -86,8 +86,8 @@ const createStudent = (req,res) =>{
                 bcrypt.hash(defaultPass, 10, function (err, hash) {
                   if (err) return res.status(500).send(err);
                   else {
-                    console.log(results1);
-                    console.log(fields1);
+                    // console.log(results1);
+                    // console.log(fields1);
                     var userName = results1[0].STUDENT_ID;
                     
                     userName = "S" + userName;
