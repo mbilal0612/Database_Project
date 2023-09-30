@@ -51,6 +51,7 @@ const createClass = (req, res) => {
     }
   );
 };
+
 const getClassID = (req, res) => {
   const obj = req.body;
   if (!obj.year) {
