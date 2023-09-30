@@ -454,6 +454,106 @@ const restoreTransactionByID = (req,res) =>{
 
 }
 
+const deleteTransactionByName = (req, res) =>{
+
+    const obj = req.body;
+
+    if(!obj.transactionName){
+        return res.status(400).json("MissingInputException: transactionName must be defined!");
+    }
+
+    db.query({
+        sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
+        timeout : 40000,
+        values:[
+            "TRANSACTION",
+            "T_FLAG",
+            1,
+            "T_NAME",
+            obj.transactionName     
+        ]
+    }, (errors, results, fields)=>{
+
+        if(errors){
+            return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
+        }
+
+        if(results.length == 0){
+            return res.status(500).json({message: "MissingDataException: Transaction with the given name DNE!"});
+        }
+
+        db.query({
+            sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
+            timeout : 40000,
+            values:[
+                "TRANSACTION",
+                "T_FLAG",
+                0,
+                "T_NAME",
+                obj.transactionName     
+            ]
+        }, (errors, results, fields)=>{
+    
+            if(errors){
+                return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
+            }
+    
+            return res.status(200).json({message:"Transactions successfully deleted!"})
+        })
+    })    
+
+
+}
+
+const restoreTransactionByName = (req, res) =>{
+
+    const obj = req.body;
+
+    if(!obj.transactionName){
+        return res.status(400).json("MissingInputException: transactionName must be defined!");
+    }
+
+    db.query({
+        sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
+        timeout : 40000,
+        values:[
+            "TRANSACTION",
+            "T_FLAG",
+            0,
+            "T_NAME",
+            obj.transactionName     
+        ]
+    }, (errors, results, fields)=>{
+
+        if(errors){
+            return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
+        }
+
+        if(results.length == 0){
+            return res.status(500).json({message: "MissingDataWarning: Transaction with the given name DNE!"});
+        }
+
+        db.query({
+            sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
+            timeout : 40000,
+            values:[
+                "TRANSACTION",
+                "T_FLAG",
+                1,
+                "T_NAME",
+                obj.transactionName     
+            ]
+        }, (errors, results, fields)=>{
+    
+            if(errors){
+                return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
+            }
+
+            return res.status(200).json({message:"Transactions successfully restored!"});
+        })
+    })    
+}
+
 module.exports = {
     createArrearsByGrade,
     createArrearsByAcademicYear,
@@ -462,5 +562,7 @@ module.exports = {
     generateStudentLedger,
     createGuardianPayment,
     deleteTransactionByID,
-    restoreTransactionByID
+    restoreTransactionByID,
+    deleteTransactionByName,
+    restoreTransactionByName
 };

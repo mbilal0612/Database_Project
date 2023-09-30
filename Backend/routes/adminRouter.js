@@ -16,6 +16,8 @@ router.post("/createArrearsByStudentID", tryCatch(financeService.createArrearsBy
 
 router.patch("/deleteTransactionByID", tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID", tryCatch(financeService.restoreTransactionByID));
+router.patch("/deleteTransactionByName", tryCatch(financeService.deleteTransactionByName));
+router.patch("/restoreTransactionByName", tryCatch(financeService.restoreTransactionByName));
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
