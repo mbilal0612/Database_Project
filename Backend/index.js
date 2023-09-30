@@ -6,7 +6,7 @@ const {connectDB} = require("./config/db");
 const adminRouter = require("./routes/adminRouter");
 const authRouter = require("./routes/authRouter");
 const studentRouter = require("./routes/studentRouter");
-const parentRouter = require("./routes/guardianRouter");
+const guardianRouter = require("./routes/guardianRouter");
 
 
 connectDB();
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 app.use("/student", studentRouter);
-app.use("/parent", parentRouter);
+app.use("/guardian", guardianRouter);
 
 app.use(errors);
 
