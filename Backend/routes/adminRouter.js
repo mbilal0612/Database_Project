@@ -5,8 +5,9 @@ var router = express.Router();
 var adminService = require("../services/adminService");
 var classService = require("../services/classService");
 var financeService = require("../services/financeService");
-var facultyService = require("../services/facultyService");
+var relationService = require("../services/relationService");
 var studentService = require("../services/studentService");
+var facultyService = require("../services/facultyService");
 
 router.post("/createAdmin", tryCatch(adminService.createAdmin));
 router.post("/createClass", tryCatch(classService.createClass));
@@ -15,6 +16,8 @@ router.post("/createAcademicYear", tryCatch(adminService.createAcademicYear));
 router.post("/createArrearsByGrade", tryCatch(financeService.createArrearsByGrade));
 router.post("/createArrearsByAcademicYear", tryCatch(financeService.createArrearsByAcademicYear));
 router.post("/createArrearsByStudentID", tryCatch(financeService.createArrearsByStudentID));
+router.post("/createRelation", tryCatch(relationService.createRelation));
+router.post("/createStudent", tryCatch(studentService.createStudent));
 router.post("/createStudent", tryCatch(studentService.createStudent));
 router.post("/createFaculty", tryCatch(facultyService.createFaculty));
 
@@ -25,6 +28,7 @@ router.patch("/restoreTransactionByName", tryCatch(financeService.restoreTransac
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
+router.get("/getRelations", tryCatch(relationService.getRelations));
 router.get("/getStudentByID/:id", tryCatch(studentService.getStudentById));
 
 

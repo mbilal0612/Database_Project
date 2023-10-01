@@ -103,6 +103,7 @@ Student_ID(FK)
 T_Name
 T_Amount //-ve or +ve
 T_Date
+T_FLAG
 
 
 </panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2740</x><y>130</y><w>300</w><h>50</h></coordinates><panel_attributes>lt=-
