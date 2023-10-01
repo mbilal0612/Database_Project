@@ -1,8 +1,8 @@
 //connect to db
 const {hashPassword} = require("mysql/lib/protocol/Auth");
-db = require("../config/db").connection;
-bcrypt = require('bcrypt');
-defaultpass="12345678";
+const db = require("../config/db").connection;
+const bcrypt = require('bcrypt');
+const defaultpass="12345678";
 
 const createGuardian = (req, res) => {
     const obj = req.body;
