@@ -8,6 +8,7 @@ var financeService = require("../services/financeService");
 var relationService = require("../services/relationService");
 var studentService = require("../services/studentService");
 var facultyService = require("../services/facultyService");
+var qualificationService = require("../services/qualifService");
 
 router.post("/createAdmin", tryCatch(adminService.createAdmin));
 router.post("/createClass", tryCatch(classService.createClass));
@@ -20,6 +21,8 @@ router.post("/createRelation", tryCatch(relationService.createRelation));
 router.post("/createStudent", tryCatch(studentService.createStudent));
 router.post("/createStudent", tryCatch(studentService.createStudent));
 router.post("/createFaculty", tryCatch(facultyService.createFaculty));
+router.post("/linkQualification", tryCatch(qualificationService.linkQualification))
+router.post("/createQualification", tryCatch(qualificationService.createQualification))
 
 router.patch("/deleteTransactionByID", tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID", tryCatch(financeService.restoreTransactionByID));
