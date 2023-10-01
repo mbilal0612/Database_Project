@@ -168,7 +168,6 @@ const createArrearsByAcademicYear = (req, res) =>{
             if(errors){
                 return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
             }else{
-
                 let date = new Date();
 
                 for(let i =0; i < results.length; i++){              
@@ -298,14 +297,15 @@ const createGuardianPayment = (req,res) =>{
 
     var temp = parseInt(obj.studentID.substring(1,obj.studentID.length));
     
-    db.query({sql: "SELECT * FROM ?? WHERE ?? = ?",
+    db.query({
+            sql: "SELECT * FROM ?? WHERE ?? = ?",
             timeout: 40000,
             values :[
                 "TRANSACTION",
                 "STUDENT_ID",
                 temp,
             ]
-        }, (errors, results, fields) => {
+            }, (errors, results, fields) => {
             if(errors){
                 return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
             }else{
@@ -340,8 +340,7 @@ const createGuardianPayment = (req,res) =>{
                     );
             }
         }
-        );
-
+    );
 }
 
 const deleteTransactionByID = (req,res) =>{
@@ -393,7 +392,6 @@ const deleteTransactionByID = (req,res) =>{
             return res.status(200).json({message: "Transaction successfully deleted!"});
     
         })
-
 
     })
 
@@ -448,8 +446,6 @@ const restoreTransactionByID = (req,res) =>{
             return res.status(200).json({message: "Transaction successfully restored!"});
     
         })
-
-
     })
 
 }
@@ -501,7 +497,6 @@ const deleteTransactionByName = (req, res) =>{
             return res.status(200).json({message:"Transactions successfully deleted!"})
         })
     })    
-
 
 }
 
