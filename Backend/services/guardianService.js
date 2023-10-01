@@ -125,8 +125,7 @@ const createGuardian = (req, res) => {
 }
 
 const getGuardians = (req, res) => {
-    const obj = req.body;
-
+    const obj = req.params;
     db.query(
         {
             sql: "SELECT * FROM ??",
@@ -148,11 +147,12 @@ const getGuardians = (req, res) => {
 }
 
 const getGuardianById = (req, res) => {
-    const obj = req.body;
+    const obj = req.params;
 
     if(!obj.guardianId){
         return res.status(400).json({message:"guardianId is required!"});
     }
+    let gId = parseInt(obj.guardianId.substring(1,obj.guardianId.length));
 
     db.query(
         {
@@ -161,7 +161,7 @@ const getGuardianById = (req, res) => {
             values:[
                 "GUARDIAN",
                 "GUARDIAN_ID",
-                obj.guardianId
+                gId
                 ]
 
         },

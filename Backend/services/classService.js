@@ -80,7 +80,7 @@ const getClassID = (req, res) => {
     (error, results, fields) => {
         if(error) return res.status(500).send("unkown error occured");
         else{
-            if(results.length==0) return res.status(400).send("Class does not exist");
+            if(results.length===0) return res.status(400).send("Class does not exist");
             else return res.json(results[0]);
         }
     }
@@ -88,11 +88,13 @@ const getClassID = (req, res) => {
 };
 
 const getClassById = (req, res) => {
-    const obj = req.body;
+    const obj = req.params;
 
-    if(!obj.classId){
-        return res.status(400).json({message:"classId is required!"});
+    if(!obj.id){
+        return res.status(400).json({ message : "classId is required!"});
     }
+
+    let class_id = parseInt(obj.id.substring(1,obj.id.length));
 
     db.query(
         {
@@ -101,7 +103,7 @@ const getClassById = (req, res) => {
             values : [
                 "CLASS",
                 "CLASS_ID",
-                obj.classId
+                class_id
             ]
         },
         (error,results,fields) => {
