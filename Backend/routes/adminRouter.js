@@ -15,10 +15,7 @@ router.post("/createAcademicYear", tryCatch(adminService.createAcademicYear));
 router.post("/createArrearsByGrade", tryCatch(financeService.createArrearsByGrade));
 router.post("/createArrearsByAcademicYear", tryCatch(financeService.createArrearsByAcademicYear));
 router.post("/createArrearsByStudentID", tryCatch(financeService.createArrearsByStudentID));
-
 router.post("/createStudent", tryCatch(studentService.createStudent));
-router.get("/getStudentByID/:id", tryCatch(studentService.getStudentById));
-
 router.post("/createFaculty", tryCatch(facultyService.createFaculty));
 
 router.patch("/deleteTransactionByID", tryCatch(financeService.deleteTransactionByID));
@@ -28,7 +25,7 @@ router.patch("/restoreTransactionByName", tryCatch(financeService.restoreTransac
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
-
+router.get("/getStudentByID/:id", tryCatch(studentService.getStudentById));
 
 
 module.exports = router
