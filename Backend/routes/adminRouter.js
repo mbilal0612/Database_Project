@@ -33,7 +33,8 @@ router.patch("/deleteTransactionByID", tryCatch(financeService.deleteTransaction
 router.patch("/restoreTransactionByID", tryCatch(financeService.restoreTransactionByID));
 router.patch("/deleteTransactionByName", tryCatch(financeService.deleteTransactionByName));
 router.patch("/restoreTransactionByName", tryCatch(financeService.restoreTransactionByName));
-
+router.patch("/deleteFacultyQualification", tryCatch(qualificationService.deleteQualification_faculty));
+router.patch("/deleteQualification", tryCatch(qualificationService.deleteQualification))
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
@@ -48,6 +49,7 @@ router.get("/getCourseById/:Id", tryCatch(courseService.getCourseById));
 router.get("/searchSimilarCourse/:searchTerm", tryCatch(courseService.getSimilarCourse));
 router.get("/getFacultyById/:id", tryCatch(facultyService.getFacultyById));
 router.get("/getAllFaculty", tryCatch(facultyService.getAllFaculty));
+router.get("/getQualificationsById/:facultyID", tryCatch(qualificationService.getQualifs));
 
 //PUT REQUESTS
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
