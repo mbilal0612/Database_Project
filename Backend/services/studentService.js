@@ -251,7 +251,6 @@ const assignStudentECA = (req,res)=> {
     )
 }
 
-
 const getStudentECA = (req, res)=> {
     const obj = req.params;
 
@@ -292,5 +291,4 @@ module.exports = {
     getAllStudents,
     assignStudentECA,
     getStudentECA,
-
 }

@@ -5,14 +5,12 @@ var router = express.Router();
 var adminService = require("../services/adminService");
 var classService = require("../services/classService");
 var financeService = require("../services/financeService");
+var facultyService = require("../services/facultyService");
 var relationService = require("../services/relationService");
 var studentService = require("../services/studentService");
 let ecaService = require("../services/ecaService");
-let facultyService = require("../services/facultyService");
 var qualificationService = require("../services/qualifService");
 let courseService = require("../services/courseService");
-const {getAllFaculty} = require("../services/facultyService");
-
 router.post("/createAdmin", tryCatch(adminService.createAdmin));
 router.post("/createClass", tryCatch(classService.createClass));
 router.post("/getClassID", tryCatch(classService.getClassID));
@@ -21,6 +19,7 @@ router.post("/createArrearsByGrade", tryCatch(financeService.createArrearsByGrad
 router.post("/createArrearsByAcademicYear", tryCatch(financeService.createArrearsByAcademicYear));
 router.post("/createArrearsByStudentID", tryCatch(financeService.createArrearsByStudentID));
 router.post("/createRelation", tryCatch(relationService.createRelation));
+router.post("/assignStudentGuardian", tryCatch(relationService.assignStudentGuardian));
 router.post("/createStudent", tryCatch(studentService.createStudent));
 router.post("/createFaculty", tryCatch(facultyService.createFaculty));
 router.post("/createECA",tryCatch(ecaService.createEca));
@@ -29,12 +28,14 @@ router.post("/linkQualification", tryCatch(qualificationService.linkQualificatio
 router.post("/createQualification", tryCatch(qualificationService.createQualification));
 router.post("/createCourse",tryCatch(courseService.createCourse));
 
+
 router.patch("/deleteTransactionByID", tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID", tryCatch(financeService.restoreTransactionByID));
 router.patch("/deleteTransactionByName", tryCatch(financeService.deleteTransactionByName));
 router.patch("/restoreTransactionByName", tryCatch(financeService.restoreTransactionByName));
 router.patch("/deleteFacultyQualification", tryCatch(qualificationService.deleteQualification_faculty));
 router.patch("/deleteQualification", tryCatch(qualificationService.deleteQualification))
+router.patch("/updateRelationByName", tryCatch(relationService.updateRelationByName));
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
@@ -51,12 +52,11 @@ router.get("/getFacultyById/:id", tryCatch(facultyService.getFacultyById));
 router.get("/getAllFaculty", tryCatch(facultyService.getAllFaculty));
 router.get("/getQualificationsById/:facultyID", tryCatch(qualificationService.getQualifs));
 router.get("/getAllQualifications", tryCatch(qualificationService.getAllQualifications));
+router.get("/getRelationID/:relationName", tryCatch(relationService.getRelationByID));
 
 //PUT REQUESTS
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));
 router.put("/updateFacultyDetails",tryCatch(facultyService.updateFaculty));
-
-
 
 module.exports = router
