@@ -11,6 +11,7 @@ let ecaService = require("../services/ecaService");
 let facultyService = require("../services/facultyService");
 var qualificationService = require("../services/qualifService");
 let courseService = require("../services/courseService");
+const {getAllFaculty} = require("../services/facultyService");
 
 router.post("/createAdmin", tryCatch(adminService.createAdmin));
 router.post("/createClass", tryCatch(classService.createClass));
@@ -20,7 +21,6 @@ router.post("/createArrearsByGrade", tryCatch(financeService.createArrearsByGrad
 router.post("/createArrearsByAcademicYear", tryCatch(financeService.createArrearsByAcademicYear));
 router.post("/createArrearsByStudentID", tryCatch(financeService.createArrearsByStudentID));
 router.post("/createRelation", tryCatch(relationService.createRelation));
-router.post("/createStudent", tryCatch(studentService.createStudent));
 router.post("/createStudent", tryCatch(studentService.createStudent));
 router.post("/createFaculty", tryCatch(facultyService.createFaculty));
 router.post("/createECA",tryCatch(ecaService.createEca));
@@ -46,10 +46,13 @@ router.get("/getStudentEca/:id", tryCatch(studentService.getStudentECA));
 router.get("/getAllCourses",tryCatch(courseService.getAllCourse));
 router.get("/getCourseById/:Id", tryCatch(courseService.getCourseById));
 router.get("/searchSimilarCourse/:searchTerm", tryCatch(courseService.getSimilarCourse));
+router.get("/getFacultyById/:id", tryCatch(facultyService.getFacultyById));
+router.get("/getAllFaculty", tryCatch(facultyService.getAllFaculty));
 
 //PUT REQUESTS
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));
+router.put("/updateFacultyDetails",tryCatch(facultyService.updateFaculty));
 
 
 

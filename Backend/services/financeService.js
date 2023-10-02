@@ -269,7 +269,7 @@ const generateStudentLedger = (req,res) =>{
                 return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
             }else{
 
-                if(results.length == 0){
+                if(results.length === 0){
                     return res.status(200).json({message: "MissingDataWarning: Either student DNE; or has no arrears on their ledger!"});
                 }
 
@@ -310,7 +310,7 @@ const createGuardianPayment = (req,res) =>{
                 return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
             }else{
 
-                if(results.length == 0){
+                if(results.length === 0){
                     return res.status(400).json({message: "MissingDataException: The queried student does not exist in the database!"});
                 }
         
@@ -333,7 +333,7 @@ const createGuardianPayment = (req,res) =>{
                         }, (errors, results, fields) => {
         
                             if(errors){
-                                return res.status(500).json(error);
+                                return res.status(500).json(errors);
                             }
                             return res.status(200).json({message: "Payment succesfully dispatched!"});
                         }

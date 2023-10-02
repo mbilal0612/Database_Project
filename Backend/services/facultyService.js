@@ -16,21 +16,25 @@ const createFaculty = (req, res) => {
   if (!obj.DOB) {
     return res.status(400).json({ message: "Date of Birth is required!" });
   }
+  if(!obj.gender){
+      return res.status(400).json({ message: "Gender is required"});
+  }
   if (!obj.hireDate) {
     return res.status(400).json({ message: "Hire Date is required!" });
   }
   if (!obj.nationality) {
     return res.status(400).json({ message: "Nationality is required!" });
   }
+  if(!obj.religion){
+      return res.status(400).json({ message : "Relgion is required"});
+  }
   if (!obj.salary) {
     return res.status(400).json({ message: "Salary is required!" });
   }
-  if (!obj.phoneNumber) {
-    return res.status(400).json({ message: "Phone Number is Required! " });
-  }
+
   db.query(
     {
-      sql: "INSERT INTO ?? (??,??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+      sql: "INSERT INTO ?? (??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?)",
       values: [
         "FACULTY",
         "CNIC",
@@ -43,7 +47,6 @@ const createFaculty = (req, res) => {
         "RELIGION",
         "FULL_TIME",
         "SALARY",
-        "PHONE_NUMBER",
         obj.CNIC,
         obj.firstName,
         obj.lastName,
@@ -54,19 +57,19 @@ const createFaculty = (req, res) => {
         obj.religion,
         obj.fullTime,
         obj.salary,
-        obj.phoneNumber,
       ],
     },
     (error, results, fields) => {
-      if (error) console.log(error);
+      if (error){
+          return res.status(500).send(error);
+      }
       db.query(
         {
           sql: "SELECT * FROM ?? WHERE ??=?",
           values: ["FACULTY", "CNIC", obj.CNIC],
         },
         (err, results, fields) => {
-          if (results.size == 0)
-            res.status(500).json({ message: "unkown error occurred" });
+          if (results.size === 0) res.status(500).json({ message: "unkown error occurred" });
           else {
             var ID = results[0].FACULTY_ID;
             var u_name = "F" + ID;
@@ -120,7 +123,144 @@ const createFaculty = (req, res) => {
   );
 };
 
+const updateFaculty = (req,res) => {
+  const obj = req.body;
+
+  if(!obj.facultyId){
+    return res.status(400).json({ message : "id is required"});
+  }
+  if (!obj.CNIC) {
+    return res.status(400).json({ message: "CNIC is required!" });
+  }
+  if (!obj.firstName) {
+    return res.status(400).json({ message: "firstName is required!" });
+  }
+  if (!obj.lastName) {
+    return res.status(400).json({ message: "lastName is required!" });
+  }
+  if (!obj.DOB) {
+    return res.status(400).json({ message: "Date of Birth is required!" });
+  }
+
+  if(!obj.gender){
+    return res.status(400).json({ message: "Gender is required"});
+  }
+
+  if (!obj.hireDate) {
+    return res.status(400).json({ message: "Hire Date is required!" });
+  }
+  if (!obj.nationality) {
+    return res.status(400).json({ message: "Nationality is required!" });
+  }
+  if (!obj.salary) {
+    return res.status(400).json({ message: "Salary is required!" });
+  }
+  if (!obj.religion) {
+    return res.status(400).json({ message: "Religion is Required! " });
+  }
+
+  if(!obj.fullTime) {
+      return res.status(400).json({ message : "full time is required"});
+  }
+
+  db.query(
+      {
+        sql : "UPDATE ?? SET ??=? , ??=?, ??=? , ??=? , ??=? , ??=? , ??=? , ??=? , ??=? , ??=? WHERE ?? = ?",
+        timeout: 40000,
+        values : [
+            "FACULTY",
+            "CNIC",
+            obj.CNIC,
+            "FIRST_NAME",
+            obj.firstName,
+            "LAST_NAME",
+            obj.lastName,
+            "DOB",
+            obj.DOB,
+            "HIRE_DATE",
+            obj.hireDate,
+            "SALARY",
+            obj.salary,
+            "NATIONALITY",
+            obj.nationality,
+            "RELIGION",
+            obj.religion,
+            "GENDER",
+            obj.gender,
+            "FULL_TIME",
+            obj.fullTime,
+            "FACULTY_ID",
+            obj.facultyId
+        ]
+      },
+      (error, results, fields)=> {
+
+          if(error){
+              return res.status(500).send(error);
+          }
+
+          return res.status(200).json({ message : "Succesfully changed"});
+      }
+  )
+
+};
+
+const getAllFaculty = (req,res) => {
+
+  db.query(
+      {
+        sql : "SELECT * FROM ?? ",
+        timeout: 40000,
+        values : [
+            "FACULTY"
+        ]
+      },
+
+      (error, results, fields)=> {
+
+          if(error){
+            return res.status(500).send(error);
+          }
+
+          return res.status(200).send(results);
+      }
+  )
+};
+
+const getFacultyById = (req,res) => {
+
+  const obj = req.params;
+
+  if(!obj.id){
+    return res.status(400).send({ message : "Need ID "});
+  }
+
+  db.query(
+      {
+        sql: "SELECT * FROM ?? WHERE ?? = ?",
+        timeout: 40000,
+        values : [
+            "FACULTY",
+            "FACULTY_ID",
+            obj.id
+        ]
+      },
+
+      (error, results, fields)=> {
+
+        if(error){
+          return res.status(500).send(error);
+        }
+
+        return res.status(200).send(results);
+      }
+  )
+};
 //exports
 module.exports = {
   createFaculty,
+  getFacultyById,
+  getAllFaculty,
+  updateFaculty,
+
 };
