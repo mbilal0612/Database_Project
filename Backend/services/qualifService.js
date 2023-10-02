@@ -103,54 +103,88 @@ const deleteQualification_faculty = (req, res) => {
       message: "Please select the qualification you want to delete",
     });
   var facID = parseInt(obj.facultyID.substring(1, obj.facultyID.length));
-  db.query({
-    sql: "DELETE FROM ?? WHERE ?? = ? AND ?? = ?",
-    values: [
-      "FACULTY_QUALIFICATION",
-      "FACULTY_ID",
-      facID,
-      "QUALIFICATION_ID",
-      obj.qualifID,
-    ],
-  },
-    (error, results, fields)=>{
-      if(error){
-        return res.status(500).json({message: "An unkown error has occured"});
+  db.query(
+    {
+      sql: "DELETE FROM ?? WHERE ?? = ? AND ?? = ?",
+      values: [
+        "FACULTY_QUALIFICATION",
+        "FACULTY_ID",
+        facID,
+        "QUALIFICATION_ID",
+        obj.qualifID,
+      ],
+    },
+    (error, results, fields) => {
+      if (error) {
+        return res.status(500).json({ message: "An unkown error has occured" });
       }
-      if(results.affectedRows == 0) return res.status(400).json({message:"the following Faculty-->qualification does not exist"});
-      else return res.status(200).json({message: "The following qualification has been deleted from this faculty's record"});
+      if (results.affectedRows == 0)
+        return res
+          .status(400)
+          .json({
+            message: "the following Faculty-->qualification does not exist",
+          });
+      else
+        return res
+          .status(200)
+          .json({
+            message:
+              "The following qualification has been deleted from this faculty's record",
+          });
     }
   );
 };
-const deleteQualification = (req,res)=>{
+const deleteQualification = (req, res) => {
   obj = req.body;
   if (!obj.qualifID)
     return res.status(400).json({
       message: "Please select the qualification you want to delete",
     });
-  db.query({
-    sql: "DELETE FROM ?? WHERE ?? = ?",
-    values: [
-      "QUALIFICATION",
-      "QUALIFICATION_ID",
-      obj.qualifID
-    ],
-  },
-    (error, results, fields)=>{
-      if(error){
-        return res.status(500).json({message: "An unkown error has occured"});
+  db.query(
+    {
+      sql: "DELETE FROM ?? WHERE ?? = ?",
+      values: ["QUALIFICATION", "QUALIFICATION_ID", obj.qualifID],
+    },
+    (error, results, fields) => {
+      if (error) {
+        return res.status(500).json({ message: "An unkown error has occured" });
       }
-      if(results.affectedRows == 0) return res.status(400).json({message:"the following qualification does not exist"});
-      else return res.status(200).json({message: "All records of the following qualification have been deleted"});
+      if (results.affectedRows == 0)
+        return res
+          .status(400)
+          .json({ message: "the following qualification does not exist" });
+      else
+        return res
+          .status(200)
+          .json({
+            message:
+              "All records of the following qualification have been deleted",
+          });
     }
   );
-  
-}
+};
+const getAllQualifications = (req, res) => {
+  db.query(
+    { sql: "SELECT ?? FROM ??", values: ["NAME", "QUALIFICATION"] },
+    (err, results, fields) => {
+      if(err) {
+        console.log((err));
+        return res.status(500).json({message: "unkown error occured"});
+      }
+      qualifs = [];
+      for(var i = 0; i<results.length; i++){
+        qualifs.push(results[i].NAME);
+      }
+      return res.status(200).json({message:"report successfully generated", qualifications: qualifs});
+    }
+  );
+};
 
 module.exports = {
   linkQualification,
   createQualification,
   getQualifs,
   deleteQualification_faculty,
-  deleteQualification
+  deleteQualification,
+  getAllQualifications
 };

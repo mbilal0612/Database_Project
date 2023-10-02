@@ -50,6 +50,7 @@ router.get("/searchSimilarCourse/:searchTerm", tryCatch(courseService.getSimilar
 router.get("/getFacultyById/:id", tryCatch(facultyService.getFacultyById));
 router.get("/getAllFaculty", tryCatch(facultyService.getAllFaculty));
 router.get("/getQualificationsById/:facultyID", tryCatch(qualificationService.getQualifs));
+router.get("/getAllQualifications", tryCatch(qualificationService.getAllQualifications));
 
 //PUT REQUESTS
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
