@@ -80,6 +80,7 @@ const createGuardian = (req, res) => {
                             error: error
                             });
                         }
+                        
                         console.log(results);
                         bcrypt.hash(defaultpass,10,(err,hash)=>{
                             let username = "G"+results[0].GUARDIAN_ID;
@@ -103,13 +104,13 @@ const createGuardian = (req, res) => {
                                         return res.status(500).json({message : "Something went wrong please try again later..."});
 
                                     }else{
-
+                                        return res.json({
+                                            message: "Parent Created",
+                                            username: username,
+                                            password: defaultpass,
+                                        });
                                     }
-                                    return res.status(200).json({
-                                        message: "Parent Created",
-                                        username: username,
-                                        password: defaultpass,
-                                    });
+                                    
                                 }
                             )
                         });
