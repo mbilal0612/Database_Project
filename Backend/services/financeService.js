@@ -236,7 +236,7 @@ const getStudentFee = (req, res) =>{
                     }
                 }
 
-                res.status(200).status(200).json({message: "Fee successfully generated.", STUDENT_ID: results[0].STUDENT_ID, Fee:sum})
+                res.status(200).json({message: "Fee successfully generated.", STUDENT_ID: results[0].STUDENT_ID, Fee:sum})
 
             }
         }
@@ -273,7 +273,7 @@ const generateStudentLedger = (req,res) =>{
                     return res.status(200).json({message: "MissingDataWarning: Either student DNE; or has no arrears on their ledger!"});
                 }
 
-                res.status(200).status(200).json({message: "Ledger successfully generated.", STUDENT_ID: temp, entities: results});
+                res.status(200).json({message: "Ledger successfully generated.", STUDENT_ID: temp, entities: results});
 
             }
         }

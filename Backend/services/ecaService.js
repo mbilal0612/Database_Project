@@ -58,12 +58,12 @@ const getEcaId = (req, res) => {
 
 const updateEcaName = (req,res) => {
     const obj = req.body;
-
-    if(obj.eca_Id){
+    console.log(obj);
+    if(!obj.id){
         return res.status(400).json({ message : "ECA_ID required!"});
     }
 
-    if(obj.eca_Name){
+    if(!obj.name){
         return res.status(400).json({ message : "ECA_NAME required!"});
     }
 
@@ -73,10 +73,10 @@ const updateEcaName = (req,res) => {
             timeout : 40000,
             values : [
                 "ECA",
-                "ECA_NAME",
-                obj.eca_Name,
+                "NAME",
+                obj.name,
                 "ECA_ID",
-                obj.eca_Id
+                obj.id
             ]
         },
         (error, results, fields) => {
@@ -116,5 +116,6 @@ module.exports = {
     createEca,
     updateEcaName,
     getAllEca,
-    getEcaId
+    getEcaId,
+
 }

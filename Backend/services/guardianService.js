@@ -105,7 +105,7 @@ const createGuardian = (req, res) => {
                                     }else{
 
                                     }
-                                    return res.json({
+                                    return res.status(200).json({
                                         message: "Parent Created",
                                         username: username,
                                         password: defaultpass,
@@ -139,7 +139,7 @@ const getGuardians = (req, res) => {
             if(error){
                 return res.status(500).send(error);
             }
-            return res.json({
+            return res.status(200).json({
                 results: results
             });
         }
@@ -169,7 +169,7 @@ const getGuardianById = (req, res) => {
             if(error){
                 return res.status(500).send(error);
             }
-            return res.json({
+            return res.status(200).json({
                 results: results
             })
         })

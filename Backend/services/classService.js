@@ -38,7 +38,7 @@ const createClass = (req, res) => {
           .status(500)
           .json({ message: "Something went wrong please try again later..." });
       } else {
-        return res.json({
+        return res.status(200).json({
           message: "Class Created",
           class: {
             startYear: obj.START_YEAR,
@@ -111,7 +111,7 @@ const getClassById = (req, res) => {
                 return res.status(400).json("something went wrong");
             }
 
-            return res.json(
+            return res.status(200).json(
                 results
             );
         }

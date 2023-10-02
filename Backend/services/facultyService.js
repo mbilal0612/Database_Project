@@ -90,7 +90,7 @@ const createFaculty = (req, res) => {
                     console.log(err);
                     return res.status(500).send(err);
                   } else {
-                    return res.json({
+                    return res.status(200).json({
                       message: "Faculty created successfully!",
                       details: {
                         userName: u_name,

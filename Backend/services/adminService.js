@@ -123,7 +123,7 @@ const createAdmin = (req, res) => {
                     (error, results, fields) => {
                       if (error) return res.status(500).send(error);
                       else {
-                        return res.json({
+                        return res.status(200).json({
                           message: "successfully created and added to users",
                           username: userName,
                           password: defaultPass,

@@ -195,7 +195,7 @@ const getStudentById = (req,res) =>{
                 return res.status(500).json({message:"Something went wrong please try again later..."});
             }else{
                 results[0].STUDENT_ID = 'S' + results[0].STUDENT_ID;
-                return res.json({
+                return res.status(200).json({
                     results: results
                 });
             }
@@ -203,10 +203,94 @@ const getStudentById = (req,res) =>{
     )
 }
 
+const getAllStudents = (req,res) => {
+    db.query(
+        {
+            sql : "SELECT * FROM STUDENT",
+            timeout:40000,
+        },
+        (error,results,fields)=>{
+            if(error){
+                return res.status(500).send(error);
+            }
+
+            return res.status(200).send(results);
+        }
+    )
+}
+
+const assignStudentECA = (req,res)=> {
+    const obj = req.body;
+
+    if(!obj.student_Id){
+        return res.status(400).json({ message : "student Id is required"});
+    }
+
+    if(!obj.eca_Id){
+        return res.status(400).json({ message : "eca Id is required"});
+
+    }
+
+    db.query(
+        {
+            sql:"INSERT INTO STUDENT_ECA (STUDENT_ID, ECA_ID) VALUES (?,?)",
+            timeout: 40000,
+            values : [
+                obj.student_Id,
+                obj.eca_Id
+            ]
+        },
+
+        (error, results,fields)=> {
+            if(error){
+                return res.status(500).send(error);
+            }
+
+            return res.status(200).json({ message : "successful entry"});
+        }
+    )
+}
+
+
+const getStudentECA = (req, res)=> {
+    const obj = req.params;
+
+    if(!obj.id){
+        return res.status(400).json({ message : 'student_id is required'});
+    }
+
+    //TODO: WRITE DB QUERY HERE
+    db.query(
+        {
+            sql : "SELECT * FROM ?? INNER JOIN ?? USING (??) INNER JOIN ?? USING (??) WHERE  ??= ?",
+            timeout: 40000,
+            values : [
+                "STUDENT_ECA",
+                "ECA",
+                "ECA_ID",
+                "STUDENT",
+                "STUDENT_ID",
+                "STUDENT_ID",
+                obj.id
+            ]
+
+        },
+        (error, results, fields)=> {
+            if(error){
+                return res.status(500).send(error);
+            }
+
+            return res.status(200).json(results);
+        }
+    )
+}
 
 module.exports = {
     createStudent,
     getStudents,
-    getStudentById
+    getStudentById,
+    getAllStudents,
+    assignStudentECA,
+    getStudentECA,
 
 }
