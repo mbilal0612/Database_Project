@@ -44,7 +44,7 @@ const createRelation = (req, res) => {
 
         }
         else {
-            return res.status(500).json({ message: "DataDuplicationException: Relation with the same name already exists!" });
+            return res.status(500).json({ message: "DataDuplicationException: Relation with the same name already exists!"});
         }
 
     })
