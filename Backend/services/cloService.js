@@ -15,18 +15,24 @@ const createClo = (req,res) => {
         return res.status(400).json({ message : "Course ID is required"});
     }
 
+    if(!obj.cloId){
+        return res.status(400).json({ message : " clo Id is required"})
+    }
+
     db.query(
         {
-            sql : "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
+            sql : "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
             timeout:40000,
             values: [
                 "CLO",
                 "CLO_NAME",
                 "CLO_DESC",
                 "COURSE_ID",
+                "CLO_ID",
                 obj.cloName,
                 obj.cloDesc,
-                obj.courseId
+                obj.courseId,
+                obj.cloId
             ]
         },
         (error, results, fields) => {
@@ -60,7 +66,7 @@ const getAllClo = (req,res) => {
 };
 
 const getCloById = (req,res) => {
-    const obj = req.body;
+    const obj = req.params;
 
     if(!obj.cloId){
         return res.status(400).json({ message : "CLO ID is required"});
@@ -126,3 +132,10 @@ const updateClo = (req,res) => {
         }
     )
 };
+
+module.exports = {
+    createClo,
+    getCloById,
+    getAllClo,
+    updateClo
+}

@@ -110,6 +110,20 @@ const updateQuestion = (req,res) => {
                 "QUESTION_ID",
                 obj.questionId
             ]
+        },
+        (error,results,fields)=>{
+            if(error){
+                return res.status(500).send(error);
+            }
+
+            return res.status(200).json({ message : 'updated'});
         }
     )
 };
+
+module.exports = {
+    createQuestion,
+    getQuestionById,
+    getAllQuestions,
+    updateQuestion
+}
