@@ -219,6 +219,77 @@ const getAllStudents = (req,res) => {
     )
 }
 
+const getStudentsByClass = (req,res) => {
+
+    var obj = req.params;
+
+    if(!obj.classGrade){
+        return res.status(400).json({message: "MissingInputException: Class Grade is needed!"})
+    }
+    if(!obj.classSection){
+        return res.status(400).json({message: "MissingInputException: Class Section is needed!"})
+    }
+    if(!obj.classAcademicYear){
+        return res.status(400).json({message: "MissingInputException: Class Academic Year is needed!"})
+    }
+
+    db.query(
+        {
+            sql : "SELECT * FROM ?? WHERE ?? = ? AND ?? = ? AND ?? = ?",
+            timeout:40000,
+            values :[
+                "CLASS",
+                "YEAR",
+                obj.classGrade,
+                "SECTION",
+                obj.classSection,
+                "START_YEAR",
+                obj.classAcademicYear,
+            ]
+        },
+        (errors,results,fields)=>{
+
+
+
+            if(errors){
+                return res.status(500).send("SQLSkillIssueException: Get better, dog!");
+            }
+
+            if(results.length == 0){
+                return res.status(500).send("MissingDataException: No such class exists in the database!");
+            }
+
+            if(results.length != 1){
+                return res.status(500).send("DuplicateDataException: More than one class may exist in the database!");
+            }
+
+            db.query(
+                {
+                    sql : "SELECT * FROM ?? WHERE ?? = ?",
+                    timeout:40000,
+                    values :[
+                        "STUDENT",
+                        "CLASS_ID",
+                        results[0].CLASS_ID
+                    ]
+                },
+                (errors,results,fields)=>{
+
+                    if(errors){
+                        return res.status(500).send("SQLSkillIssueException: Get better, dog!");
+                    }
+        
+                    if(results.length == 0){
+                        return res.status(500).send("MissingDataWarning: No students exist in this class!");
+                    }
+        
+                    return res.status(200).json({message: "Success", results})
+                }
+            )
+        }
+    )
+}
+
 const assignStudentECA = (req,res)=> {
     const obj = req.body;
 
@@ -291,4 +362,5 @@ module.exports = {
     getAllStudents,
     assignStudentECA,
     getStudentECA,
+    getStudentsByClass
 }
