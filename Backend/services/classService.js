@@ -16,16 +16,25 @@ const createClass = (req, res) => {
     return res.status(400).json({ message: "start year is required!" });
   }
 
+  var str = "";
+
+  if(obj.year < 10){
+    str = str + "0";
+  }
+  str = str + obj.year + "-" + obj.section + "-" + obj.startYear;
+
   db.query(
     {
-      sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
+      sql: "INSERT INTO ?? (??,??,??,??,??) VALUES (?,?,?,?,?)",
       timeout: 40000, // 40s
       values: [
         "CLASS",
+        "CLASS_ID",
         "START_YEAR",
         "STRENGTH",
         "YEAR",
         "SECTION",
+        str,
         obj.startYear,
         obj.strength,
         obj.year,
@@ -87,14 +96,12 @@ const getClassID = (req, res) => {
   );
 };
 
-const getClassById = (req, res) => {
+const getClassByID = (req, res) => {
     const obj = req.params;
 
-    if(!obj.id){
+    if(!obj.classID){
         return res.status(400).json({ message : "classId is required!"});
     }
-
-    let class_id = parseInt(obj.id.substring(1,obj.id.length));
 
     db.query(
         {
@@ -103,7 +110,7 @@ const getClassById = (req, res) => {
             values : [
                 "CLASS",
                 "CLASS_ID",
-                class_id
+                obj.classID
             ]
         },
         (error,results,fields) => {
@@ -118,8 +125,42 @@ const getClassById = (req, res) => {
     )
 }
 
+const getClassByAcademicYear = (req, res) => {
+
+  var obj = req.params;
+
+  if(!obj.startYear){
+    return res.status(400).json({ message:"MissingInputException: startYear is required!"});
+  }
+
+  db.query(
+    {
+      sql:"SELECT * FROM ?? WHERE ?? = ?",
+      values:[
+        "CLASS",
+        "START_YEAR",
+        obj.startYear
+      ]
+    }, (errors, results, fields) => {
+
+      if(errors){
+        return res.status(400).json({message: "SQLSkillIssueException: SQL Error!"})
+      }
+
+      if(results.length == 0){
+        return res.status(200).json({message:"No Records!"})
+      }
+
+      return res.status(200).json({message:"Success!", data: results});
+
+    }
+  )
+
+}
+
 module.exports = {
     createClass,
-    getClassById,
+    getClassByID,
     getClassID,
+    getClassByAcademicYear
 };

@@ -9,14 +9,15 @@ var facultyService = require("../services/facultyService");
 var relationService = require("../services/relationService");
 var studentService = require("../services/studentService");
 var attendanceService = require("../services/attendanceService");
-let ecaService = require("../services/ecaService");
+var ecaService = require("../services/ecaService");
 var qualificationService = require("../services/qualifService");
-let courseService = require("../services/courseService");
+var courseService = require("../services/courseService");
+var academicYearService = require("../services/academicYearService");
+var enrollmentService = require("../services/enrollmentService");
 
 router.post("/createAdmin", tryCatch(adminService.createAdmin));
 router.post("/createClass", tryCatch(classService.createClass));
 router.post("/getClassID", tryCatch(classService.getClassID));
-router.post("/createAcademicYear", tryCatch(adminService.createAcademicYear));
 router.post("/createArrearsByGrade", tryCatch(financeService.createArrearsByGrade));
 router.post("/createArrearsByAcademicYear", tryCatch(financeService.createArrearsByAcademicYear));
 router.post("/createArrearsByStudentID", tryCatch(financeService.createArrearsByStudentID));
@@ -31,6 +32,8 @@ router.post("/createQualification", tryCatch(qualificationService.createQualific
 router.post("/createCourse",tryCatch(courseService.createCourse));
 router.post("/createAttendance",tryCatch(attendanceService.createAttendance));
 router.post("/createBatchAttendance",tryCatch(attendanceService.createBatchAttendance));
+router.post("/createAcademicYear", tryCatch(academicYearService.createAcademicYear));
+router.post("/enrollStudentToClass", tryCatch(enrollmentService.enrollStudentToClass));
 
 router.patch("/deleteTransactionByID", tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID", tryCatch(financeService.restoreTransactionByID));
@@ -48,6 +51,10 @@ router.patch("/deleteSpecificRelation", tryCatch(relationService.deleteSpecificR
 router.patch("/updateRelationNameByID", tryCatch(relationService.updateRelationNameByID))
 router.patch("/updateExistingRelationshipType", tryCatch(relationService.updateExistingRelationshipType))
 router.patch("/updateAttendance", tryCatch(attendanceService.updateAttendance));
+router.patch("/deleteAcademicYear", tryCatch(academicYearService.deleteAcademicYear));
+router.patch("/restoreAcademicYear", tryCatch(academicYearService.restoreAcademicYear));
+router.patch("/setAcademicYearDays", tryCatch(academicYearService.setAcademicYearDays));
+router.patch("/denrollStudentFromClass", tryCatch(enrollmentService.denrollStudentFromClass));
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
@@ -67,9 +74,13 @@ router.get("/getAllQualifications", tryCatch(qualificationService.getAllQualific
 router.get("/getRelationID/:relationName", tryCatch(relationService.getRelationByID));
 router.get("/getRelationByGuardianID/:guardianID", tryCatch(relationService.getRelationByGuardianID));
 router.get("/getRelationByStudentID/:studentID", tryCatch(relationService.getRelationByStudentID));
-router.get("/getStudentsByClass/:classAcademicYear/:classGrade/:classSection", tryCatch(studentService.getStudentsByClass));
+router.get("/getStudentsByClass/:classAcademicYear/:classGrade/:classSection", tryCatch(enrollmentService.getStudentsByClass));
+router.get("/getStudentsByClassID/:classID", tryCatch(enrollmentService.getStudentsByClassID));
 router.get("/getStudentEntireAttendanceReport/:studentID", tryCatch(attendanceService.getStudentEntireAttendanceReport));
 router.get("/getStudentAttendanceReportByAcademicYear/:studentID/:startYear", tryCatch(attendanceService.getStudentAttendanceReportByAcademicYear));
+router.get("/getAcademicYears", tryCatch(academicYearService.getAcademicYears));
+router.get("/getClassByAcademicYear/:startYear", tryCatch(classService.getClassByAcademicYear));
+router.get("/getClassByID/:classID", tryCatch(classService.getClassByID));
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));

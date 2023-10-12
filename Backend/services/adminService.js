@@ -3,36 +3,8 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const defaultPass = "12345678";
 
-const createAcademicYear = (req, res) => {
-  const obj = req.body;
-  if (!obj.startYear) {
-    return res.status(400).json({ message: "Start Year is required !" });
-  }
-  if (!obj.desc) {
-    return res.status(400).json({ message: "Description is required !" });
-  }
-  db.query(
-    {
-      sql: "INSERT INTO ?? (??,??) VALUES (?,?)",
-      values: [
-        "ACADEMIC_YEAR",
-        "START_YEAR",
-        "ACADEMIC_DESC",
-        obj.startYear,
-        obj.desc,
-      ],
-    },
-    (error, results, fields) => {
-      if(error) return res.status(500).json({ message: "An unknow error has occured" });
-      else{
-        return res.json({message:"Academic year successfully added",
-      startYear: obj.startYear,
-      description: obj.desc
-    })
-      }
-    }
-  );
-};
+//Copied and Moved createAcademicYear from here to academicYearService. 
+//Reference Commit : createdEnrollmentService, Finished academicYearService and Major Database changes
 const createAdmin = (req, res) => {
   const obj = req.body;
 
@@ -157,5 +129,4 @@ const createAdmin = (req, res) => {
 
 module.exports = {
   createAdmin,
-  createAcademicYear,
 };
