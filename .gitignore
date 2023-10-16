@@ -1,5 +1,5 @@
 backend/package-lock.json
 backend/node_modules
-Tools\Umlet
+Tools/Umlet
 .vscode
-.idea
+.idea/
