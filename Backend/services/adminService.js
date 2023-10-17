@@ -1,11 +1,18 @@
 const db = require("../config/db").connection;
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+const defaultPass = "12345678";
 
+//Copied and Moved createAcademicYear from here to academicYearService. 
+//Reference Commit : createdEnrollmentService, Finished academicYearService and Major Database changes
 const createAdmin = (req, res) => {
   const obj = req.body;
 
   if (obj.CNIC) {
     //check for regex here
     // return res.status(400).json({message: "CNIC is required!"} )
+  } else {
+    return res.status(400).json({ message: "cnic is required !" });
   }
   if (!obj.firstName) {
     return res.status(400).json({ message: "firstName is required!" });
@@ -49,21 +56,69 @@ const createAdmin = (req, res) => {
     },
     function (error, results, fields) {
       if (error) {
+        //TODO: update error response properly
         return res.status(500).send(error);
       } else {
-        return res.json({
-          message: "Admin Created",
-          admin: {
-            CNIC: obj.CNIC,
-            firstName: obj.firstName,
-            lastName: obj.lastName,
-            hireDate: obj.hireDate,
-            gender: obj.gender,
-            nationality: obj.nationality,
-            religion: obj.religion,
-            salary: obj.salary,
+        //generate erp for the user
+        db.query(
+          {
+            sql: "SELECT ?? FROM ?? WHERE ?? = ?",
+            timeout: 40000,
+            values: ["ADMIN_ID", "ADMIN", "CNIC", obj.CNIC],
           },
-        });
+          (error1, results1, fields1) => {
+            if (error1) {
+              return res.status(500).send(error1);
+            } else {
+              bcrypt.hash(defaultPass, saltRounds, function (err, hash) {
+                if (err) return res.status(500).send(err);
+                else {
+                  // console.log(results1);
+                  // console.log(fields1);
+                  var userName = results1[0].ADMIN_ID;
+
+                  userName = "A" + userName;
+                  db.query(
+                    {
+                      sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
+                      timeout: 40000,
+                      values: [
+                        "USERS",
+                        "USERNAME",
+                        "PASSWORD",
+                        "ADMIN_ID",
+                        userName,
+                        hash,
+                        results1[0].ADMIN_ID,
+                      ],
+                    },
+                    (error, results, fields) => {
+                      if (error) return res.status(500).send(error);
+                      else {
+                        return res.status(200).json({
+                          message: "successfully created and added to users",
+                          username: userName,
+                          password: defaultPass,
+                          admin: {
+                            admin_ID: userName,
+                            CNIC: obj.CNIC,
+                            firstName: obj.firstName,
+                            lastName: obj.lastName,
+                            hireDate: obj.hireDate,
+                            gender: obj.gender,
+                            nationality: obj.nationality,
+                            religion: obj.religion,
+                            salary: obj.salary,
+                          },
+                        });
+                      }
+                    }
+                  );
+                }
+              });
+            }
+          }
+        );
       }
       // error will be an Error if one occurred during the query
       // results will contain the results of the query

@@ -1,3 +1,16 @@
-backend/package-lock.json
-backend/node_modules
-Tools\Umlet
+node_modules/
+Backend/package-lock.json
+Backend/node_modules/
+Tools/Umlet
+.vscode/
+.idea/
+trashService.js
+
+# IMPORTANT: in unix based systems "trashService.js" & "trashservice.js" are different files.
+# while in Windows based system they are the same, so please make sure follow the convention.
+# Also always use forward slashes "/" regardless of os in git ingore files.
+
+# How to ignore files & folders
+## trashService.js ignores a file
+## node_modules/ , .vscode/ & .idea/  are for ignoring folders. So whenever you need to ignore a folder make sure to add forward slash after the foldername.
+### new folders added that are in the .gitignore file (this file) will be greyed out, so check that before committing.
