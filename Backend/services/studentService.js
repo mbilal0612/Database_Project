@@ -134,32 +134,7 @@ const createStudent = (req,res) =>{
     )
 };
 
-const getStudents = (req,res) =>{
-    const obj = req.body;
 
-    if(!obj.studentId){
-        return res.status(400).json({message:"studentId is required!"});
-    }
-    db.query(
-        {
-            sql:"SELECT * FROM ?? WHERE ??=?",
-            timeout:40000, //40s
-            values:[
-                "STUDENT",
-                "STUDENT_ID",
-                obj.studentId,
-            ],
-        },
-
-        function(error,results,fields){
-            if(error){
-                return res.status(500).json({message:"Something went wrong please try again later..."});
-            }else{
-                
-            }
-        }
-    )
-}
 
 const getStudentById = (req,res) =>{
     const obj = req.params;
@@ -171,12 +146,14 @@ const getStudentById = (req,res) =>{
     
     db.query(
         {
-            sql:"SELECT * FROM ?? WHERE ??=?",
+            sql:"SELECT * FROM ?? WHERE ??=? AND ?? = ?",
             timeout:4000,
             values:[
-                "STUDENT",
-                "STUDENT_ID",
-                temp
+                "USERS",
+                "USER_ID",
+                obj.id, 
+                "ROLE_ID",
+                "STUDENT"
             ]
 
         },
@@ -184,7 +161,7 @@ const getStudentById = (req,res) =>{
             if(error){
                 return res.status(500).json({message:"Something went wrong please try again later..."});
             }else{
-                results[0].STUDENT_ID = 'S' + results[0].STUDENT_ID;
+                if(results.length===0) return res.status(400).json({message:"This ID does not belong to any student"});
                 return res.status(200).json({
                     results: results
                 });
@@ -196,12 +173,12 @@ const getStudentById = (req,res) =>{
 const getAllStudents = (req,res) => {
     db.query(
         {
-            sql : "SELECT * FROM STUDENT",
+            sql : "SELECT * FROM ??",values:["USERS"],
             timeout:40000,
         },
         (error,results,fields)=>{
             if(error){
-                return res.status(500).send(error);
+                return res.status(500).json({ message : 'student_id is required'});
             }
 
             return res.status(200).send(results);
@@ -233,7 +210,7 @@ const assignStudentECA = (req,res)=> {
 
         (error, results,fields)=> {
             if(error){
-                return res.status(500).send(error);
+                return res.status(500).json({ message : 'student_id is required'});
             }
 
             return res.status(200).json({ message : "successful entry"});
@@ -266,7 +243,7 @@ const getStudentECA = (req, res)=> {
         },
         (error, results, fields)=> {
             if(error){
-                return res.status(500).send(error);
+                return res.status(500).json({message: "unkown error"});
             }
 
             return res.status(200).json(results);
@@ -276,7 +253,6 @@ const getStudentECA = (req, res)=> {
 
 module.exports = {
     createStudent,
-    getStudents,
     getStudentById,
     getAllStudents,
     assignStudentECA,

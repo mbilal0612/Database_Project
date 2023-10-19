@@ -11,26 +11,44 @@ const linkQualification = (req, res) => {
   }
 
   //Need to add check for faculty existence,
-
-  var temp = parseInt(obj.facultyID.substring(1, obj.facultyID.length));
-  db.query(
-    {
-      sql: "INSERT INTO ?? (??,??) VALUES (? ,?)",
-      values: [
-        "FACULTY_QUALIFICATION",
-        "FACULTY_ID",
-        "QUALIFICATION_ID",
-        temp,
-        obj.qualificationID,
-      ],
-    },
-    (error, result, fields) => {
-      if (error) return res.status(500).json({ message: "unkown error!" });
-      return res
-        .status(200)
-        .json({ message: "qualification successfully added to faculty" });
-    }
-  );
+  db.query({
+    sql: "SELECT * FROM ?? WHERE ?? = ?",
+    values: ["QUALIFICATION", "QUALIFICATION_ID", obj.qualificationID],
+  }, (error, results, fields)=>{
+    if (error) return res.status(500).json({ message: "unkown error!" });
+      if (results.length === 0)
+        return res.status(400).json({ message: "Qualification DNE" });
+        db.query(
+          {
+            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            values: ["USERS", "USER_ID", obj.facultyID],
+          },
+          (error, results, fields) => {
+            if (error) return res.status(500).json({ message: "unkown error!" });
+            if (results.length === 0)
+              return res.status(400).json({ message: "User DNE" });
+            db.query(
+              {
+                sql: "INSERT INTO ?? (??,??) VALUES (? ,?)",
+                values: [
+                  "FACULTY_QUALIFICATION",
+                  "FACULTY_ID",
+                  "QUALIFICATION_ID",
+                  obj.facultyID,
+                  obj.qualificationID,
+                ],
+              },
+              (error, result, fields) => {
+                if (error) return res.status(500).json({ message: "unkown error!" });
+                return res
+                  .status(200)
+                  .json({ message: "qualification successfully added to faculty" });
+              }
+            );
+          }
+        );
+  });
+  
 };
 
 const createQualification = (req, res) => {
@@ -107,7 +125,7 @@ const deleteQualification_faculty = (req, res) => {
     });
   var facID = parseInt(obj.facultyID.substring(1, obj.facultyID.length));
 
-    // Need to add check for link existence
+  // Need to add check for link existence
 
   db.query(
     {
@@ -125,18 +143,14 @@ const deleteQualification_faculty = (req, res) => {
         return res.status(500).json({ message: "An unkown error has occured" });
       }
       if (results.affectedRows == 0)
-        return res
-          .status(400)
-          .json({
-            message: "the following Faculty-->qualification does not exist",
-          });
+        return res.status(400).json({
+          message: "the following Faculty-->qualification does not exist",
+        });
       else
-        return res
-          .status(200)
-          .json({
-            message:
-              "The following qualification has been deleted from this faculty's record",
-          });
+        return res.status(200).json({
+          message:
+            "The following qualification has been deleted from this faculty's record",
+        });
     }
   );
 };
@@ -160,12 +174,10 @@ const deleteQualification = (req, res) => {
           .status(400)
           .json({ message: "the following qualification does not exist" });
       else
-        return res
-          .status(200)
-          .json({
-            message:
-              "All records of the following qualification have been deleted",
-          });
+        return res.status(200).json({
+          message:
+            "All records of the following qualification have been deleted",
+        });
     }
   );
 };
@@ -173,15 +185,18 @@ const getAllQualifications = (req, res) => {
   db.query(
     { sql: "SELECT ?? FROM ??", values: ["NAME", "QUALIFICATION"] },
     (err, results, fields) => {
-      if(err) {
-        console.log((err));
-        return res.status(500).json({message: "unkown error occured"});
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: "unkown error occured" });
       }
       qualifs = [];
-      for(var i = 0; i<results.length; i++){
+      for (var i = 0; i < results.length; i++) {
         qualifs.push(results[i].NAME);
       }
-      return res.status(200).json({message:"report successfully generated", qualifications: qualifs});
+      return res.status(200).json({
+        message: "report successfully generated",
+        qualifications: qualifs,
+      });
     }
   );
 };
@@ -192,5 +207,5 @@ module.exports = {
   getQualifs,
   deleteQualification_faculty,
   deleteQualification,
-  getAllQualifications
+  getAllQualifications,
 };

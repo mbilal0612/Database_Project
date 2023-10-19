@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -66,4 +66,22 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+} */
+
+cred-label{
+  font-family: Inter, sans-serif;
+  line-height: 1.5;
+  font-weight: 600;
+  font-size: xx-large;
+  padding: 1ch;
+  margin-bottom: 5ch;
+
+  color: black;
+  
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }

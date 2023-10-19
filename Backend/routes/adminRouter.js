@@ -2,6 +2,11 @@ const express = require("express");
 const tryCatch = require("../middleware/tryCatch");
 
 var router = express.Router();
+var auth = require("../middleware/auth");
+var adminAuth = require("../middleware/adminAuth");
+var facultyAuth = require("../middleware/facultyAuth");
+var studentAuth = require("../middleware/studentAuth");
+var guardianAuth = require("../middleware/guardianAuth");
 var adminService = require("../services/adminService");
 var classService = require("../services/classService");
 var financeService = require("../services/financeService");
@@ -16,49 +21,49 @@ var academicYearService = require("../services/academicYearService");
 var enrollmentService = require("../services/enrollmentService");
 var userService = require("../services/userService");
 
-router.post("/createAdmin", tryCatch(adminService.createAdmin));
-router.post("/createClass", tryCatch(classService.createClass));
-router.post("/getClassID", tryCatch(classService.getClassID));
-router.post("/createArrearsByGrade", tryCatch(financeService.createArrearsByGrade));
-router.post("/createArrearsByAcademicYear", tryCatch(financeService.createArrearsByAcademicYear));
-router.post("/createArrearsByStudentID", tryCatch(financeService.createArrearsByStudentID));
-router.post("/createRelation", tryCatch(relationService.createRelation));
-router.post("/assignStudentGuardian", tryCatch(relationService.assignStudentGuardian));
-router.post("/createStudent", tryCatch(studentService.createStudent));
-router.post("/createFaculty", tryCatch(facultyService.createFaculty));
-router.post("/createECA",tryCatch(ecaService.createEca));
-router.post("/assignEca", tryCatch(studentService.assignStudentECA));
-router.post("/linkQualification", tryCatch(qualificationService.linkQualification));
-router.post("/createQualification", tryCatch(qualificationService.createQualification));
-router.post("/createCourse",tryCatch(courseService.createCourse));
+router.post("/createAdmin",[auth,adminAuth] ,tryCatch(adminService.createAdmin));       //not used
+router.post("/createClass",[auth,adminAuth], tryCatch(classService.createClass));
+router.post("/getClassID",[auth,adminAuth] ,tryCatch(classService.getClassID));     //not used
+router.post("/createArrearsByGrade",[auth,adminAuth] ,tryCatch(financeService.createArrearsByGrade));
+router.post("/createArrearsByAcademicYear",[auth,adminAuth] , tryCatch(financeService.createArrearsByAcademicYear));
+router.post("/createArrearsByStudentID",[auth,adminAuth] , tryCatch(financeService.createArrearsByStudentID));
+router.post("/createRelation",[auth,adminAuth] , tryCatch(relationService.createRelation));
+router.post("/assignStudentGuardian",[auth,adminAuth] , tryCatch(relationService.assignStudentGuardian));
+router.post("/createStudent", tryCatch(studentService.createStudent)); // not used
+router.post("/createFaculty", tryCatch(facultyService.createFaculty));      //not used
+router.post("/createECA",[auth,adminAuth] ,tryCatch(ecaService.createEca));   
+router.post("/assignEca",[auth,adminAuth] , tryCatch(studentService.assignStudentECA));
+router.post("/linkQualification",[auth,adminAuth] , tryCatch(qualificationService.linkQualification));
+router.post("/createQualification", [auth,adminAuth] ,tryCatch(qualificationService.createQualification));
+router.post("/createCourse", [auth,adminAuth] ,tryCatch(courseService.createCourse));
 router.post("/createAttendance",tryCatch(attendanceService.createAttendance));
 router.post("/createBatchAttendance",tryCatch(attendanceService.createBatchAttendance));
-router.post("/createAcademicYear", tryCatch(academicYearService.createAcademicYear));
-router.post("/enrollStudentToClass", tryCatch(enrollmentService.enrollStudentToClass));
-router.post("/createUser", tryCatch(userService.createUser));
+router.post("/createAcademicYear",[auth,adminAuth] , tryCatch(academicYearService.createAcademicYear));
+router.post("/enrollStudentToClass",[auth,adminAuth] , tryCatch(enrollmentService.enrollStudentToClass));
+router.post("/createUser",[auth,adminAuth] , tryCatch(userService.createUser));
 router.post("/queryLogin", tryCatch(userService.queryLogin));
 
-router.patch("/deleteTransactionByID", tryCatch(financeService.deleteTransactionByID));
-router.patch("/restoreTransactionByID", tryCatch(financeService.restoreTransactionByID));
-router.patch("/deleteTransactionByName", tryCatch(financeService.deleteTransactionByName));
-router.patch("/restoreTransactionByName", tryCatch(financeService.restoreTransactionByName));
-router.patch("/deleteFacultyQualification", tryCatch(qualificationService.deleteQualification_faculty));
-router.patch("/deleteQualification", tryCatch(qualificationService.deleteQualification))
-router.patch("/updateRelationByName", tryCatch(relationService.updateRelationByName));
-router.patch("/deleteAllGuardianRelations", tryCatch(relationService.deleteAllGuardianRelations));
-router.patch("/deleteAllStudentRelations", tryCatch(relationService.deleteAllStudentRelations));
-router.patch("/restoreAllGuardianRelations", tryCatch(relationService.restoreAllGuardianRelations));
-router.patch("/restoreAllStudentRelations", tryCatch(relationService.restoreAllStudentRelations));
-router.patch("/restoreSpecificRelation", tryCatch(relationService.restoreSpecificRelation));
-router.patch("/deleteSpecificRelation", tryCatch(relationService.deleteSpecificRelation));
-router.patch("/updateRelationNameByID", tryCatch(relationService.updateRelationNameByID))
-router.patch("/updateExistingRelationshipType", tryCatch(relationService.updateExistingRelationshipType))
-router.patch("/updateAttendance", tryCatch(attendanceService.updateAttendance));
-router.patch("/deleteAcademicYear", tryCatch(academicYearService.deleteAcademicYear));
-router.patch("/restoreAcademicYear", tryCatch(academicYearService.restoreAcademicYear));
-router.patch("/setAcademicYearDays", tryCatch(academicYearService.setAcademicYearDays));
-router.patch("/denrollStudentFromClass", tryCatch(enrollmentService.denrollStudentFromClass));
-router.patch("/changeUserPassword", tryCatch(userService.changeUserPassword));
+router.patch("/deleteTransactionByID",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByID));
+router.patch("/restoreTransactionByID",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByID));
+router.patch("/deleteTransactionByName",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByName));
+router.patch("/restoreTransactionByName",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByName));
+router.patch("/deleteFacultyQualification",[auth,adminAuth] , tryCatch(qualificationService.deleteQualification_faculty));
+router.patch("/deleteQualification", [auth,adminAuth] ,tryCatch(qualificationService.deleteQualification))
+router.patch("/updateRelationByName", [auth,adminAuth] ,tryCatch(relationService.updateRelationByName));
+router.patch("/deleteAllGuardianRelations",[auth,adminAuth] , tryCatch(relationService.deleteAllGuardianRelations));
+router.patch("/deleteAllStudentRelations",[auth,adminAuth] , tryCatch(relationService.deleteAllStudentRelations));
+router.patch("/restoreAllGuardianRelations",[auth,adminAuth] ,tryCatch(relationService.restoreAllGuardianRelations));
+router.patch("/restoreAllStudentRelations",[auth,adminAuth] , tryCatch(relationService.restoreAllStudentRelations));
+router.patch("/restoreSpecificRelation",[auth,adminAuth] , tryCatch(relationService.restoreSpecificRelation));
+router.patch("/deleteSpecificRelation",[auth,adminAuth] , tryCatch(relationService.deleteSpecificRelation));
+router.patch("/updateRelationNameByID", [auth,adminAuth] ,tryCatch(relationService.updateRelationNameByID))
+router.patch("/updateExistingRelationshipType",[auth,adminAuth] , tryCatch(relationService.updateExistingRelationshipType))
+router.patch("/updateAttendance", [auth,adminAuth] ,tryCatch(attendanceService.updateAttendance));
+router.patch("/deleteAcademicYear",[auth,adminAuth] , tryCatch(academicYearService.deleteAcademicYear));
+router.patch("/restoreAcademicYear",[auth,adminAuth] , tryCatch(academicYearService.restoreAcademicYear));
+router.patch("/setAcademicYearDays", [auth,adminAuth] ,tryCatch(academicYearService.setAcademicYearDays));
+router.patch("/denrollStudentFromClass", [auth,adminAuth] ,tryCatch(enrollmentService.denrollStudentFromClass));
+router.patch("/changeUserPassword", [auth,adminAuth] ,tryCatch(userService.changeUserPassword));
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
