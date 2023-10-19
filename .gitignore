@@ -1,9 +1,18 @@
+
+#folders
+
 node_modules/
 Backend/package-lock.json
 Backend/node_modules/
-Tools/Umlet
 .vscode/
 .idea/
+
+
+#files
+
+
+Tools/Umlet
+
 trashService.js
 
 # IMPORTANT: in unix based systems "trashService.js" & "trashservice.js" are different files.
