@@ -14,6 +14,7 @@ var qualificationService = require("../services/qualifService");
 var courseService = require("../services/courseService");
 var academicYearService = require("../services/academicYearService");
 var enrollmentService = require("../services/enrollmentService");
+var userService = require("../services/userService");
 
 router.post("/createAdmin", tryCatch(adminService.createAdmin));
 router.post("/createClass", tryCatch(classService.createClass));
@@ -34,6 +35,8 @@ router.post("/createAttendance",tryCatch(attendanceService.createAttendance));
 router.post("/createBatchAttendance",tryCatch(attendanceService.createBatchAttendance));
 router.post("/createAcademicYear", tryCatch(academicYearService.createAcademicYear));
 router.post("/enrollStudentToClass", tryCatch(enrollmentService.enrollStudentToClass));
+router.post("/createUser", tryCatch(userService.createUser));
+router.post("/queryLogin", tryCatch(userService.queryLogin));
 
 router.patch("/deleteTransactionByID", tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID", tryCatch(financeService.restoreTransactionByID));
@@ -55,6 +58,7 @@ router.patch("/deleteAcademicYear", tryCatch(academicYearService.deleteAcademicY
 router.patch("/restoreAcademicYear", tryCatch(academicYearService.restoreAcademicYear));
 router.patch("/setAcademicYearDays", tryCatch(academicYearService.setAcademicYearDays));
 router.patch("/denrollStudentFromClass", tryCatch(enrollmentService.denrollStudentFromClass));
+router.patch("/changeUserPassword", tryCatch(userService.changeUserPassword));
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));

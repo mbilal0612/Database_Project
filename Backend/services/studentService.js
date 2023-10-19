@@ -69,26 +69,26 @@ const createStudent = (req,res) =>{
                 //generate erp for the user
         db.query(
             {
-              sql: "SELECT ?? FROM ?? WHERE ?? = ?",
-              timeout: 40000,
-              values: ["STUDENT_ID", "STUDENT", "CNIC", obj.CNIC],
+                sql: "SELECT ?? FROM ?? WHERE ?? = ?",
+                timeout: 40000,
+                values: ["STUDENT_ID", "STUDENT", "CNIC", obj.CNIC],
             },
             (error1, results1, fields1) => {
-              if (error1) {
+                if (error1) {
                 return res.status(500).send(error1);
-              } else {
+                } else {
                 bcrypt.hash(defaultPass, 10, function (err, hash) {
-                  if (err) return res.status(500).send(err);
-                  else {
+                    if (err) return res.status(500).send(err);
+                    else {
                     // console.log(results1);
                     // console.log(fields1);
                     var userName = results1[0].STUDENT_ID;
                     
                     userName = "S" + userName;
                     db.query({
-                      sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
-                      timeout: 40000,
-                      values: [
+                        sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
+                        timeout: 40000,
+                        values: [
                         "USERS",
                         "USERNAME",
                         "PASSWORD",
@@ -96,11 +96,11 @@ const createStudent = (req,res) =>{
                         userName,
                         hash,
                         results1[0].STUDENT_ID,
-                      ]},
-                      (error,results,fields)=>{
+                        ]},
+                        (error,results,fields)=>{
                         if(error) return res.status(500).send(error);
                         else{
-                          return res.json({
+                            return res.json({
                             message:"successfully created and added to users",
                             username: userName,
                             password: defaultPass,
@@ -116,25 +116,22 @@ const createStudent = (req,res) =>{
                                 nationality: obj.nationality,
                                 religion: obj.religion
                             }
-                          })
+                            })
                         }
-                      }
+                        }
                     );
-                  }
-                });
-              }
+                    }
+                    });
+                }
             }
-          );
+            );
             }
             // error will be an Error if one occurred during the query
             // results will contain the results of the query
             // fields will contain information about the returned results fields (if any)
         }
-
         
     )
-
-
 };
 
 const getStudents = (req,res) =>{

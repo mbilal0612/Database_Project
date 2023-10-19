@@ -26,7 +26,7 @@ const enrollStudentToClass = (req, res) => {
     }, (errors, results, fields) => {
 
         if(errors){
-            return res.status(400).json({message:"SQLSkillIssueException: SQL Error!" });
+            return res.status(400).json({message:"SQLSkill_IssueException: SQL Error!" });
         }
 
         if(results.length > 0){
@@ -51,7 +51,7 @@ const enrollStudentToClass = (req, res) => {
             }, (errors, results, fields) => {
 
                 if(errors){
-                    return res.status(400).json({message:"SQLSkillIssueException: SQL Error!" });
+                    return res.status(400).json({message:errors });
                 }
         
                 return res.status(200).json({message:"Enrollment Success!"});
@@ -163,12 +163,14 @@ const getStudentsByClass = (req,res) => {
 
             db.query(
                 {
-                    sql : "SELECT * FROM ?? NATURAL JOIN ?? WHERE ?? = ?",
+                    sql : "SELECT * FROM ?? RIGHT JOIN ?? S on ?? = ?? WHERE ?? = ?",
                     timeout:40000,
                     values :[
-                        "STUDENT",
+                        "USERS",
                         "STUDENT_ACADEMIC_HISTORY",
-                        "CLASS_ID",
+                        "USERS.USER_ID",
+                        "S.STUDENT_ID",
+                        "S.CLASS_ID",
                         results[0].CLASS_ID
                     ]
                 },
@@ -177,7 +179,7 @@ const getStudentsByClass = (req,res) => {
                     if(errors){
                         return res.status(500).send();
                     }
-        
+
                     if(results.length == 0){
                         return res.status(500).send("MissingDataWarning: No students exist in this class!");
                     }
@@ -199,12 +201,14 @@ const getStudentsByClassID = (req,res) => {
 
     db.query(
         {
-            sql : "SELECT * FROM ?? NATURAL JOIN ?? WHERE ?? = ?",
+            sql : "SELECT * FROM ?? RIGHT JOIN ?? S on ?? = ?? WHERE ?? = ?",
             timeout:40000,
             values :[
-                "STUDENT",
+                "USERS",
                 "STUDENT_ACADEMIC_HISTORY",
-                "CLASS_ID",
+                "USERS.USER_ID",
+                "S.STUDENT_ID",
+                "S.CLASS_ID",
                 obj.classID
             ]
         },
@@ -224,6 +228,7 @@ const getStudentsByClassID = (req,res) => {
 
 }
 
+// All APIs made compatible with the new USERS implementation as of 19th October 2023
 
 module.exports = {
     enrollStudentToClass,

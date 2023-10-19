@@ -182,11 +182,13 @@ const assignStudentGuardian = (req, res) => {
         relationID = results[0].RELATION_ID;
 
         db.query({
-            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
             values: [
-                "STUDENT",
-                "STUDENT_ID",
-                obj.studentID
+                "USERS",
+                "USER_ID",
+                obj.studentID,
+                "ROLE_ID",
+                "STUDENT"
             ]
         }, (errors, results, fields) => {
     
@@ -199,11 +201,13 @@ const assignStudentGuardian = (req, res) => {
             }
             
             db.query({
-                sql: "SELECT * FROM ?? WHERE ?? = ?",
+                sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? =?",
                 values: [
-                    "GUARDIAN",
-                    "GUARDIAN_ID",
-                    obj.guardianID
+                    "USERS",
+                    "USER_ID",
+                    obj.guardianID,
+                    "ROLE_ID",
+                    "GUARDIAN"
                 ]
             }, (errors, results, fields) => {
         
@@ -257,16 +261,18 @@ const getRelationByGuardianID = (req, res) => {
     }
 
     db.query({
-        sql:"SELECT * FROM ?? WHERE ?? = ?",
+        sql:"SELECT * FROM ?? WHERE ?? = ? AND ?? =?",
         values:[
-            "GUARDIAN",
-            "GUARDIAN_ID",
-            obj.guardianID
+            "USERS",
+            "USER_ID",
+            obj.guardianID,
+            "ROLE_ID",
+            "GUARDIAN"
         ]
     },(errors, results, fields) =>{
 
         if(errors){
-            return res.status(400).json({message:"Internal Server Error!"});
+            return res.status(400).json({message:"Internal Server Error"});
         }
 
         if(results.length == 0){
@@ -285,7 +291,7 @@ const getRelationByGuardianID = (req, res) => {
         }, (errors, results, fields)=>{
     
             if(errors){
-                return res.status(400).json({message:"Internal Server Error!"});
+                return res.status(400).json({message:"Internal Server Error"});
             }
     
             if(results.length == 0){
@@ -308,16 +314,18 @@ const getRelationByStudentID = (req, res) => {
     }
 
     db.query({
-        sql:"SELECT * FROM ?? WHERE ?? = ?",
+        sql:"SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
         values:[
-            "STUDENT",
-            "STUDENT_ID",
-            obj.studentID
+            "USERS",
+            "USER_ID",
+            obj.studentID,
+            "ROLE_ID",
+            "STUDENT"
         ]
     },(errors, results, fields) =>{
 
         if(errors){
-            return res.status(400).json({message:"Internal Server Error!"});
+            return res.status(400).json({message:"Internal Server Error"});
         }
 
         if(results.length == 0){
@@ -360,11 +368,13 @@ const deleteAllStudentRelations = (req, res) =>{
 
     db.query(
         {
-            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
             values:[
-                "STUDENT",
-                "STUDENT_ID",
-                obj.studentID
+                "USERS",
+                "USER_ID",
+                obj.studentID,
+                "ROLE_ID",
+                "STUDENT"
             ]
         }, (errors, results, fields)=>{
 
@@ -411,11 +421,13 @@ const deleteAllGuardianRelations = (req, res) =>{
 
     db.query(
         {
-            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
             values:[
-                "GUARDIAN",
-                "GUARDIAN_ID",
-                obj.guardianID
+                "USERS",
+                "USER_ID",
+                obj.guardianID,
+                "ROLE_ID",
+                "GUARDIAN"
             ]
         }, (errors, results, fields)=>{
 
@@ -462,11 +474,13 @@ const restoreAllStudentRelations = (req, res) =>{
 
     db.query(
         {
-            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
             values:[
-                "STUDENT",
-                "STUDENT_ID",
-                obj.studentID
+                "USERS",
+                "USER_ID",
+                obj.studentID,
+                "ROLE_ID",
+                "STUDENT"
             ]
         }, (errors, results, fields)=>{
 
@@ -513,11 +527,13 @@ const restoreAllGuardianRelations = (req, res) =>{
 
     db.query(
         {
-            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? =?",
             values:[
-                "GUARDIAN",
-                "GUARDIAN_ID",
-                obj.guardianID
+                "USERS",
+                "USER_ID",
+                obj.guardianID,
+                "ROLE_ID",
+                "GUARDIAN"
             ]
         }, (errors, results, fields)=>{
 
@@ -803,6 +819,8 @@ const updateRelationNameByID = (req, res) =>{
         )
 
 }
+
+// All APIs made compatible with the new USERS implementation as of 19th October 2023
 
 module.exports = {
     createRelation,

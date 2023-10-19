@@ -14,3 +14,4 @@ trashService.js
 ## trashService.js ignores a file
 ## node_modules/ , .vscode/ & .idea/  are for ignoring folders. So whenever you need to ignore a folder make sure to add forward slash after the foldername.
 ### new folders added that are in the .gitignore file (this file) will be greyed out, so check that before committing.
+.vscode/settings.json

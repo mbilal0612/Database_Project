@@ -1,4 +1,5 @@
 const db = require("../config/db").connection;
+var backendUtility = require("../services/backendUtility");
 
 const createArrearsByGrade = (req, res) =>{
 
@@ -20,27 +21,24 @@ const createArrearsByGrade = (req, res) =>{
         return res.status(500).json("MissingInputException: Arrear must have a name!");
     }
     
+    var quer = obj.grade + "-%-"+obj.academicYear;
+
     //Example = SELECT * FROM `STUDENT` JOIN `CLASS` ON STUDENT.CLASS_ID = CLASS.CLASS_ID WHERE START_YEAR = 2023 AND YEAR = 11;
-    db.query({sql: "SELECT ?? FROM ?? JOIN ?? ON ?? = ?? WHERE ?? = ? AND ?? = ?",
+    db.query({sql: "SELECT ?? FROM ?? WHERE ?? LIKE ?",
             timeout: 40000,
             values :[
                 "STUDENT_ID",
-                "STUDENT",
-                "CLASS",
-                "STUDENT.CLASS_ID",
-                "CLASS.CLASS_ID",
-                "START_YEAR",
-                obj.academicYear,
-                "YEAR",
-                obj.grade,
+                "STUDENT_ACADEMIC_HISTORY",
+                "CLASS_ID",
+                quer,
             ]
         }, (errors, results, fields) => {
             if(errors){
-                return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
+                return res.status(500).json({message: errors});
             }else{
 
                 let date = new Date();
-
+                
                 for(let i =0; i < results.length; i++){              
                     db.query({
                         sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
@@ -61,23 +59,20 @@ const createArrearsByGrade = (req, res) =>{
                             if(errors){
                                 return res.status(500).json(error);
                             }
-
                         }
                     );
                 }
 
+                return res.status(200).json({message:"Successfully generated arrears hehe"});
+
             }
         }
         );
-    
-        return res.status(200).json({message: "Arrears successfully created"});
-    
 };
 
 const createArrearsByStudentID = (req, res) =>{
 
     const obj = req.body;
-    var temp = parseInt(obj.studentID.substring(1,obj.studentID.length));
 
     if(!obj.studentID){
         return res.status(500).json("MissingInputException: Student ID must be defined!");
@@ -91,12 +86,15 @@ const createArrearsByStudentID = (req, res) =>{
         return res.status(500).json("MissingInputException: Arrear must have a name!");
     }
 
-    db.query({sql: "SELECT * FROM ?? WHERE ?? = ?",
+    db.query({sql: "SELECT ?? FROM ?? WHERE ?? = ? AND ?? = ?",
     timeout: 40000,
     values :[
-        "STUDENT",
-        "STUDENT_ID",
-        temp,
+        "USER_ID",
+        "USERS",
+        "USER_ID",
+        obj.studentID,
+        "ROLE_ID",
+        "STUDENT"
     ]
 }, (errors, results, fields) => {
     if(errors){
@@ -107,8 +105,13 @@ const createArrearsByStudentID = (req, res) =>{
             return res.status(400).json({message: "MissingDataException: The queried student does not exist in the database!"});
         }
 
+        if(results.length > 1){
+            return res.status(400).json({message: "DuplicateDataException: Fatal Database Error!"});
+        }
+
         let date = new Date();
-          
+        var x = backendUtility.toLocalISO(date);
+
             db.query({
                 sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
                 timeout:40000,
@@ -118,9 +121,9 @@ const createArrearsByStudentID = (req, res) =>{
                     "T_NAME",
                     "T_DATE",
                     "T_AMOUNT",
-                    results[0].STUDENT_ID,
+                    obj.studentID,
                     obj.name,
-                    date.toISOString().slice(0, 10),
+                    x,
                     obj.amount
                 ]
                 }, (errors, results, fields) => {
@@ -153,22 +156,23 @@ const createArrearsByAcademicYear = (req, res) =>{
         return res.status(500).json("MissingInputException: Arrear must have a name!");
     }
     
-    db.query({sql: "SELECT ?? FROM ?? JOIN ?? ON ?? = ?? WHERE ?? = ?",
+    var quer = "%-"+obj.academicYear;
+
+    db.query({sql: "SELECT ?? FROM ?? WHERE ?? LIKE ?",
             timeout: 40000,
             values :[
                 "STUDENT_ID",
-                "STUDENT",
-                "CLASS",
-                "STUDENT.CLASS_ID",
-                "CLASS.CLASS_ID",
-                "START_YEAR",
-                obj.academicYear,
+                "STUDENT_ACADEMIC_HISTORY",
+                "CLASS_ID",
+                quer
             ]
         }, (errors, results, fields) => {
             if(errors){
                 return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
             }else{
                 let date = new Date();
+
+                console.log(results);
 
                 for(let i =0; i < results.length; i++){              
                     db.query({
@@ -210,15 +214,13 @@ const getStudentFee = (req, res) =>{
     if(!obj.id){
         return res.status(500).json("MissingInputException: StudentID must be defined!");
     }
-
-    var temp = parseInt(obj.id.substring(1,obj.id.length));
     
     db.query({sql: "SELECT * FROM ?? WHERE ?? = ?",
             timeout: 40000,
             values :[
                 "TRANSACTION",
                 "STUDENT_ID",
-                temp,
+                obj.id,
             ]
         }, (errors, results, fields) => {
             if(errors){
@@ -252,15 +254,13 @@ const generateStudentLedger = (req,res) =>{
     if(!obj.id){
         return res.status(500).json("MissingInputException: StudentID must be defined!");
     }
-
-    var temp = parseInt(obj.id.substring(1,obj.id.length));
     
     db.query({sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
             timeout: 40000,
             values :[
                 "TRANSACTION",
                 "STUDENT_ID",
-                temp,
+                obj.id,
                 "T_FLAG",
                 1
             ]
@@ -273,7 +273,7 @@ const generateStudentLedger = (req,res) =>{
                     return res.status(200).json({message: "MissingDataWarning: Either student DNE; or has no arrears on their ledger!"});
                 }
 
-                res.status(200).json({message: "Ledger successfully generated.", STUDENT_ID: temp, entities: results});
+                res.status(200).json({message: "Ledger successfully generated.", STUDENT_ID: obj.id, entities: results});
 
             }
         }
@@ -283,7 +283,6 @@ const generateStudentLedger = (req,res) =>{
 const createGuardianPayment = (req,res) =>{
 
     const obj = req.body;
-    var temp = parseInt(obj.studentID.substring(1,obj.studentID.length));
 
     if(!obj.studentID){
         return res.status(500).json("MissingInputException: Student ID must be defined!");
@@ -294,8 +293,6 @@ const createGuardianPayment = (req,res) =>{
     }
 
     obj.amount *=-1;
-
-    var temp = parseInt(obj.studentID.substring(1,obj.studentID.length));
     
     db.query({
             sql: "SELECT * FROM ?? WHERE ?? = ?",
@@ -303,11 +300,11 @@ const createGuardianPayment = (req,res) =>{
             values :[
                 "TRANSACTION",
                 "STUDENT_ID",
-                temp,
+                obj.studentID,
             ]
             }, (errors, results, fields) => {
             if(errors){
-                return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
+                return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off? [1]"});
             }else{
 
                 if(results.length === 0){
@@ -315,7 +312,7 @@ const createGuardianPayment = (req,res) =>{
                 }
         
                 let date = new Date();
-                  
+                
                     db.query({
                         sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
                         timeout:40000,
@@ -326,7 +323,7 @@ const createGuardianPayment = (req,res) =>{
                             "T_DATE",
                             "T_AMOUNT",
                             results[0].STUDENT_ID,
-                            "Fee Payment by Guardian of Student",
+                            "Fee Payment by Guardian <Guardian_ID> of Student <Student_ID> on <DATETIME>",
                             date.toISOString().slice(0, 10),
                             obj.amount
                         ]
@@ -365,11 +362,13 @@ const deleteTransactionByID = (req,res) =>{
             return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
         }
 
+        console.log(results);
+
         if(results.length == 0){
             return res.status(500).json({message: "MissingDataException: Transaction DNE!"});
         }
 
-        if(!results.T_FLAG){
+        if(!results[0].T_FLAG){
             return res.status(400).json({message: "RedundentRequestException: Transaction is already deleted!"});
         }
 
@@ -423,7 +422,7 @@ const restoreTransactionByID = (req,res) =>{
             return res.status(500).json({message: "MissingDataException: Transaction DNE!"});
         }
 
-        if(results.T_FLAG){
+        if(results[0].T_FLAG){
             return res.status(400).json({message: "RedundentRequestException: Transaction is already restored!"});
         }
 
@@ -548,6 +547,8 @@ const restoreTransactionByName = (req, res) =>{
         })
     })    
 }
+
+// All APIs made compatible with the new USERS implementation as of 19th October 2023
 
 module.exports = {
     createArrearsByGrade,

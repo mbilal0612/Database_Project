@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS QUESTION (
     QUESTION_ID INT AUTO_INCREMENT PRIMARY KEY,
     QUESTION_DESC VARCHAR(1024) NOT NULL,
     QUESTION_TYPE INT,
-    MAX_MARKS INT NOT NULL,
+    MAX_MARKS INT NOT NULL
     FOREIGN KEY (QUESTION_TYPE) REFERENCES QUESTION_TYPES(QUESTION_TYPE) ON DELETE CASCADE
 );
 
@@ -282,6 +282,7 @@ CHANGE `CLASS_ID`
 
 DROP TABLE `CLASS_COURSE`;
 DROP TABLE `CLASS_TEACHER`;
+DROP TABLE `CLASS`
 
 CREATE TABLE IF NOT EXISTS CLASS (
     CLASS_ID VARCHAR(9) PRIMARY KEY,
@@ -320,4 +321,280 @@ CREATE TABLE IF NOT EXISTS CLASS_TEACHER (
     PRIMARY KEY (CLASS_ID, FACULTY_ID),
     FOREIGN KEY (CLASS_ID) REFERENCES CLASS(CLASS_ID) ON DELETE CASCADE,
     FOREIGN KEY (FACULTY_ID) REFERENCES FACULTY(FACULTY_ID) ON DELETE CASCADE
+);
+
+-- Reference Commit :
+
+CREATE TABLE ROLES (
+    ROLE_ID VARCHAR(16) PRIMARY KEY
+)
+
+INSERT INTO `roles` (`ROLE_ID`) VALUES
+('ADMIN'),
+('ALUMNI'),
+('FACULTY'),
+('GUARDIAN'),
+('STAFF'),
+('STUDENT');
+
+CREATE TABLE IF NOT EXISTS NATIONALITIES (
+    NAT_ID VARCHAR(128) PRIMARY KEY
+)
+
+INSERT INTO nationalities (NAT_ID) VALUES 
+    ('Afghan'),
+    ('Albanian'),
+    ('Algerian'),
+    ('American'),
+    ('Andorran'),
+    ('Angolan'),
+    ('Antiguans'),
+    ('Argentinean'),
+    ('Armenian'),
+    ('Australian'),
+    ('Austrian'),
+    ('Azerbaijani'),
+    ('Bahamian'),
+    ('Bahraini'),
+    ('Bangladeshi'),
+    ('Barbadian'),
+    ('Barbudans'),
+    ('Batswana'),
+    ('Belarusian'),
+    ('Belgian'),
+    ('Belizean'),
+    ('Beninese'),
+    ('Bhutanese'),
+    ('Bolivian'),
+    ('Bosnian'),
+    ('Brazilian'),
+    ('British'),
+    ('Bruneian'),
+    ('Bulgarian'),
+    ('Burkinabe'),
+    ('Burmese'),
+    ('Burundian'),
+    ('Cambodian'),
+    ('Cameroonian'),
+    ('Canadian'),
+    ('Cape Verdean'),
+    ('Central African'),
+    ('Chadian'),
+    ('Chilean'),
+    ('Chinese'),
+    ('Colombian'),
+    ('Comoran'),
+    ('Congolese'),
+    ('Costa Rican'),
+    ('Croatian'),
+    ('Cuban'),
+    ('Cypriot'),
+    ('Czech'),
+    ('Danish'),
+    ('Djibouti'),
+    ('Dominican'),
+    ('Dutch'),
+    ('East Timorese'),
+    ('Ecuadorean'),
+    ('Egyptian'),
+    ('Emirian'),
+    ('Equatorial Guinean'),
+    ('Eritrean'),
+    ('Estonian'),
+    ('Ethiopian'),
+    ('Fijian'),
+    ('Filipino'),
+    ('Finnish'),
+    ('French'),
+    ('Gabonese'),
+    ('Gambian'),
+    ('Georgian'),
+    ('German'),
+    ('Ghanaian'),
+    ('Greek'),
+    ('Grenadian'),
+    ('Guatemalan'),
+    ('Guinea-Bissauan'),
+    ('Guinean'),
+    ('Guyanese'),
+    ('Haitian'),
+    ('Herzegovinian'),
+    ('Honduran'),
+    ('Hungarian'),
+    ('I-Kiribati'),
+    ('Icelander'),
+    ('Indian'),
+    ('Indonesian'),
+    ('Iranian'),
+    ('Iraqi'),
+    ('Irish'),
+    ('Israeli'),
+    ('Italian'),
+    ('Ivorian'),
+    ('Jamaican'),
+    ('Japanese'),
+    ('Jordanian'),
+    ('Kazakhstani'),
+    ('Kenyan'),
+    ('Kittian and Nevisian'),
+    ('Kuwaiti'),
+    ('Kyrgyz'),
+    ('Laotian'),
+    ('Latvian'),
+    ('Lebanese'),
+    ('Liberian'),
+    ('Libyan'),
+    ('Liechtensteiner'),
+    ('Lithuanian'),
+    ('Luxembourger'),
+    ('Macedonian'),
+    ('Malagasy'),
+    ('Malawian'),
+    ('Malaysian'),
+    ('Maldivan'),
+    ('Malian'),
+    ('Maltese'),
+    ('Marshallese'),
+    ('Mauritanian'),
+    ('Mauritian'),
+    ('Mexican'),
+    ('Micronesian'),
+    ('Moldovan'),
+    ('Monacan'),
+    ('Mongolian'),
+    ('Moroccan'),
+    ('Mosotho'),
+    ('Motswana'),
+    ('Mozambican'),
+    ('Namibian'),
+    ('Nauruan'),
+    ('Nepalese'),
+    ('New Zealander'),
+    ('Nicaraguan'),
+    ('Nigerian'),
+    ('Nigerien'),
+    ('North Korean'),
+    ('Northern Irish'),
+    ('Norwegian'),
+    ('Omani'),
+    ('Pakistani'),
+    ('Palauan'),
+    ('Palestenian'),
+    ('Panamanian'),
+    ('Papua New Guinean'),
+    ('Paraguayan'),
+    ('Peruvian'),
+    ('Polish'),
+    ('Portuguese'),
+    ('Qatari'),
+    ('Romanian'),
+    ('Russian'),
+    ('Rwandan'),
+    ('Saint Lucian'),
+    ('Salvadoran'),
+    ('Samoan'),
+    ('San Marinese'),
+    ('Sao Tomean'),
+    ('Saudi'),
+    ('Scottish'),
+    ('Senegalese'),
+    ('Serbian'),
+    ('Seychellois'),
+    ('Sierra Leonean'),
+    ('Singaporean'),
+    ('Slovakian'),
+    ('Slovenian'),
+    ('Solomon Islander'),
+    ('Somali'),
+    ('South African'),
+    ('South Korean'),
+    ('Spanish'),
+    ('Sri Lankan'),
+    ('Sudanese'),
+    ('Surinamer'),
+    ('Swazi'),
+    ('Swedish'),
+    ('Swiss'),
+    ('Syrian'),
+    ('Taiwanese'),
+    ('Tajik'),
+    ('Tanzanian'),
+    ('Thai'),
+    ('Togolese'),
+    ('Tongan'),
+    ('Trinidadian or Tobagonian'),
+    ('Tunisian'),
+    ('Turkish'),
+    ('Tuvaluan'),
+    ('Ugandan'),
+    ('Ukrainian'),
+    ('Uruguayan'),
+    ('Uzbekistani'),
+    ('Venezuelan'),
+    ('Vietnamese'),
+    ('Welsh'),
+    ('Yemenite'),
+    ('Zambian'),
+    ('Zimbabwean');
+
+
+CREATE TABLE IF NOT EXISTS RELIGIONS(
+    RELIGION_ID VARCHAR(32) PRIMARY KEY
+)
+
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Christianity');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Judaism');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Islam');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Buddhism');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Hinduism');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Adventism');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Ayyavazhi');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Atheism');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Zoroastrianism');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Cultism');
+INSERT INTO RELIGIONS (RELIGION_ID) VALUES ('Sikhism');
+
+CREATE TABLE IF NOT EXISTS GENDERS(
+    GENDER_ID VARCHAR(8) PRIMARY KEY
+)
+
+INSERT INTO GENDERS (GENDER_ID) VALUES ('Male');
+INSERT INTO GENDERS (GENDER_ID) VALUES ('Female');
+INSERT INTO GENDERS (GENDER_ID) VALUES ('Intersex');
+
+DROP TABLE USERS;
+
+CREATE TABLE IF NOT EXISTS USERS (
+    USER_ID INT AUTO_INCREMENT PRIMARY KEY,
+    CNIC VARCHAR(15) UNIQUE,
+    FIRST_NAME VARCHAR(64) NOT NULL,
+    LAST_NAME VARCHAR(64) NOT NULL,
+    DOB DATE NOT NULL,
+    GENDER VARCHAR(7) NOT NULL,
+    EMERGENCY_CONTACT VARCHAR(20) NOT NULL,
+    JOIN_DATE DATE NOT NULL,
+    NATIONALITY VARCHAR(128) NOT NULL,
+    RELIGION VARCHAR(128) NOT NULL,
+    P_HASH VARCHAR(256) NOT NULL,
+    ROLE_ID VARCHAR(16) NOT NULL,
+    EMAIL_ADDRESS VARCHAR(256) NOT NULL,
+    BLOCK BOOLEAN default false,
+    ADDRESS VARCHAR(256) NOT NULL,
+    PHONE VARCHAR(24) UNIQUE NOT NULL,
+    FOREIGN KEY (ROLE_ID) REFERENCES ROLES(ROLE_ID),
+    FOREIGN KEY (NATIONALITY) REFERENCES NATIONALITIES(NAT_ID),
+    FOREIGN KEY (RELIGION) REFERENCES RELIGIONS(RELIGION_ID)
+);
+
+CREATE TABLE GUARDIAN_DETAILS(
+	GUARDIAN_ID INT NOT NULL,
+    OCCUPATION VARCHAR(128) NOT NULL,
+    FOREIGN KEY (GUARDIAN_ID) REFERENCES USERS(USER_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE EMPLOYEE_DETAILS(
+	EMPLOYEE_ID INT NOT NULL,
+    FULLTIME Boolean NOT NULL,
+    SALARY INT,
+    FOREIGN KEY (EMPLOYEE_ID) REFERENCES USERS(USER_ID) ON DELETE CASCADE
 );

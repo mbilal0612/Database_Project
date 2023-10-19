@@ -122,7 +122,7 @@ const deleteAcademicYear = (req, res) => {
                         if(errors){
                             return res.status(400).json({message: "SQLSkillIssueException: SQL Error!"})
                         }
-
+                    
                         return res.status(200).json({message:"Deletion Success!"});
                     
                     }

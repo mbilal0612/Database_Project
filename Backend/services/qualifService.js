@@ -9,6 +9,9 @@ const linkQualification = (req, res) => {
   if (!obj.qualificationID) {
     return res.status(400).json({ message: "Need qualification ID to add" });
   }
+
+  //Need to add check for faculty existence,
+
   var temp = parseInt(obj.facultyID.substring(1, obj.facultyID.length));
   db.query(
     {
@@ -103,6 +106,9 @@ const deleteQualification_faculty = (req, res) => {
       message: "Please select the qualification you want to delete",
     });
   var facID = parseInt(obj.facultyID.substring(1, obj.facultyID.length));
+
+    // Need to add check for link existence
+
   db.query(
     {
       sql: "DELETE FROM ?? WHERE ?? = ? AND ?? = ?",

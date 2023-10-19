@@ -18,11 +18,13 @@ const createAttendance = (req,res) =>{
 
     db.query(
         {
-            sql:"SELECT * FROM ??  WHERE ?? = ?",
+            sql:"SELECT * FROM ??  WHERE ?? = ? AND ?? = ?",
             values: [
-                "STUDENT",
-                "STUDENT_ID",
+                "USERS",
+                "USER_ID",
                 obj.studentID,
+                "ROLE_ID",
+                "STUDENT"
             ]
         }, (errors, results, fields) =>{
 
@@ -163,11 +165,13 @@ const updateAttendance = (req, res) =>{
 
     db.query(
         {
-            sql:"SELECT * FROM ??  WHERE ?? = ?",
+            sql:"SELECT * FROM ??  WHERE ?? = ? AND ?? = ?",
             values: [
-                "STUDENT",
-                "STUDENT_ID",
+                "USERS",
+                "USER_ID",
                 obj.studentID,
+                "ROLE_ID",
+                "STUDENT"
             ]
         }, (errors, results, fields) =>{
 
@@ -245,11 +249,13 @@ const getStudentAttendanceReportByAcademicYear = (req,res) =>{
 
     db.query(
         {
-            sql:"SELECT * FROM ??  WHERE ?? = ?",
+            sql:"SELECT * FROM ??  WHERE ?? = ? AND ?? = ?",
             values: [
-                "STUDENT",
-                "STUDENT_ID",
+                "USERS",
+                "USER_ID",
                 obj.studentID,
+                "ROLE_ID",
+                "STUDENT"
             ]
         }, (errors, results, fields) =>{
 
@@ -319,11 +325,13 @@ const getStudentEntireAttendanceReport = (req,res) =>{
 
     db.query(
         {
-            sql:"SELECT * FROM ??  WHERE ?? = ?",
+            sql:"SELECT * FROM ??  WHERE ?? = ? AND ?? = ?",
             values: [
-                "STUDENT",
-                "STUDENT_ID",
+                "USERS",
+                "USER_ID",
                 obj.studentID,
+                "ROLE_ID",
+                "STUDENT"
             ]
         }, (errors, results, fields) =>{
 
@@ -366,6 +374,7 @@ const getStudentEntireAttendanceReport = (req,res) =>{
 
                     return res.status(200).json({
                     message: "Successfully fetched attendance!", 
+                    expectedDays: "Will add later!",
                     totalDays:results.length,
                     daysPresent: presentDays, 
                     daysAbsent: absentDays,
@@ -379,6 +388,8 @@ const getStudentEntireAttendanceReport = (req,res) =>{
     )
 
 }
+
+// All APIs made compatible with the new USERS implementation as of 19th October 2023
 
 module.exports = {
     createAttendance,

@@ -5,6 +5,7 @@ const defaultPass = "12345678";
 
 //Copied and Moved createAcademicYear from here to academicYearService. 
 //Reference Commit : createdEnrollmentService, Finished academicYearService and Major Database changes
+
 const createAdmin = (req, res) => {
   const obj = req.body;
 
