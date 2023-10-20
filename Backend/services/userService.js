@@ -287,11 +287,11 @@ const queryLogin = (req,res)=>{
             obj.id
         ]
     }, (errors, results, fields) =>{
-
+        
         if(errors){
             return res.status(400).json({message: "Skill_IssueException: Learn 2 SQL!"});
         }
-
+        if(results.length===0) return res.status(400).json({message:"This ERP does not exist"});
         console.log(results);
 
         bcrypt.compare(obj.password, results[0].P_HASH, function(err, result) {
