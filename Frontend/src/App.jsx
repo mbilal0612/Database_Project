@@ -23,10 +23,14 @@ import EnterMarks from "./pages/FacultyView/EnterMarks";
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
+  const [userType, setUserType] = useState('None');
+
+
+
   React.useEffect(() => {
     const check = () => {
       const token = sessionStorage.getItem("token");
-    
+      console.log(token);
       if (token) return true;
       else return false;
     };
