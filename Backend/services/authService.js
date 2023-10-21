@@ -4,7 +4,7 @@ const createUser = function (req, res) {
   } catch (err) {
     res.status(500).send("Something went wrong please try again later...");
   }
-  res.send("nabeel is gay!!!");
+  res.send("!!!");
 };
 module.exports = {
   createUser,
