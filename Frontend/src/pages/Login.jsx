@@ -1,4 +1,8 @@
 import { Button } from "@mui/material";
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import React from "react";
 import Textbox from "../components/util-components/Textbox";
@@ -13,6 +17,11 @@ function Login() {
   const [pword, setPword] = useState("");
   const [response, setResponse] = useState("");
   const [isAlert, setIsAlert] = useState(false);
+  const [showPass, setShowPass] = useState(false);
+
+  const handleShowPass = ()=>{
+    setShowPass(!showPass);
+  }
 
   const handleERPchange = (event) => {
     setERP(event.target.value);
@@ -26,6 +35,7 @@ function Login() {
     const res = await login(ERP, pword);
     if (res.status === 200) {
       sessionStorage.setItem("token", res.data.token);
+      sessionStorage.setItem("userType", res.data.userType);
       if (res.data.userType == "STUDENT")
         window.location.assign("/StudentHome");
       else if (res.data.userType == "FACULTY")
@@ -35,7 +45,7 @@ function Login() {
       else if (res.data.userType == "GUARDIAN")
         window.location.assign("GuardianHome");
     } else {
-        setIsAlert(true);
+      setIsAlert(true);
       console.log(res);
       setResponse(res.response.data.message);
     }
@@ -43,44 +53,71 @@ function Login() {
   };
   return (
     <React.Fragment>
-        <center>
-      <div id="login-card" className="card">
-        <SchoolLogo id="big-logo"></SchoolLogo>
-        <cred-label>Enter Credentials</cred-label>
-        <div classname="textField">
-          <Textbox
-            value={ERP}
-            onChange={handleERPchange}
-            Label="ERP-ID"
-          ></Textbox>
+      <center>
+        <div id="login-card" className="card">
+          <SchoolLogo id="big-logo"></SchoolLogo>
+          <cred-label>Enter Credentials</cred-label>
+          <div classname="textField">
+            <Textbox
+              value={ERP}
+              onChange={handleERPchange}
+              Label="ERP-ID"
+            ></Textbox>
 
-          <Textbox
-            onChange={handlePwordchange}
-            Label="Password"
-            Type="password"
-          ></Textbox>
-          {isAlert ? (
-          <BasicAlerts errormessage={response}></BasicAlerts>
-            ):(<div></div>)}
-          <Button
-            variant="contained"
-            onClick={handleEntry}
-            sx={{
-              marginTop: "2%",
-              backgroundColor: "black",
-              ":hover": {
-                bgcolor: "#999",
-                color: "white",
-              },
-            }}
-          >
-            {" "}
-            Login{" "}
-          </Button>
+            <Textbox
+               endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleShowPass}
+                    edge="end"
+                  >
+                    {showPass ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              onChange={handlePwordchange}
+              Label="Password"
+              Type={showPass ? 'text' : 'password'}
+            ></Textbox>
+            {isAlert ? (
+              <BasicAlerts errormessage={response}></BasicAlerts>
+            ) : (
+              <div></div>
+            )}
+            {ERP && pword ? (
+              <Button
+                variant="contained"
+                onClick={handleEntry}
+                fullWidth
+                sx={{
+                  marginTop: "2%",
+                  backgroundColor: "black",
+                  ":hover": {
+                    bgcolor: "#999",
+                    color: "white",
+                  },
+                }}
+              >
+                {" "}
+                Login{" "}
+              </Button>
+            ) : (
+              <Button
+              disabled={true}
+              onClick={handleEntry}
+              fullWidth
+              variant="contained"
+              sx={{ mt: '2%', backgroundColor: "black" }}
+              >
+                {" "}
+                Login{" "}
+              </Button>
+            )}
+          </div>
+
+          <SimpleBackdrop currentOpenState={open} handleClose={() => {}} />
         </div>
-
-        <SimpleBackdrop currentOpenState={open} handleClose={() => {}} />
-      </div>
       </center>
     </React.Fragment>
   );
