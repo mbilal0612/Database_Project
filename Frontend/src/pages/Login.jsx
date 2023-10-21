@@ -4,58 +4,84 @@ import React from "react";
 import Textbox from "../components/util-components/Textbox";
 import SimpleBackdrop from "../components/util-components/Loader";
 import SchoolLogo from "../components/util-components/SchoolLogo";
-import axios from "axios";
+import { login } from "../apis/auth/auth";
+import BasicAlerts from "../components/util-components/AlertMessages";
 
 function Login() {
-  //   const [number, setNumber] = React.useState(0);
-
-  //   var increment = function () {
-  //     setNumber(number + 1);
-  //     console.log(number);
-  //   };
   const [open, setOpen] = useState(false);
   const [ERP, setERP] = useState("");
   const [pword, setPword] = useState("");
+  const [response, setResponse] = useState("");
+  const [isAlert, setIsAlert] = useState(false);
+
   const handleERPchange = (event) => {
     setERP(event.target.value);
   };
   const handlePwordchange = (event) => {
     setPword(event.target.value);
   };
-  const handleOpen = () => {
+
+  const handleEntry = async () => {
     setOpen(true);
-    axios
-      .post("http://localhost:8080/admin/queryLogin", {
-        id: ERP,
-        password: pword,
-      })
-      .then(function (res) {
-        console.log(res);
-        handleClose();
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-  const handleClose = () => {
+    const res = await login(ERP, pword);
+    if (res.status === 200) {
+      sessionStorage.setItem("token", res.data.token);
+      if (res.data.userType == "STUDENT")
+        window.location.assign("/StudentHome");
+      else if (res.data.userType == "FACULTY")
+        window.location.assign("/FacultyHome");
+      else if (res.data.userType == "ADMIN")
+        window.location.assign("/AdminHome");
+      else if (res.data.userType == "GUARDIAN")
+        window.location.assign("GuardianHome");
+    } else {
+        setIsAlert(true);
+      console.log(res);
+      setResponse(res.response.data.message);
+    }
     setOpen(false);
   };
   return (
     <React.Fragment>
+        <center>
       <div id="login-card" className="card">
         <SchoolLogo id="big-logo"></SchoolLogo>
         <cred-label>Enter Credentials</cred-label>
-        <entry-boxes classname="textField">
-          <Textbox onChange={handleERPchange} Label="ERP-ID"></Textbox>
+        <div classname="textField">
+          <Textbox
+            value={ERP}
+            onChange={handleERPchange}
+            Label="ERP-ID"
+          ></Textbox>
+
           <Textbox
             onChange={handlePwordchange}
             Label="Password"
             Type="password"
           ></Textbox>
-        </entry-boxes>
-        <Button onClick={handleOpen}> Login </Button>
-        <SimpleBackdrop currentOpenState={open} handleClose={handleClose} />
+          {isAlert ? (
+          <BasicAlerts errormessage={response}></BasicAlerts>
+            ):(<div></div>)}
+          <Button
+            variant="contained"
+            onClick={handleEntry}
+            sx={{
+              marginTop: "2%",
+              backgroundColor: "black",
+              ":hover": {
+                bgcolor: "#999",
+                color: "white",
+              },
+            }}
+          >
+            {" "}
+            Login{" "}
+          </Button>
+        </div>
+
+        <SimpleBackdrop currentOpenState={open} handleClose={() => {}} />
       </div>
+      </center>
     </React.Fragment>
   );
 }

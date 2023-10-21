@@ -2,6 +2,7 @@ const express = require("express");
 const errors = require("./middleware/errors");
 
 const app = express();
+const cors = require('cors')
 const {connectDB} = require("./config/db");
 const adminRouter = require("./routes/adminRouter");
 const authRouter = require("./routes/authRouter");
@@ -11,7 +12,7 @@ const facultyRouter = require("./routes/facultyRouter");
 
 
 connectDB();
-
+app.use(cors())
 app.use(express.json());
 
 app.use("/admin", adminRouter);
