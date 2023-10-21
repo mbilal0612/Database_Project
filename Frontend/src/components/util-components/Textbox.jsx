@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-export default function BasicTextFields({ Label, Type, onChange, value }) {
+export default function BasicTextFields({ Label, Type, onChange, value, endAdornment }) {
   return (
     <Box
       component="form"
@@ -13,6 +13,7 @@ export default function BasicTextFields({ Label, Type, onChange, value }) {
       autoComplete="off"
     >
       <TextField
+        endAdornment = {endAdornment}
         value={value}
         onChange={onChange}
         type={Type}

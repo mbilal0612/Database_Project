@@ -351,7 +351,7 @@ const queryLogin = (req, res) => {
 
       bcrypt.compare(obj.password, results[0].P_HASH, function (err, result) {
         if (result) {
-          tok = jwt.sign({ id: obj.id }, privateKey);
+          tok = jwt.sign({ id: obj.id, userType: results[0].ROLE_ID}, privateKey);
           return res.status(200).json({
             message: "Login Successful!",
             token: tok,
