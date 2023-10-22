@@ -1,29 +1,26 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { decryptToken } from '../../apis/auth/getUserType';
-import PasswordField from '../../components/util-components/PasswordField';
+import React, { useEffect, useState } from "react";
+import { decryptToken } from "../../apis/auth/getUserType";
 
-const GuardianHome = () => {
 
-  useEffect(()=>{
-
-    const checkUserType = async () =>{
+const StudentHome = () => {
+  const [render, setRender] = useState(false);
+  useEffect(() => {
+    const checkUserType = async () => {
       const token = sessionStorage.getItem("token");
       const decryptedToken = await decryptToken(token);
       const userType = decryptedToken.data["userType"];
       console.log(userType);
-      if( userType !== "GUARDIAN"){
+      if (userType !== "GUARDIAN") {
         window.location.assign("/UNATHORIZEDACCESS");
-      }
-    }
+      } else setRender(true);
+    };
 
     checkUserType();
   });
 
-
   return (
-    <div><PasswordField margin={1}/></div>
+    <div>GuardianHome</div>
   )
 }
 
-export default GuardianHome
+export default StudentHome;
