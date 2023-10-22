@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { decryptToken } from '../../apis/auth/getUserType';
+import PasswordField from '../../components/util-components/PasswordField';
 
 const GuardianHome = () => {
 
@@ -21,7 +22,7 @@ const GuardianHome = () => {
 
 
   return (
-    <div>GuardianHome</div>
+    <div><PasswordField margin={1}/></div>
   )
 }
 

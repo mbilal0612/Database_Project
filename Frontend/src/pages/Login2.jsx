@@ -1,34 +1,29 @@
-import { Button } from "@mui/material";
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useState } from "react";
-import React from "react";
-import Textbox from "../components/util-components/Textbox";
-import SimpleBackdrop from "../components/util-components/Loader";
 import SchoolLogo from "../components/util-components/SchoolLogo";
 import { login } from "../apis/auth/auth";
 import BasicAlerts from "../components/util-components/AlertMessages";
+import UsernameField from "../components/util-components/UsernameField";
+import PasswordField from "../components/util-components/PasswordField";
+import { useState } from "react";
+import React from "react";
+import { Button } from "@mui/material";
+import SimpleBackdrop from "../components/util-components/Loader";
 
-function Login() {
+function Login2() {
   const [open, setOpen] = useState(false);
   const [ERP, setERP] = useState("");
   const [pword, setPword] = useState("");
   const [response, setResponse] = useState("");
   const [isAlert, setIsAlert] = useState(false);
-  const [showPass, setShowPass] = useState(false);
 
-  const handleShowPass = ()=>{
-    setShowPass(!showPass);
-  }
-
+  
   const handleERPchange = (event) => {
     setERP(event.target.value);
   };
   const handlePwordchange = (event) => {
     setPword(event.target.value);
   };
+
+  
 
   const handleEntry = async () => {
     setOpen(true);
@@ -53,35 +48,30 @@ function Login() {
     }
     setOpen(false);
   };
+
+
+  const handleKeyDown = (event) => {
+    // console.log(event.key);
+    // console.log(event.code);
+    if (event.keyCode === 13 && ERP && pword) {
+      console.log("enter pressed");
+      handleEntry();
+      
+    }
+  };
+
   return (
-    <React.Fragment>
+    <>
       <center>
         <div id="login-card" className="card">
           <SchoolLogo id="big-logo"></SchoolLogo>
           <cred-label>Enter Credentials</cred-label>
-          <div className="textField">
-            <Textbox
-              value={ERP}
-              onChange={handleERPchange}
-              Label="ERP-ID"
-            ></Textbox>
+          <div className="LoginInputField">
+            
+            <UsernameField  onChange={handleERPchange}/>
+            <PasswordField onChange={handlePwordchange} onKeyDown={handleKeyDown}/>
 
-            <Textbox
-               endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleShowPass}
-                    edge="end"
-                  >
-                    {showPass ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              onChange={handlePwordchange}
-              Label="Password"
-              Type={showPass ? 'text' : 'password'}
-            />
+            
             {isAlert ? (
               <BasicAlerts errormessage={response}></BasicAlerts>
             ) : (
@@ -91,6 +81,7 @@ function Login() {
               <Button
                 variant="contained"
                 onClick={handleEntry}
+                
                 fullWidth
                 sx={{
                   marginTop: "2%",
@@ -106,12 +97,12 @@ function Login() {
               </Button>
             ) : (
               <Button
-              disabled={true}
-              onClick={handleEntry}
-              fullWidth
-              variant="contained"
-              sx={{ mt: '2%', backgroundColor: "black" }}
-              >
+                disabled={true}
+                onClick={handleEntry}
+                fullWidth
+                variant="contained"
+                sx={{ mt: '2%', backgroundColor: "black" }}
+                >
                 {" "}
                 Login{" "}
               </Button>
@@ -121,8 +112,8 @@ function Login() {
           <SimpleBackdrop currentOpenState={open} handleClose={() => {}} />
         </div>
       </center>
-    </React.Fragment>
+    </>
   );
 }
 
-export default Login;
+export default Login2;

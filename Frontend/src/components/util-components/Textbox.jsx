@@ -13,7 +13,10 @@ export default function BasicTextFields({ Label, Type, onChange, value, endAdorn
       autoComplete="off"
     >
       <TextField
-        endAdornment = {endAdornment}
+        InputProps={{
+          endAdornment:(endAdornment)
+        }}
+        
         value={value}
         onChange={onChange}
         type={Type}

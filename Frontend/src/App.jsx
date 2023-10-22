@@ -3,6 +3,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
+import Login2 from "./pages/Login2";
 import NotFound from "./pages/NotFound";
 import AdminHome from "./pages/AdminView/AdminHome";
 import Admin from "./pages/AdminView/Admin";
@@ -23,7 +24,6 @@ import EnterMarks from "./pages/FacultyView/EnterMarks";
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
-  const [userType, setUserType] = useState('None');
 
 
 
