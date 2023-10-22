@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
-
+import SimpleBackdrop from "../../components/util-components/Loader";
+import GuardianNavbar from "../../components/Navbars/GuardianNavbar";
 
 const GuardianHome = () => {
   const [render, setRender] = useState(false);
@@ -19,8 +20,20 @@ const GuardianHome = () => {
   });
 
   return (
-    <div>GuardianHome</div>
-  )
-}
+    <>
+      {render ? (
+
+        <div className="div1"> 
+          <GuardianNavbar />
+          GuardianHome</div>
+      ) : (
+        <SimpleBackdrop
+          currentOpenState={true}
+          handleClose={() => {}}
+        ></SimpleBackdrop>
+      )}
+    </>
+  );
+};
 
 export default GuardianHome;

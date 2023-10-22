@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import { decryptToken } from '../../apis/auth/getUserType';
 import SimpleBackdrop from '../../components/util-components/Loader';
+import FacultyNavbar from '../../components/Navbars/FacultyNavbar';
 
-const StudentHome = () => {
+const FacultyHome = () => {
   const [render, setRender] = useState(false);
   useEffect(()=>{
 
@@ -27,4 +28,4 @@ const StudentHome = () => {
   )
 }
 
-export default StudentHome
+export default FacultyHome

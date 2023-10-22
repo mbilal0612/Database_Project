@@ -1,85 +1,4 @@
-#root {
- 
-  display:flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  text-align: center;
-  flex-direction: column;
-}
-
-body {
-  margin: 0%;
-  padding: 0%;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-.textField { 
-  padding: 10%;
-  margin:5%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
-#login-card{
-  height:100%;
-  width:100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-/*======================
-    404 page
-=======================*/
-
-
-.page_404{ padding:40px 0; background:#fff; font-family: 'Arvo', serif;
-}
-
-.page_404  img{ width:100%;}
-
-.four_zero_four_bg{
- 
- background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
-    height: 400px;
-    background-position: center;
- }
- 
- 
- .four_zero_four_bg h1{
- font-size:80px;
- }
- 
-  .four_zero_four_bg h3{
-       font-size:80px;
-       }
-       
-       .link_404{      
-  color: #fff!important;
-    padding: 10px 20px;
-    background: Black;
-    margin: 20px 0;
-    display: inline-block;}
-  .contant_box_404{ margin-top:-50px;}
-
-/*======================
-    end of 404 page
-=======================*/
-
-/*======================
-    Navbar css
-=======================*/
-/* do not delete */
-
-/* 
-  nav {
+nav {
     display: flex;
     width: 100%;
     height: 100%;
@@ -90,6 +9,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     position: sticky;
     top: 0;
+    border-radius: 0 0 15px 15px;
 }
 
 .div1{
@@ -126,7 +46,7 @@ nav ul li a {
     border-radius: 0.5rem;
 }
 
-nav ul li a:not(.active):hover{
+nav ul li a:not(.active,.logout:hover):hover{
     background-color: #333333;
 }
 
@@ -136,8 +56,8 @@ nav .logout{
 }
 
 nav .logout:hover{
-    background-color: red;
     color: white;
+    background-color: red;
 }
 
 nav .menu{
@@ -187,8 +107,4 @@ nav .menu span{
     nav ul li a {
        margin: 0.2rem 0.5rem; 
     }
-} */
-
-/*======================
-    end of Navbar
-=======================*/
+}

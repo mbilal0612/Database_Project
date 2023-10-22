@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import { decryptToken } from '../../apis/auth/getUserType';
 import SimpleBackdrop from '../../components/util-components/Loader';
+import AdminNavbar from '../../components/Navbars/AdminNavbar';
 
-const StudentHome = () => {
+const AdminHome = () => {
   const [render, setRender] = useState(false);
   useEffect(()=>{
 
@@ -22,9 +23,10 @@ const StudentHome = () => {
 
   
   return (
-    <>{render ? (<div>AdminHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
-    
+    <>{render ? (
+    <div>AdminHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+  
   )
 }
 
-export default StudentHome
+export default AdminHome
