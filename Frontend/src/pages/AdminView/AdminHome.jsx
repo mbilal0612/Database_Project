@@ -1,28 +1,30 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, {useEffect, useState} from 'react'
 import { decryptToken } from '../../apis/auth/getUserType';
-const AdminHome = () => {
+import SimpleBackdrop from '../../components/util-components/Loader';
 
-  // * this handles the cases where the user is logged and will not be able to acccess the parts where it isn't allowed to
-  // * student cant only access student home page
+const StudentHome = () => {
+  const [render, setRender] = useState(false);
   useEffect(()=>{
 
     const checkUserType = async () =>{
       const token = sessionStorage.getItem("token");
       const decryptedToken = await decryptToken(token);
-      const userType = decryptedToken.data.userType;
+      const userType = decryptedToken.data["userType"];
       console.log(userType);
       if( userType !== "ADMIN"){
         window.location.assign("/UNATHORIZEDACCESS");
       }
-    };
-
+      else setRender(true);
+    }
+    
     checkUserType();
   });
 
+  
   return (
-    <div>AdminHome</div>
+    <>{render ? (<div>StudentHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+    
   )
 }
 
-export default AdminHome
+export default StudentHome

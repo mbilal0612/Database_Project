@@ -1,8 +1,4 @@
 import { Button } from "@mui/material";
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import React from "react";
 import Textbox from "../components/util-components/Textbox";
@@ -17,11 +13,9 @@ function Login() {
   const [pword, setPword] = useState("");
   const [response, setResponse] = useState("");
   const [isAlert, setIsAlert] = useState(false);
-  const [showPass, setShowPass] = useState(false);
 
-  const handleShowPass = ()=>{
-    setShowPass(!showPass);
-  }
+
+  
 
   const handleERPchange = (event) => {
     setERP(event.target.value);
@@ -58,7 +52,7 @@ function Login() {
         <div id="login-card" className="card">
           <SchoolLogo id="big-logo"></SchoolLogo>
           <cred-label>Enter Credentials</cred-label>
-          <div classname="textField">
+          <div className="textField">
             <Textbox
               value={ERP}
               onChange={handleERPchange}
@@ -66,20 +60,9 @@ function Login() {
             ></Textbox>
 
             <Textbox
-               endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleShowPass}
-                    edge="end"
-                  >
-                    {showPass ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              }
               onChange={handlePwordchange}
               Label="Password"
-              Type={showPass ? 'text' : 'password'}
+              Type='password'
             ></Textbox>
             {isAlert ? (
               <BasicAlerts errormessage={response}></BasicAlerts>

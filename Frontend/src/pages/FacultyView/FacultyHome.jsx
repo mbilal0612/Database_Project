@@ -1,27 +1,30 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, {useEffect, useState} from 'react'
 import { decryptToken } from '../../apis/auth/getUserType';
+import SimpleBackdrop from '../../components/util-components/Loader';
 
-const FacultyHome = () => {
-
+const StudentHome = () => {
+  const [render, setRender] = useState(false);
   useEffect(()=>{
+
     const checkUserType = async () =>{
       const token = sessionStorage.getItem("token");
       const decryptedToken = await decryptToken(token);
-      // console.log(decryptedToken);
-      const userType = decryptedToken.data.userType;
+      const userType = decryptedToken.data["userType"];
       console.log(userType);
       if( userType !== "FACULTY"){
         window.location.assign("/UNATHORIZEDACCESS");
       }
+      else setRender(true);
     }
-
+    
     checkUserType();
   });
 
+  
   return (
-    <div>FacultyHome</div>
+    <>{render ? (<div>StudentHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+    
   )
 }
 
-export default FacultyHome
+export default StudentHome
