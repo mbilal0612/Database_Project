@@ -17,7 +17,7 @@ export default function PasswordField({onChange, value, onKeyDown}){
 
     return(
 
-        <Box sx={{ '& .MuiTextField-root': { m: 1, width: '50ch' }, }}>
+        <Box sx={{ '& .MuiTextField-root': { m: 1, width: '45ch' }, }}>
             <TextField
                 
                 type={showPassword ? "text" : "password"}

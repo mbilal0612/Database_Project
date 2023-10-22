@@ -6,7 +6,7 @@ export default function UsernameField({onChange,value}){
 
     return(
 
-        <Box sx={{ '& .MuiTextField-root': { m: 1, width: '50ch' }, }}>
+        <Box sx={{ '& .MuiTextField-root': { m: 1, width: '45ch' }, }}>
             <TextField
                 
                 label="Username"

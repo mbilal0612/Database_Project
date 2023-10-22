@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
 
 
-const StudentHome = () => {
+const GuardianHome = () => {
   const [render, setRender] = useState(false);
   useEffect(() => {
     const checkUserType = async () => {
@@ -23,4 +23,4 @@ const StudentHome = () => {
   )
 }
 
-export default StudentHome;
+export default GuardianHome;

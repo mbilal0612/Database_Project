@@ -40,7 +40,7 @@ function App() {
     <BrowserRouter>
       {!isLoggedIn ? (
         <Routes>
-          <Route path="/" Component={Login} />
+          <Route path="/" Component={Login2} />
           <Route path="*" Component={NotFound} />
         </Routes>
       ) : (
