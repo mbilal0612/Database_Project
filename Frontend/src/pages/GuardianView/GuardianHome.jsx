@@ -21,7 +21,7 @@ const StudentHome = () => {
   return (
     <>
       {render ? (
-        <div>StudentHome</div>
+        <div>GuardianHome</div>
       ) : (
         <SimpleBackdrop
           currentOpenState={true}

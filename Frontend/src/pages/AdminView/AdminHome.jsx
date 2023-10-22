@@ -22,7 +22,7 @@ const StudentHome = () => {
 
   
   return (
-    <>{render ? (<div>StudentHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+    <>{render ? (<div>AdminHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
     
   )
 }
