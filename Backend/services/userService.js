@@ -4,7 +4,9 @@ const jwt = require("jsonwebtoken");
 const privateKey = "NOONEcanCRACKthis";
 
 const createUser = (req, res) => {
+ console.log(1)
   var obj = req.body;
+  console.log(2)
 
   if (!obj.firstName) {
     return res
@@ -86,7 +88,7 @@ const createUser = (req, res) => {
     (errors, results) => {
       if (errors) {
         return res.status(400).json({
-          message: "SQLSkillIssue: Get good Nigga! [0]",
+          message: "SQLSkillIssue: Get good! [0]",
           data: errors,
         });
       }
@@ -169,7 +171,7 @@ const createUser = (req, res) => {
               (errors, results, fields) => {
                 if (errors) {
                   return res.status(400).json({
-                    message: "SQLSkillIssue: Get good Nigga!",
+                    message: "SQLSkillIssue: Get good!",
                     data: errors,
                   });
                 }
@@ -192,7 +194,7 @@ const createUser = (req, res) => {
                     (errors, results, fields) => {
                       if (errors) {
                         return res.status(400).json({
-                          message: "SQLSkill_Issue: Get good Nigga!",
+                          message: "SQLSkill_Issue: Get good!",
                           data: errors,
                         });
                       }
@@ -225,7 +227,7 @@ const createUser = (req, res) => {
                     (errors, results) => {
                       if (errors) {
                         return res.status(400).json({
-                          message: "SQLSkill_Issue: Get good Nigga!",
+                          message: "SQLSkill_Issue: Get good!",
                           data: errors,
                         });
                       }
