@@ -1,11 +1,10 @@
 #root {
- 
   display:flex;
   padding: 5%;
- 
   align-items: center;
   text-align: center;
   flex-direction: column;
+  font-family: 'Inter', sans-serif;
 }
 
 
