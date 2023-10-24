@@ -3,7 +3,14 @@ import { Link, NavLink } from 'react-router-dom'
 import "./navbar.css";
 
 export const StudentNavbar = () => {
-    const [menuOpen, setMenuOpen] = useState(false) 
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const handleLogout = ()=>{
+        sessionStorage.clear();
+        window.location.assign("/");
+    };
+
+
   return ( 
   <nav>
     <Link to="/StudentHome" className="title">LOGO</Link>
@@ -28,7 +35,7 @@ export const StudentNavbar = () => {
             <NavLink to='/Assignments'>ASSIGNMENTS</NavLink>
         </li> 
         <li>
-            <Link to='/' className="logout">LOGOUT</Link>
+            <Link onClick={handleLogout} to='/' className="logout">LOGOUT</Link>
         </li>
     </ul>
   </nav>

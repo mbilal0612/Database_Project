@@ -3,7 +3,13 @@ import { Link, NavLink } from 'react-router-dom'
 import "./navbar.css";
 
 const FacultyNavbar = () => {
-    const [menuOpen, setMenuOpen] = useState(false) 
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const handleLogout = ()=>{
+        sessionStorage.clear();
+        window.location.assign("/");
+    }
+
     return ( 
     <nav>
       <Link to="/FacultyHome" className="title">LOGO</Link>
@@ -25,7 +31,7 @@ const FacultyNavbar = () => {
               <NavLink to='/EnterMarks'>ENTER MARKS</NavLink>
           </li>
           <li>
-            <Link to='/' className="logout">LOGOUT</Link>
+            <Link  onClick={handleLogout} to='/' className="logout">LOGOUT</Link>
         </li>
       </ul>
     </nav>
