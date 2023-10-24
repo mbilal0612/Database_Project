@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { decryptToken } from '../../apis/auth/getUserType';
 import SimpleBackdrop from '../../components/util-components/Loader';
+import StudentNavbar from "../../components/Navbars/StudentNavbar";
 
 const Attendance = () => {
   const [render, setRender] = useState(false);
@@ -22,7 +23,10 @@ const Attendance = () => {
 
   
   return (
-    <>{render ? (<div>Attendance</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+    <>{render ? (
+    <div>
+      <StudentNavbar />
+      Attendance</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
     
   )
 }

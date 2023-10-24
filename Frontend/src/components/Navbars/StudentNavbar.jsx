@@ -1,33 +1,41 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import "./navbar.css";
 
-const Navbar = () => {
+export const StudentNavbar = () => {
+    const [menuOpen, setMenuOpen] = useState(false) 
   return ( 
   <nav>
-    <Link to="/AdminHome">Website</Link>
-    <ul>
+    <Link to="/StudentHome" className="title">LOGO</Link>
+    <div className="menu" onClick={() => {
+        setMenuOpen(!menuOpen);
+    }}>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <ul className={menuOpen ? "open" : ""}>
         <li>
-            <Link to='/Student'>STUDENT</Link>
+            <NavLink to='/Schedule'>SCHEDULE</NavLink>
         </li>
         <li>
-            <Link to='/Faculty'>FACULTY</Link>
+            <NavLink to='/Attendance'>ATTENDANCE</NavLink>
         </li>
         <li>
-            <Link to='/Guardian'>GUARDIAN</Link>
+            <NavLink to='/Grades'>GRADES</NavLink>
         </li>
         <li>
-            <Link to='/Admin'>ADMIN</Link>
-        </li>
+            <NavLink to='/Assignments'>ASSIGNMENTS</NavLink>
+        </li> 
         <li>
-            <Link to='/'>LOGOUT</Link>
+            <Link to='/' className="logout">LOGOUT</Link>
         </li>
     </ul>
   </nav>
   )
 }
 
-export default Navbar
-
+export default StudentNavbar
 
 
 // STUDENT VIEW NAV BAR COMPONENTS AND LINKS
