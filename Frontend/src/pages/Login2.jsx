@@ -31,15 +31,15 @@ function Login2() {
     if (res.status === 200) {
       sessionStorage.setItem("token", res.data.token);
       
-      if (res.data.userType == "STUDENT")
+      if (res.data.userType === "STUDENT")
 
         window.location.assign("/StudentHome");
         
-      else if (res.data.userType == "FACULTY")
+      else if (res.data.userType === "FACULTY")
         window.location.assign("/FacultyHome");
-      else if (res.data.userType == "ADMIN")
+      else if (res.data.userType === "ADMIN")
         window.location.assign("/AdminHome");
-      else if (res.data.userType == "GUARDIAN")
+      else if (res.data.userType === "GUARDIAN")
         window.location.assign("GuardianHome");
     } else {
       setIsAlert(true);

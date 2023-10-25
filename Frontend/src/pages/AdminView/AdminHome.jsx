@@ -13,7 +13,7 @@ const AdminHome = () => {
       const userType = decryptedToken.data["userType"];
       console.log(userType);
       if( userType !== "ADMIN"){
-        window.location.assign("/UNATHORIZEDACCESS");
+        window.location.assign("/UNAUTHORIZEDACCESS");
       }
       else setRender(true);
     }
@@ -24,7 +24,7 @@ const AdminHome = () => {
   
   return (
     <>{render ? (
-    <div>AdminHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+    <div><AdminNavbar/>AdminHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
   
   )
 }

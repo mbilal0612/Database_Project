@@ -13,19 +13,19 @@ function NotFound() {
       else {
         const decryptedToken = await decryptToken(token);
         const userType = decryptedToken.data["userType"];
-        if(userType=='STUDENT'){
+        if(userType==='STUDENT'){
           setLink("http://localhost:5173/StudentHome");
           setRender(true);
         }
-        else if(userType=='FACULTY'){
+        else if(userType==='FACULTY'){
           setLink("http://localhost:5173/FacultyHome");
           setRender(true);
         }
-        else if(userType=='GUARDIAN'){
+        else if(userType==='GUARDIAN'){
           setLink("http://localhost:5173/GuardianHome");
           setRender(true);
         }
-        else if(userType=='ADMIN'){
+        else if(userType==='ADMIN'){
           setLink("http://localhost:5173/AdminHome");
           setRender(true);
         }
@@ -50,7 +50,7 @@ function NotFound() {
                   <div className="contant_box_404">
                     <h3 className="h2">Look like you're lost</h3>
 
-                    <p>the page you are looking for not avaible!</p>
+                    <p>the page you are looking for not available!</p>
 
                     <a href={link} className="link_404">
                       Go to Home

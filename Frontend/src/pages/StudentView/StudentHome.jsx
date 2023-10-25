@@ -28,7 +28,7 @@ const StudentHome = () => {
   return (
     <>{render ? (
       <>
-      <div>
+      <div className="div1">
         <StudentNavbar />
         StudentHome
       </div>

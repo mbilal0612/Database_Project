@@ -14,13 +14,15 @@ const GuardianHome = () => {
       const token = sessionStorage.getItem("token");
       const decryptedToken = await decryptToken(token);
       const userType = decryptedToken.data["userType"];
-      console.log(userType);
+      console.log(userType);``
       if (userType !== "GUARDIAN") {
         window.location.assign("/UNATHORIZEDACCESS");
       } else setRender(true);
     };
 
-    checkUserType();
+    checkUserType().then(r => {
+      console.log("TypeChecked");
+    });
   });
 
   return (
@@ -42,7 +44,7 @@ const GuardianHome = () => {
                       <p>DOB: 06/12/2002</p>
                       <p>Class: 10K</p>
                     </Grid>
-                    <Grid sx={{ textAlign:'start', fontSize:24, fontWeight:800, display:'flex', alignItems:'center'}}>
+                    <Grid sx={{ textAlign:'start', fontSize:24, fontWeight:800, display:'flex', alignItems:'center', flexWrap:'wrap'}}>
                       <p>Attendance:</p><CustomizedProgressBars value={90} sx={{ pr:2}}/>
                       <p>Marks:</p><CustomizedProgressBars value={75}/>
                       <p>FeePaid:</p><CustomizedProgressBars value={100}/>
