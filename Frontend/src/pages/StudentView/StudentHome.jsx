@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import { decryptToken } from '../../apis/auth/getUserType';
+import {Button, Card, CardContent, Grid, Typography} from '@mui/material';
+import CircularWithValueLabel from "../../components/util-components/circularProgressWithLabel.jsx";
+import CustomizedProgressBars from "../../components/util-components/FacebookCircularProgress.jsx";
 import SimpleBackdrop from '../../components/util-components/Loader';
 import StudentNavbar from "../../components/Navbars/StudentNavbar";
 
@@ -24,9 +27,68 @@ const StudentHome = () => {
   
   return (
     <>{render ? (
-    <div>
-      <StudentNavbar />
-      StudentHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+      <>
+      <div>
+        <StudentNavbar />
+        StudentHome
+      </div>
+      <div className="S1">
+        Welcome,
+        StudentName
+      </div>  
+      <div className="S2">
+       Your Courses:
+      </div> 
+      <Card sx={{ height:'100%', width:'90%', backgroundColor:'#F2F2F2', fontFamily:'Inter', marginTop: '3%', borderRadius: '15px' }}>
+      <CardContent>
+        <Typography sx={ { fontSize:36, fontWeight:800, textAlign:'start', fontFamily:'Arial, Helvetica, sans-serif', paddingLeft: '1%' } }>
+          Course#1 Name:
+        </Typography>
+        <Grid container spacing={2} sx={{justifyContent:'space-between'}}>
+          <Grid sx={{ textAlign:'start', pl:2, fontSize:24, fontWeight:800, paddingLeft: '3%' }}>
+            <p> Course ERP: 7345</p>
+            <p>Teacher: Sir Zain</p>
+            <p>Class: 10K</p>
+          </Grid>
+          <Grid sx={{ textAlign:'start', fontSize:24, fontWeight:800, display:'flex', alignItems:'center'}}>
+            <p>Attendance:</p><CustomizedProgressBars value={90} sx={{ pr:2}}/>
+            <p>Marks:</p><CustomizedProgressBars value={75}/>
+          </Grid>
+          <Grid  sx={{ display:'flex', flexDirection:'column-reverse'}}>
+            <Button href="/Ledger" sx={{backgroundColor: 'black', color: 'white', borderRadius: '12px', fontSize:15}}>
+              View More
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+
+    <Card sx={{ height:'100%', width:'90%', backgroundColor:'#F2F2F2', fontFamily:'Inter', marginTop: '3%', borderRadius: '15px' }}>
+      <CardContent>
+        <Typography sx={ { fontSize:36, fontWeight:800, textAlign:'start', fontFamily:'Arial, Helvetica, sans-serif', paddingLeft: '1%' } }>
+          Course#2 Name:
+        </Typography>
+        <Grid container spacing={2} sx={{justifyContent:'space-between'}}>
+          <Grid sx={{ textAlign:'start', pl:2, fontSize:24, fontWeight:800, paddingLeft: '3%' }}>
+            <p> Course ERP: 4286</p>
+            <p>Teacher: Miss Ayesha</p>
+            <p>Class: 10K</p>
+          </Grid>
+          <Grid sx={{ textAlign:'start', fontSize:24, fontWeight:800, display:'flex', alignItems:'center'}}>
+            <p>Attendance:</p><CustomizedProgressBars value={90} sx={{ pr:2}}/>
+            <p>Marks:</p><CustomizedProgressBars value={75}/>
+          </Grid>
+          <Grid  sx={{ display:'flex', flexDirection:'column-reverse'}}>
+            <Button href="/Ledger" sx={{backgroundColor: 'black', color: 'white', borderRadius: '12px', fontSize:15}}>
+              View More
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+
+</>
+      ): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
     
   )
 }
