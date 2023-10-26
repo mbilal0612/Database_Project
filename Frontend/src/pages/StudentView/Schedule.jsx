@@ -24,7 +24,7 @@ const Schedule = () => {
   
   return (
     <>{render ? (
-    <div>
+    <div className="div1">
       <StudentNavbar />
       Schedule</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
     

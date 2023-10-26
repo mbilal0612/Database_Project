@@ -23,9 +23,10 @@ const FacultyHome = () => {
 
   
   return (
-    <>{render ? (<div>
-      <FacultyNavbar />
-      FacultyHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+    <>{render ? (
+    <div className="div1">
+    <FacultyNavbar />
+    FacultyHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
     
   )
 }

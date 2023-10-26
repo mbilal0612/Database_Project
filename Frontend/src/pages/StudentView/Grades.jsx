@@ -24,7 +24,7 @@ const Grades = () => {
   
   return (
     <>{render ? (
-    <div>
+    <div className="div1">
       <StudentNavbar />
       Grades</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
     
