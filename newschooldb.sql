@@ -666,8 +666,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 -- ! pass is STUDENT@4000
-INSERT INTO `users` VALUES(9, '42201-896210-1', 'Muhammad', 'Bilal', '2001-12-12', 'Male', '+92-323-8227006', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'ADMIN', 'nabeelmirza79@gmail.com', 0, 'M97/4, Khayaban-e-Saadi, Phase 7, DHA', '+92-323-8227006');
-INSERT INTO `users` VALUES(11, '42201-896130-1', 'John', 'Wick', '2001-12-12', 'Male', '+92-323-8257184', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'GUARDIAN', 'j.wick@continental.com', 0, 'ContinentalHotel', '+92-323-8225814');
+INSERT INTO `users` VALUES(11, '43201-896210-1', 'Nabeel', 'Mirza', '2001-12-12', 'Male', '+92-333-8227116', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'ADMIN', 'nabeelmirza79@gmail.com', 0, 'M97/4, Khayaban-e-Saadi, Phase 7, DHA', '+92-323-8227006');
+INSERT INTO `users` VALUES(9, '42201-896130-1', 'John', 'Wick', '2001-12-12', 'Male', '+92-323-8257184', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'GUARDIAN', 'j.wick@continental.com', 0, 'ContinentalHotel', '+92-323-8225814');
+INSERT INTO `users` VALUES(3, '42201-896130-2', 'Maaz', 'Karim', '2001-12-12', 'Male', '+92-323-8256184', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'FACULTY', 'random@continental.com', 0, 'ContinentalHotel', '+92-323-8225824');
+INSERT INTO `users` VALUES(4, '42201-896130-3', 'Musab', 'Iqbal', '2001-12-12', 'Male', '+92-323-8256184', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'STUDENT', 'random123@continental.com', 0, 'ContinentalHotel', '+92-324-8236824');
 
 --
 -- Indexes for dumped tables

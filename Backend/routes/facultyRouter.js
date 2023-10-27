@@ -16,12 +16,14 @@ router.get("/getAllCLO", tryCatch(cloService.getAllClo));
 router.get("/getClo/:cloId", tryCatch(cloService.getCloById));
 router.get("/getAllPlos", tryCatch(ploService.getPLOs));
 router.get("/getplo/:ploID", tryCatch(ploService.getPLOByID));
+router.get("/getCloByCourse/:courseId", tryCatch(cloService.getCloByCourse));
 
 router.post("/createQuestion", tryCatch(questionService.createQuestion));
 router.post("/createClo", tryCatch(cloService.createClo));
 router.post("/linkCLOtoQuestion", tryCatch(questionService.assignCLOToQuestion));
 router.post("/createQuestionType", tryCatch(questionTypeService.createQuestionType));
 router.post("/createPlo", tryCatch(ploService.createPLO));
+router.post("/assignPlo", tryCatch(cloService.assignToPlo));
 
 router.put("/updateQuestion", tryCatch(questionService.updateQuestion));
 router.put("/updateClo", tryCatch(cloService.updateClo));

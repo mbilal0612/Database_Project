@@ -20,6 +20,8 @@ var courseService = require("../services/courseService");
 var academicYearService = require("../services/academicYearService");
 var enrollmentService = require("../services/enrollmentService");
 var userService = require("../services/userService");
+let programService = require("../services/programService");
+let ploService = require("../services/ploService");
 
 router.post("/createAdmin",[auth,adminAuth] ,tryCatch(adminService.createAdmin));       //not used
 router.post("/createClass",[auth,adminAuth], tryCatch(classService.createClass));
@@ -42,6 +44,7 @@ router.post("/createAcademicYear",[auth,adminAuth] , tryCatch(academicYearServic
 router.post("/enrollStudentToClass",[auth,adminAuth] , tryCatch(enrollmentService.enrollStudentToClass));
 router.post("/createUser",[auth,adminAuth] , tryCatch(userService.createUser));
 router.post("/queryLogin", tryCatch(userService.queryLogin));
+router.post("/createProgram", tryCatch(programService.createProgram));
 
 router.patch("/deleteTransactionByID",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByID));
@@ -90,9 +93,17 @@ router.get("/getStudentAttendanceReportByAcademicYear/:studentID/:startYear", tr
 router.get("/getAcademicYears", tryCatch(academicYearService.getAcademicYears));
 router.get("/getClassByAcademicYear/:startYear", tryCatch(classService.getClassByAcademicYear));
 router.get("/getClassByID/:classID", tryCatch(classService.getClassByID));
+router.get("/allPrograms", tryCatch(programService.getAllPrograms));
+router.get("/getProgram/:programName", tryCatch(programService.getProgramByID));
+router.get("/ploForProgram/:programName", tryCatch(ploService.getPloByProgram));
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));
 router.put("/updateFacultyDetails",tryCatch(facultyService.updateFaculty));
+router.put("/updateProgram", tryCatch(programService.updateProgram));
+router.put("/assignPlo", tryCatch(programService.assignPlo));
+
+router.delete("/deleteProgram/:programName", tryCatch(programService.deleteProgram));
+
 
 module.exports = router

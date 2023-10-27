@@ -6,12 +6,9 @@ Backend/package-lock.json
 Backend/node_modules/
 .vscode/
 .idea/
-
+Umlet/
 
 #files
-
-
-Tools/Umlet
 
 trashService.js
 
