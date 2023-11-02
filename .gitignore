@@ -4,6 +4,7 @@
 node_modules/
 Backend/package-lock.json
 Backend/node_modules/
+Backend/.env
 .vscode/
 .idea/
 Umlet/

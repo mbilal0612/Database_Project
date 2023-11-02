@@ -1,25 +1,14 @@
 const { createTransport } = require('nodemailer');
 
 const transporter = createTransport({
-    host: "smtp-relay.sendinblue.com",
+    host: "smtp.gmail.com",
     port: 587,
     auth: {
-        user: "<your-login>",
-        pass: "<your-key>",
+        user: process.env.SMTP_Email,
+        pass: process.env.SMTP_PASS,
     },
 });
 
-// const mailOptions = {
-//     from: '<your-login>',
-//     to: '<your-receiver>',
-//     subject: `Your subject`,
-//     text: `Your text content`
-// };
-
-// transporter.sendMail(mailOptions, function(error, info){
-//     if (error) {
-//         console.log(error);
-//     } else {
-//         console.log('Email sent: ' + info.response);
-//     }
-// });
+module.exports = {
+    transporter   
+}

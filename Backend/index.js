@@ -1,6 +1,6 @@
 const express = require("express");
 const errors = require("./middleware/errors");
-
+const env = require('dotenv').config();
 const app = express();
 const cors = require('cors')
 const {connectDB} = require("./config/db");

@@ -49,16 +49,16 @@ function Login() {
   };
   return (
     <React.Fragment>
-      <center>
-        <div id="login-card" className="card">
-          <SchoolLogo id="big-logo"></SchoolLogo>
-          <cred-label>Enter Credentials</cred-label>
-          <div className="textField">
-            <Textbox
-              value={ERP}
-              onChange={handleERPchange}
-              Label="ERP-ID"
-            ></Textbox>
+        <center>
+      <div id="login-card" className="card">
+        <SchoolLogo id="big-logo"></SchoolLogo>
+        <cred-label>Enter Credentials</cred-label>
+        <div className="textField">
+          <Textbox
+            value={ERP}
+            onChange={handleERPchange}
+            Label="ERP-ID"
+          ></Textbox>
 
             <Textbox
               onChange={handlePwordchange}

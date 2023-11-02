@@ -4,7 +4,6 @@ import BasicAlerts from "../components/util-components/AlertMessages";
 import UsernameField from "../components/util-components/UsernameField";
 import PasswordField from "../components/util-components/PasswordField";
 import { useState } from "react";
-import React from "react";
 import { Button } from "@mui/material";
 import SimpleBackdrop from "../components/util-components/Loader";
 
@@ -22,8 +21,6 @@ function Login2() {
   const handlePwordchange = (event) => {
     setPword(event.target.value);
   };
-
-  
 
   const handleEntry = async () => {
     setOpen(true);

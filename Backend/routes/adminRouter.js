@@ -45,6 +45,7 @@ router.post("/enrollStudentToClass",[auth,adminAuth] , tryCatch(enrollmentServic
 router.post("/createUser",[auth,adminAuth] , tryCatch(userService.createUser));
 router.post("/queryLogin", tryCatch(userService.queryLogin));
 router.post("/createProgram", tryCatch(programService.createProgram));
+router.post("/devCreateUser", tryCatch(userService.developmentCreateUser));
 
 router.patch("/deleteTransactionByID",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByID));
@@ -67,6 +68,7 @@ router.patch("/restoreAcademicYear",[auth,adminAuth] , tryCatch(academicYearServ
 router.patch("/setAcademicYearDays", [auth,adminAuth] ,tryCatch(academicYearService.setAcademicYearDays));
 router.patch("/denrollStudentFromClass", [auth,adminAuth] ,tryCatch(enrollmentService.denrollStudentFromClass));
 router.patch("/changeUserPassword", [auth,adminAuth] ,tryCatch(userService.changeUserPassword));
+router.post("/devForcePasswordReset", tryCatch(userService.developmentForcePasswordReset));
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
