@@ -6,11 +6,15 @@ questionService = require("../services/questionService");
 questionTypeService = require("../services/questionTypeService");
 cloService = require("../services/cloService");
 ploService = require("../services/ploService");
+courseService = require("../services/courseService");
+var auth = require("../middleware/auth");
+var facultyAuth = require("../middleware/facultyAuth");
 
 router.get("/getAllQuestions",tryCatch(questionService.getAllQuestions));
 router.get("/getQuestion/:questionId", tryCatch(questionService.getQuestionById));
 router.get("/getQuestionsByClo/:cloId", tryCatch(questionService.getQuestionsByCLO));
 router.get("/getAllQuestionTypes", tryCatch(questionTypeService.getAllQuestionTypes));
+router.get("/getFacultyCourses/:facultyId", [auth], tryCatch(courseService.getFacultyCourses));
 
 router.get("/getAllCLO", tryCatch(cloService.getAllClo));
 router.get("/getClo/:cloId", tryCatch(cloService.getCloById));

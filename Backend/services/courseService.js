@@ -1,164 +1,169 @@
 db = require("../config/db").connection;
 
-const createCourse = (req,res) => {
-    const obj = req.body;
+const createCourse = (req, res) => {
+  const obj = req.body;
 
-    if(!obj.courseName){
-        return res.status(400).json({ message : " Course Name required"});
+  if (!obj.courseName) {
+    return res.status(400).json({ message: " Course Name required" });
+  }
+  if (!obj.courseId) {
+    return res.status(400).json({ message: "Course- ID is required" });
+  }
+
+  db.query(
+    {
+      sql: "INSERT INTO ?? (??,??) VALUES (?,?)",
+      timeout: 40000,
+      values: [
+        "COURSE",
+        "COURSE_ID",
+        "COURSE_NAME",
+        obj.courseId,
+        obj.courseName,
+      ],
+    },
+
+    (error, results, fields) => {
+      if (error) {
+        return res.status(500).send(error);
+      }
+
+      return res.status(200).json({ message: "successfully added" });
     }
-    if(!obj.courseId){
-        return res.status(400).json({ message : "Course- ID is required"});
+  );
+};
+
+const getAllCourse = (req, res) => {
+  const obj = req.body;
+
+  db.query(
+    {
+      sql: "SELECT * FROM ??",
+      timeout: 40000,
+      values: ["COURSE"],
+    },
+    (error, results, fields) => {
+      if (error) {
+        return res.status(500).send(error);
+      }
+
+      return res.status(200).send(results);
     }
+  );
+};
 
-    db.query(
-        {
-            sql : "INSERT INTO ?? (??,??) VALUES (?,?)",
-            timeout:40000,
-            values: [
-                "COURSE",
-                "COURSE_ID",
-                "COURSE_NAME",
-                obj.courseId,
-                obj.courseName,
+const getCourseById = (req, res) => {
+  const obj = req.params;
 
-            ]
-        },
+  if (!obj.Id) {
+    return res.status(400).json({ message: "please give id in the url" });
+  }
 
-        (error, results, fields) => {
+  db.query(
+    {
+      sql: "SELECT * FROM ?? WHERE ?? = ?",
+      timeout: 40000,
+      values: ["COURSE", "COURSE_ID", obj.Id],
+    },
 
-            if(error){
-                return res.status(500).send(error);
-            }
+    (error, results, fields) => {
+      if (error) {
+        return res.status(400).send(error);
+      }
 
-            return res.status(200).json({ message : "successfully added"});
+      return res.status(200).send(results);
+    }
+  );
+};
+
+const getFacultyCourses = (req, res) => {
+  var obj = req.params;
+  if (!obj.facultyId)
+    return res.status(400).json({ message: "facultyID not provided" });
+  db.query(
+    {
+      sql: "SELECT * FROM ?? JOIN ?? USING (??) WHERE ?? = ?",
+      values: [
+        "CLASS_COURSE",
+        "COURSE",
+        "COURSE_ID",
+        "FACULTY_ID",
+        obj.facultyId,
+      ],
+    },
+    (err, results, fields) => {
+        if(err){
+            console.log(err);
+            return res.status(500).json({message:"internal error occured"});
         }
-    )
-}
-
-const getAllCourse = (req,res) => {
-    const obj = req.body;
-
-
-    db.query(
-        {
-            sql: "SELECT * FROM ??",
-            timeout:40000,
-            values: [
-                "COURSE"
-            ]
-        },
-        (error, results, fields)=>{
-
-            if(error){
-                return res.status(500).send(error);
-            }
-
-            return res.status(200).send(results);
-        }
-    )
-}
-
-const getCourseById = (req,res)=>{
-
-    const obj = req.params;
-
-    if(!obj.Id){
-        return res.status(400).json({ message : "please give id in the url"});
+        return res.status(200).send(results);
     }
+  );
+};
 
-    db.query(
-        {
-            sql: "SELECT * FROM ?? WHERE ?? = ?",
-            timeout:40000,
-            values: [
-                "COURSE",
-                "COURSE_ID",
-                obj.Id
-            ]
-        },
+const getSimilarCourse = (req, res) => {
+  const obj = req.params;
+  let queryTerm = "%";
+  if (!obj.searchTerm) {
+    return res.status(400).json({ message: "search Term is required" });
+  }
 
-        (error, results, fields)=> {
-            if(error){
-                return res.status(400).send(error);
-            }
+  queryTerm = queryTerm + obj.searchTerm + "%";
 
-            return res.status(200).send(results);
-        }
-    )
-}
+  db.query(
+    {
+      sql: "SELECT * FROM ?? WHERE ?? LIKE ?",
+      timeout: 40000,
+      values: ["COURSE", "COURSE_NAME", queryTerm],
+    },
+    (error, results, fields) => {
+      if (error) {
+        return res.status(500).send(error);
+      }
 
-const getSimilarCourse = (req,res) => {
-    const obj = req.params;
-    let queryTerm = "%";
-    if(!obj.searchTerm){
-        return res.status(400).json({ message : "search Term is required"});
-
+      return res.status(200).send(results);
     }
+  );
+};
 
-    queryTerm = queryTerm + obj.searchTerm + "%";
+const updateCourse = (req, res) => {
+  const obj = req.body;
 
+  if (!obj.courseName) {
+    return res.status(400).json({ message: "course Name is required" });
+  }
 
-    db.query(
-        {
-            sql : "SELECT * FROM ?? WHERE ?? LIKE ?",
-            timeout:40000,
-            values : [
-                "COURSE",
-                "COURSE_NAME",
-                queryTerm
+  if (!obj.courseId) {
+    return res.status(400).json({ message: "course Id is required" });
+  }
 
-            ]
-        },
-        (error, results, fields)=> {
+  db.query(
+    {
+      sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
+      timeout: 40000,
+      values: [
+        "COURSE",
+        "COURSE_NAME",
+        obj.courseName,
+        "COURSE_ID",
+        obj.courseId,
+      ],
+    },
+    (error, results, fields) => {
+      if (error) {
+        return res.status(500).send(error);
+      }
 
-            if(error){
-                return res.status(500).send(error);
-            }
-
-            return res.status(200).send(results);
-
-        }
-    )
-}
-
-const updateCourse = (req,res) => {
-    const obj = req.body;
-
-    if(!obj.courseName){
-        return res.status(400).json({ message : "course Name is required"});
+      return res.status(200).json({ message: " successful change" });
     }
-
-    if(!obj.courseId){
-        return res.status(400).json({ message : "course Id is required"});
-    }
-
-    db.query(
-        {
-            sql : "UPDATE ?? SET ?? = ? WHERE ?? = ?",
-            timeout: 40000,
-            values : [
-                "COURSE",
-                "COURSE_NAME",
-                obj.courseName,
-                "COURSE_ID",
-                obj.courseId
-            ]
-        },
-        (error, results, fields) => {
-
-            if(error){
-                return res.status(500).send(error);
-            }
-
-            return res.status(200).json({ message :" successful change"})
-        }
-    )
-}
+  );
+};
 
 module.exports = {
-    createCourse,
-    getCourseById,
-    getAllCourse,
-    updateCourse,
-    getSimilarCourse,
-}
+  createCourse,
+  getCourseById,
+  getAllCourse,
+  updateCourse,
+  getSimilarCourse,
+  getFacultyCourses,
+};
