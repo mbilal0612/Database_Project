@@ -23,6 +23,8 @@ import FacultyHome from "./pages/FacultyView/FacultyHome";
 import APCreation from "./pages/FacultyView/APCreation";
 import Courses from "./pages/FacultyView/Courses";
 import EnterMarks from "./pages/FacultyView/EnterMarks";
+import GuardianAttendance from "./pages/GuardianView/Attendance";
+import GuardianGrade from "./pages/GuardianView/GuardianGrade";
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -64,6 +66,8 @@ function App() {
           //routes for guardian view
           <Route path="/GuardianHome" element={<GuardianHome />} />
           <Route path="/Ledger" element={<Ledger />} />
+          <Route path="/GuardianAttendance" element={<GuardianAttendance />} />
+          <Route path="/GuardianGrade" element={ <GuardianGrade/>} />
           //routes for faculty view
           <Route path="/FacultyHome" element={<FacultyHome />} />
           <Route path="/APCreation" element={<APCreation />} />

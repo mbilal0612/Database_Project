@@ -227,7 +227,7 @@ const getStudentFee = (req, res) =>{
                 return res.status(500).json({message: "SQLException: Maybe Incorrect SQL statement or XAMPP off?"});
             }else{
 
-                if(results.length == 0){
+                if(results.length === 0){
                     return res.status(200).json({message: "MissingDataWarning: Either student DNE; or has no arrears on their ledger!"});
                 }
 
@@ -255,7 +255,7 @@ const generateStudentLedger = (req,res) =>{
         return res.status(500).json("MissingInputException: StudentID must be defined!");
     }
     
-    db.query({sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
+    db.query({sql: "SELECT TRANSACTION_ID AS id,T_NAME,T_AMOUNT,T_DATE FROM ?? WHERE ?? = ? AND ?? = ?",
             timeout: 40000,
             values :[
                 "TRANSACTION",

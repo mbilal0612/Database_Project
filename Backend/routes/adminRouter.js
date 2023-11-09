@@ -30,7 +30,7 @@ router.post("/createArrearsByGrade",[auth,adminAuth] ,tryCatch(financeService.cr
 router.post("/createArrearsByAcademicYear",[auth,adminAuth] , tryCatch(financeService.createArrearsByAcademicYear));
 router.post("/createArrearsByStudentID",[auth,adminAuth] , tryCatch(financeService.createArrearsByStudentID));
 router.post("/createRelation",[auth,adminAuth] , tryCatch(relationService.createRelation));
-router.post("/assignStudentGuardian",[auth,adminAuth] , tryCatch(relationService.assignStudentGuardian));
+router.post("/assignStudentGuardian", tryCatch(relationService.assignStudentGuardian));
 router.post("/createStudent", tryCatch(studentService.createStudent)); // not used
 router.post("/createFaculty", tryCatch(facultyService.createFaculty));      //not used
 router.post("/createECA",[auth,adminAuth] ,tryCatch(ecaService.createEca));   

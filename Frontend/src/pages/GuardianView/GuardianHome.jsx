@@ -1,41 +1,69 @@
 import React, { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
-import {Button, Card, CardActions, CardContent, Grid, Typography} from '@mui/material';
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    Grid,
+    Paper,
+    Typography,
+} from "@mui/material";
 import CircularWithValueLabel from "../../components/util-components/circularProgressWithLabel.jsx";
 import CustomizedProgressBars from "../../components/util-components/FacebookCircularProgress.jsx";
 import SimpleBackdrop from "../../components/util-components/Loader";
 import GuardianNavbar from "../../components/Navbars/GuardianNavbar";
 import OutlinedCard from "../../components/CardV2";
 
-
+import { getAllChildren } from "../../apis/guardian/getAllChildren";
 
 const GuardianHome = () => {
-  const [render, setRender] = useState(false);
-  useEffect(() => {
-    const checkUserType = async () => {
-      const token = sessionStorage.getItem("token");
-      const decryptedToken = await decryptToken(token);
-      const userType = decryptedToken.data["userType"];
-      console.log(userType);``
-      if (userType !== "GUARDIAN") {
-        window.location.assign("/UNATHORIZEDACCESS");
-      } else setRender(true);
-    };
+    const [render, setRender] = useState(false);
+    const [children, setChildren] = useState([]);
+    const [userid, setId] = useState("");
+    useEffect(() => {
+        const checkUserType = async () => {
+            const token = sessionStorage.getItem("token");
+            const decryptedToken = await decryptToken(token);
+            const userType = decryptedToken.data["userType"];
+            setId(decryptedToken.data.id);
+            console.log(userType);
+            
+            if (userType !== "GUARDIAN") {
+                window.location.assign("/UNATHORIZEDACCESS");
+            } else setRender(true);
+        };
 
-    checkUserType().then(r => {
-      console.log("TypeChecked");
+        checkUserType().then((r) => {
+            console.log("TypeChecked");
+        });
     });
-  });
+    console.log("userId", userid);
 
-  return (
+    useEffect(() => {
+        const handleChildren = async ()=> {
+            getAllChildren(userid).then((res)=>{
+                setChildren(res.data.results);
+            })     
+        };
+      
+            handleChildren();
+        
+        
+    },[userid]);
 
-      <>
-        {render ? (
+
+
+    console.log("children",children)
+
+    return (
         <>
-              <div className="div1">
-                <GuardianNavbar />
-                GuardianHome</div>
-              <Card variant="outlined" sx={{ height:'100%', width:'90%', backgroundColor:'#F2F2F2', fontFamily:'Inter', marginTop: '3%', borderRadius: '15px', maxHeight:'25%' }}>
+            {render ? (
+                <>
+                    <div className="div1">
+                        <GuardianNavbar />
+                    </div>
+                    {/* <Card variant="outlined" sx={{ height:'100%', width:'90%', backgroundColor:'#F2F2F2', fontFamily:'Inter', marginTop: '3%', borderRadius: '15px', maxHeight:'25%' }}>
                 <CardContent>
                   <Typography sx={ { fontSize:36, fontWeight:800, textAlign:'start', fontFamily:'Arial, Helvetica, sans-serif', paddingLeft: '1%' } }>
                     Bilal
@@ -61,23 +89,26 @@ const GuardianHome = () => {
                         View More
                   </Button>
                 </CardActions>
-              </Card>
-              
+              </Card> */}
+              {children.map((child)=>(
+                <Paper  sx={{ minWidth: "90%", mt: 2, display: "block" }}  elavation={24}>
+                <OutlinedCard name={child.FIRST_NAME+ " "+ child.LAST_NAME} 
+                dob={child.DOB.substring(0,10)}
+                id={child.STUDENT_ID}
+                
+                />
+                </Paper>
+              ))}
+                    {/* <OutlinedCard /> */}
+                </>
+            ) : (
+                <SimpleBackdrop
+                    currentOpenState={true}
+                    handleClose={() => {}}
+                ></SimpleBackdrop>
+            )}
         </>
-        ) : (
-            <SimpleBackdrop
-                currentOpenState={true}
-                handleClose={() => {}}
-            ></SimpleBackdrop>
-        )}
-      </>
-
-
-
-  )
-}
-
-
-
+    );
+};
 
 export default GuardianHome;
