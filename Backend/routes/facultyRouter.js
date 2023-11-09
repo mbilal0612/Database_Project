@@ -1,12 +1,13 @@
 const express = require("express");
 const tryCatch = require("../middleware/tryCatch");
 
-const router = express.Router();
-questionService = require("../services/questionService");
-questionTypeService = require("../services/questionTypeService");
-cloService = require("../services/cloService");
-ploService = require("../services/ploService");
-courseService = require("../services/courseService");
+var router = express.Router();
+var questionService = require("../services/questionService");
+var questionTypeService = require("../services/questionTypeService");
+var facultyService = require("../services/facultyService");
+var cloService = require("../services/cloService");
+var ploService = require("../services/ploService");
+var courseService = require("../services/courseService");
 var auth = require("../middleware/auth");
 var facultyAuth = require("../middleware/facultyAuth");
 
@@ -15,6 +16,7 @@ router.get("/getQuestion/:questionId", tryCatch(questionService.getQuestionById)
 router.get("/getQuestionsByClo/:cloId", tryCatch(questionService.getQuestionsByCLO));
 router.get("/getAllQuestionTypes", tryCatch(questionTypeService.getAllQuestionTypes));
 router.get("/getFacultyCourses/:facultyId", [auth], tryCatch(courseService.getFacultyCourses));
+router.get("/getFacultyById/:id",[auth] , tryCatch(facultyService.getFacultyById));
 
 router.get("/getAllCLO", tryCatch(cloService.getAllClo));
 router.get("/getClo/:cloId", tryCatch(cloService.getCloById));

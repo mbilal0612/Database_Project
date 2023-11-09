@@ -2,6 +2,7 @@ const db = require("../config/db").connection;
 const bcrypt = require("bcrypt");
 const defaultPass = "12345678";
 
+
 const createFaculty = (req, res) => {
   var obj = req.body;
   if (!obj.CNIC) {
@@ -247,15 +248,16 @@ const getFacultyById = (req, res) => {
     {
       sql: "SELECT * FROM ?? WHERE ?? = ?",
       timeout: 40000,
-      values: ["FACULTY", "FACULTY_ID", obj.id],
+      values: ["USERS", "USER_ID", obj.id],
     },
 
     (error, results, fields) => {
       if (error) {
         return res.status(500).send(error);
       }
-
-      return res.status(200).send(results);
+      if(results.length===0) return res.status(400).json({message:"invalid id"});
+      if(results[0].ROLE_ID!="FACULTY") return res.status(400).json({message:"The following id does not belong to a teacher"});
+      return res.status(200).send(results[0]);
     }
   );
 };
