@@ -33,6 +33,38 @@ const createCourse = (req, res) => {
   );
 };
 
+const getStudentCourses = (req, res) => {
+  var obj = req.params;
+  if (!obj.id)
+    return res.status(400).json({ message: "student id not provided" });
+  db.query(
+    {
+      sql: "SELECT * FROM ?? JOIN ?? USING (??) JOIN ?? USING (??) WHERE ?? = ? and EXTRACT(YEAR FROM ??) = (SELECT MAX(EXTRACT(YEAR FROM ??)) FROM ?? WHERE ?? = ?)",
+      values: [
+        "STUDENT_ACADEMIC_HISTORY",
+        "CLASS_COURSE",
+        "CLASS_ID",
+        "COURSE",
+        "COURSE_ID",
+        "STUDENT_ID",
+        obj.id,
+        "ENROLLMENT_DATE",
+        "ENROLLMENT_DATE",
+        "STUDENT_ACADEMIC_HISTORY",
+        "STUDENT_ID",
+        obj.id,
+      ],
+    },
+    (error, results, fields) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "unkown error occurred" });
+      }
+      return res.status(200).json(results);
+    }
+  );
+};
+
 const getAllCourse = (req, res) => {
   const obj = req.body;
 
@@ -92,11 +124,11 @@ const getFacultyCourses = (req, res) => {
       ],
     },
     (err, results, fields) => {
-        if(err){
-            console.log(err);
-            return res.status(500).json({message:"internal error occured"});
-        }
-        return res.status(200).send(results);
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ message: "internal error occured" });
+      }
+      return res.status(200).send(results);
     }
   );
 };
@@ -166,4 +198,5 @@ module.exports = {
   updateCourse,
   getSimilarCourse,
   getFacultyCourses,
+  getStudentCourses,
 };

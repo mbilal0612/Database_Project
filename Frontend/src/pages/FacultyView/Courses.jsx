@@ -7,9 +7,10 @@ import OutlinedCard from "../../components/CourseCard";
 import { getFacultyCourses } from "../../apis/Faculty/AllCourses";
 
 const Courses = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [name, setName] = useState();
   const [courses, setCourses] = useState([]);
+  var i = 0;
 
   useEffect(() => {
     const getDetail = async () => {
@@ -27,7 +28,6 @@ const Courses = () => {
       setCourses(arr.data);
     };
 
-    setLoading(true);
     getDetail();
   }, []);
 
@@ -45,7 +45,16 @@ const Courses = () => {
       ) : (
         <div className="div1">
           <FacultyNavbar />
-          {courses.map((element)=>{return <OutlinedCard subject_code = {element.COURSE_ID} subject = {element.COURSE_NAME} grade = {element.CLASS_ID} />})}  
+          {courses.map((iter) => {
+            return (
+              <OutlinedCard
+                key={i++}
+                subject_code={iter.COURSE_ID}
+                subject={iter.COURSE_NAME}
+                grade={iter.CLASS_ID}
+              />
+            );
+          })}
         </div>
       )}
     </>

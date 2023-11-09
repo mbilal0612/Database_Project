@@ -624,13 +624,23 @@ CREATE TABLE PLO_CLO(
     FOREIGN KEY (CLO_ID) REFERENCES CLO(CLO_ID)
 );
 
+
+-- PW = STUDENT@4000
+
+INSERT INTO `users` VALUES(11, '43201-896210-1', 'Nabeel', 'Mirza', '2001-12-12', 'Male', '+92-333-8227116', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'ADMIN', 'nabeelmirza79@gmail.com', 0, 'M97/4, Khayaban-e-Saadi, Phase 7, DHA', '+92-323-8227006');
+INSERT INTO `users` VALUES(9, '42201-896130-1', 'John', 'Wick', '2001-12-12', 'Male', '+92-323-8257184', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'GUARDIAN', 'j.wick@continental.com', 0, 'ContinentalHotel', '+92-323-8225814');
+INSERT INTO `users` VALUES(3, '42201-896130-2', 'Maaz', 'Karim', '2001-12-12', 'Male', '+92-323-8256184', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'FACULTY', 'random@continental.com', 0, 'ContinentalHotel', '+92-323-8225824');
+INSERT INTO `users` VALUES(4, '42201-896130-3', 'Musab', 'Iqbal', '2001-12-12', 'Male', '+92-323-8256184', '2008-08-08', 'Pakistani', 'Islam', '$2b$12$ELuayQuQI9NrQmzTNIMfgOqkEnA1B.UWwXdrCoCijqYX871WY74ay', 'STUDENT', 'random123@continental.com', 0, 'ContinentalHotel', '+92-324-8236824');
+
 INSERT INTO COURSE VALUES('cmpt100','Introduction To Programming');
 INSERT INTO COURSE VALUES('phys1','Physics');
 INSERT INTO COURSE VALUES('math1','Mathematics');
 INSERT INTO COURSE VALUES('end1','English');
 INSERT INTO COURSE VALUES('arb1','Arabic');
+
 INSERT INTO class_course (CLASS_ID, COURSE_ID, FACULTY_ID) VALUES ('09-B-2024', 'cmpt100', 3);
 INSERT INTO class_course (CLASS_ID, COURSE_ID, FACULTY_ID) VALUES ('09-B-2024', 'phys1', 3);
 INSERT INTO class_course (CLASS_ID, COURSE_ID, FACULTY_ID) VALUES ('09-B-2024', 'math1', 3);
 INSERT INTO class_course (CLASS_ID, COURSE_ID, FACULTY_ID) VALUES ('09-B-2024', 'end1', 3);
 INSERT INTO class_course (CLASS_ID, COURSE_ID, FACULTY_ID) VALUES ('09-B-2024', 'arb1', 3);
+
