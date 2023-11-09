@@ -174,10 +174,69 @@ const getGuardianById = (req, res) => {
         })
 }
 
+// get details of a guardian's children
+const getChildren = (req,res) => {
+    const obj = req.params;
+    console
+    if(!obj.guardianId){
+        return res.status(400).json({message:"guardianId is required!"});
+    }
+
+    db.query(
+        {
+            sql: "SELECT * FROM USERS AS U1 JOIN STUDENT_GUARDIAN ON U1.USER_ID = STUDENT_GUARDIAN.GUARDIAN_ID JOIN USERS AS U2 ON U2.USER_ID = STUDENT_GUARDIAN.STUDENT_ID WHERE U1.USER_ID=?",
+            timeout:40000,
+            values:[
+                obj.guardianId
+                ]
+
+        },
+        (error, results, fields) => {
+            if(error){
+                return res.status(500).send(error);
+            }
+            return res.status(200).json({
+                results: results
+            })
+        });
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @returns Get's the attendance of all the children's of a guardian
+ */
+const getChildrenAttendance = (req,res) => {
+    const obj = req.params;
+
+    if(!obj.guardianId){
+        return res.status(400).json({message:"guardianId is required!"});
+    }
+
+    db.query(
+        {
+            //sql:" WITH children AS ( SELECT STUDENT_ID, GUARDIAN_ID FROM STUDENT_GUARDIAN WHERE GUARDIAN_ID = ?),attendance AS ( SELECT STUDENT_ID, P_DATE, PRESENT, ACADEMIC_YEAR FROM ATTENDANCE WHERE STUDENT_ID IN (SELECT STUDENT_ID FROM children)) SELECT * FROM attendance ORDER BY STUDENT_ID, ACADEMIC_YEAR DESC, P_DATE DESC;",
+            //sql:" SELECT * FROM ATTENDANCE WHERE STUDENT_ID = ?;",
+            sql: "SELECT  ROW_NUMBER() OVER(ORDER BY P_DATE) AS id,P_DATE,PRESENT,ACADEMIC_YEAR   FROM ATTENDANCE WHERE STUDENT_ID = ?;",
+            timeout:40000, 
+            values:[
+                obj.guardianId
+                ]
+        },
+        (error,result,fields) => {
+            if(error){
+                return res.status(500).json("error");
+            }
+            return res.status(200).json(result);
+        }
+    )
+}
 
 module.exports = {
     createGuardian,
     getGuardians,
     getGuardianById,
-
+    getChildren,
+    getChildrenAttendance
 }

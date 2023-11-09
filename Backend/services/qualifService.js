@@ -11,44 +11,47 @@ const linkQualification = (req, res) => {
   }
 
   //Need to add check for faculty existence,
-  db.query({
-    sql: "SELECT * FROM ?? WHERE ?? = ?",
-    values: ["QUALIFICATION", "QUALIFICATION_ID", obj.qualificationID],
-  }, (error, results, fields)=>{
-    if (error) return res.status(500).json({ message: "unkown error!" });
+  db.query(
+    {
+      sql: "SELECT * FROM ?? WHERE ?? = ?",
+      values: ["QUALIFICATION", "QUALIFICATION_ID", obj.qualificationID],
+    },
+    (error, results, fields) => {
+      if (error) return res.status(500).json({ message: "unkown error!" });
       if (results.length === 0)
         return res.status(400).json({ message: "Qualification DNE" });
-        db.query(
-          {
-            sql: "SELECT * FROM ?? WHERE ?? = ?",
-            values: ["USERS", "USER_ID", obj.facultyID],
-          },
-          (error, results, fields) => {
-            if (error) return res.status(500).json({ message: "unkown error!" });
-            if (results.length === 0)
-              return res.status(400).json({ message: "User DNE" });
-            db.query(
-              {
-                sql: "INSERT INTO ?? (??,??) VALUES (? ,?)",
-                values: [
-                  "FACULTY_QUALIFICATION",
-                  "FACULTY_ID",
-                  "QUALIFICATION_ID",
-                  obj.facultyID,
-                  obj.qualificationID,
-                ],
-              },
-              (error, result, fields) => {
-                if (error) return res.status(500).json({ message: "unkown error!" });
-                return res
-                  .status(200)
-                  .json({ message: "qualification successfully added to faculty" });
-              }
-            );
-          }
-        );
-  });
-  
+      db.query(
+        {
+          sql: "SELECT * FROM ?? WHERE ?? = ?",
+          values: ["USERS", "USER_ID", obj.facultyID],
+        },
+        (error, results, fields) => {
+          if (error) return res.status(500).json({ message: "unkown error!" });
+          if (results.length === 0)
+            return res.status(400).json({ message: "User DNE" });
+          db.query(
+            {
+              sql: "INSERT INTO ?? (??,??) VALUES (? ,?)",
+              values: [
+                "FACULTY_QUALIFICATION",
+                "FACULTY_ID",
+                "QUALIFICATION_ID",
+                obj.facultyID,
+                obj.qualificationID,
+              ],
+            },
+            (error, result, fields) => {
+              if (error)
+                return res.status(500).json({ message: "unkown error!" });
+              return res.status(200).json({
+                message: "qualification successfully added to faculty",
+              });
+            }
+          );
+        }
+      );
+    }
+  );
 };
 
 const createQualification = (req, res) => {

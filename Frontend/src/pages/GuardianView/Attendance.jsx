@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
 import SimpleBackdrop from "../../components/util-components/Loader";
 import GuardianNavbar from "../../components/Navbars/GuardianNavbar";
+import CustomizedTables from "../../components/GuardianComponents/GuardianAttendanceTable";
 import GuardianTabs from "../../components/GuardianComponents/GuardianAttendanceTabs";
 import { getAllChildren } from "../../apis/guardian/getAllChildren";
-import GuardianLedgerTabs from "../../components/GuardianComponents/GuardianLedgerTabs";
 
-const Ledger = () => {
+const GuardianAttendance = () => {
     const [render, setRender] = useState(false);
     const [children, setChildren] = useState([]);
     const [userid, setId] = useState("");
@@ -42,7 +42,7 @@ const Ledger = () => {
             {render && children.length !== 0 ? (
                 <div className="div1">
                     <GuardianNavbar />
-                    <GuardianLedgerTabs children={children}/>
+                    <GuardianTabs children={children} />
                 </div>
             ) : (
                 <SimpleBackdrop
@@ -54,4 +54,4 @@ const Ledger = () => {
     );
 };
 
-export default Ledger;
+export default GuardianAttendance;
