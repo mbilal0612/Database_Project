@@ -13,6 +13,10 @@ body{
     margin:0px;
 }
 
+.courseButton{
+  align-items: left;
+}
+
 .read-the-docs {
   color: #888;
 }
@@ -87,6 +91,9 @@ body{
     display: inline-block;}
   .contant_box_404{ margin-top:-50px;}
 
+.Welcome_line{
+  text-align: left;
+}
 /*======================
     end of 404 page
 =======================*/

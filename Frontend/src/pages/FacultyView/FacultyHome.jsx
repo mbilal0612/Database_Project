@@ -1,34 +1,45 @@
-import React, {useEffect, useState} from 'react'
-import { decryptToken } from '../../apis/auth/getUserType';
-import SimpleBackdrop from '../../components/util-components/Loader';
-import FacultyNavbar from '../../components/Navbars/FacultyNavbar';
+import React, { useEffect, useState } from "react";
+import { decryptToken } from "../../apis/auth/getUserType";
+import { getDetails } from "../../apis/Faculty/getDetails";
+import SimpleBackdrop from "../../components/util-components/Loader";
+import FacultyNavbar from "../../components/Navbars/FacultyNavbar";
+import FacultyWelcome from "../../components/Welcome Message/facultyWelcome";
 
 const FacultyHome = () => {
-  const [render, setRender] = useState(false);
-  useEffect(()=>{
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState();
 
-    const checkUserType = async () =>{
+  useEffect(() => {
+    const getDetail = async () => {
       const token = sessionStorage.getItem("token");
       const decryptedToken = await decryptToken(token);
-      const userType = decryptedToken.data["userType"];
-      console.log(userType);
-      if( userType !== "FACULTY"){
-        window.location.assign("/UNATHORIZEDACCESS");
-      }
-      else setRender(true);
-    }
-    
-    checkUserType();
-  });
+      const res = await getDetails(
+        decryptedToken.data.id,
+        sessionStorage.getItem("token")
+      );
+      setName(res.data.FIRST_NAME);
+      setLoading(false);
+    };
 
-  
+    setLoading(true);
+    getDetail();
+  }, []);
+
   return (
-    <>{render ? (
-    <div className="div1">
-    <FacultyNavbar />
-    FacultyHome</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
-    
-  )
-}
+    <>
+      {loading ? (
+        <SimpleBackdrop
+          currentOpenState={true}
+          handleClose={() => {}}
+        ></SimpleBackdrop>
+      ) : (
+        <div className="div1">
+          <FacultyNavbar />
+          <FacultyWelcome name={name} />
+        </div>
+      )}
+    </>
+  );
+};
 
-export default FacultyHome
+export default FacultyHome;
