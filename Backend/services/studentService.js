@@ -162,9 +162,9 @@ const getStudentById = (req,res) =>{
                 return res.status(500).json({message:"Something went wrong please try again later..."});
             }else{
                 if(results.length===0) return res.status(400).json({message:"This ID does not belong to any student"});
-                return res.status(200).json({
-                    results: results
-                });
+                return res.status(200).json(
+                    results[0]
+                );
             }
         }
     )
