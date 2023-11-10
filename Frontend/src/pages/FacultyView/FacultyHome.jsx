@@ -3,7 +3,7 @@ import { decryptToken } from "../../apis/auth/getUserType";
 import { getDetails } from "../../apis/Faculty/getDetails";
 import SimpleBackdrop from "../../components/util-components/Loader";
 import FacultyNavbar from "../../components/Navbars/FacultyNavbar";
-import FacultyWelcome from "../../components/Welcome Message/facultyWelcome";
+import FacultyWelcome from "../../components/Welcome Message/FacultyWelcome";
 
 const FacultyHome = () => {
   const [loading, setLoading] = useState(false);

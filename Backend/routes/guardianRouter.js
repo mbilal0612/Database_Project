@@ -12,4 +12,8 @@ router.get("/getAllChildren/:guardianId", tryCatch(guardianService.getChildren))
 router.get("/getAllChildrenAttendance/:guardianId", tryCatch(guardianService.getChildrenAttendance));
 router.get("/getChildrenFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/getStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
+router.get("/getChildrenClass/:studentId", tryCatch(guardianService.getChildrenClass));
+router.get("/getClassCourse/:classId", tryCatch(guardianService.getClassCourse));
+router.get("/getChildrenCourseAssessment/:studentId/:courseId", tryCatch(guardianService.getChildrenCourseAssessment));
+
 module.exports = router;

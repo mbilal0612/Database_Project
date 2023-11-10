@@ -5,11 +5,13 @@ import GuardianNavbar from "../../components/Navbars/GuardianNavbar";
 import CustomizedTables from "../../components/GuardianComponents/GuardianAttendanceTable";
 import GuardianTabs from "../../components/GuardianComponents/GuardianAttendanceTabs";
 import { getAllChildren } from "../../apis/guardian/getAllChildren";
+import GuardianGradeTabs from "../../components/GuardianComponents/GuardianGradeTabs";
 
 const GuardianGrade = () => {
     const [render, setRender] = useState(false);
     const [children, setChildren] = useState([]);
     const [userid, setId] = useState("");
+    
 
     useEffect(() => {
         const checkUserType = async () => {
@@ -31,7 +33,7 @@ const GuardianGrade = () => {
             getAllChildren(userid).then((res) => {
                 setChildren(res.data.results);
             });
-            console.log(children);
+            // console.log(children);
         };
 
         handleChildren();
@@ -42,7 +44,7 @@ const GuardianGrade = () => {
             {render && children.length !== 0 ? (
                 <div className="div1">
                     <GuardianNavbar />
-                    <GuardianTabs children={children} />
+                    <GuardianGradeTabs children={children}/>
                 </div>
             ) : (
                 <SimpleBackdrop
