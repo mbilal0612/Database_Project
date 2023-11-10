@@ -5,6 +5,7 @@ import SimpleBackdrop from "../../components/util-components/Loader";
 import FacultyNavbar from "../../components/Navbars/FacultyNavbar";
 import OutlinedCard from "../../components/CourseCard";
 import { getFacultyCourses } from "../../apis/Faculty/AllCourses";
+import { Box, Grid } from "@mui/material";
 
 const Courses = () => {
   const [loading, setLoading] = useState(true);
@@ -45,14 +46,21 @@ const Courses = () => {
       ) : (
         <div className="div1">
           <FacultyNavbar />
+
           {courses.map((iter) => {
             return (
-              <OutlinedCard
-                key={i++}
+              <div style={{margin:"1%"}} key={i++}>
+              <OutlinedCard 
                 subject_code={iter.COURSE_ID}
                 subject={iter.COURSE_NAME}
                 grade={iter.CLASS_ID}
+                click={() => {
+                  sessionStorage.setItem("classId", iter.CLASS_ID);
+                  sessionStorage.setItem("courseId", iter.COURSE_ID);
+                  window.location.assign("/ClassDetails");
+                }}
               />
+              </div>
             );
           })}
         </div>
