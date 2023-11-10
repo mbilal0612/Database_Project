@@ -4,7 +4,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { Paper } from "@mui/material";
-import GuardianLedgerTable from "./GuardianLedgerTable";
+import GuardianGradeTable from "./GuardianGradeTable";
 import { useEffect } from "react";
 
 function CustomTabPanel(props) {
@@ -36,14 +36,13 @@ function a11yProps(index) {
     };
 }
 
-export default function GuardianLedgerTabs({ children }) {
+export default function GuardianGradeTabs({ children }) {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        // if(children){
-        //     setValue(children[newValue].STUDENT_ID);
-        // }
+
+        // console.log(value);
     };
 
     useEffect(() => {
@@ -51,6 +50,7 @@ export default function GuardianLedgerTabs({ children }) {
             setValue(children[0].STUDENT_ID);
         }
     }, [children]);
+    // console.log("tab", children);
 
     return (
         <Paper sx={{ m: 2, height: "100%" }} elevation={24}>
@@ -71,7 +71,7 @@ export default function GuardianLedgerTabs({ children }) {
             </Box>
             {children.map((c) => (
                 <CustomTabPanel value={value} index={c.STUDENT_ID}>
-                    <GuardianLedgerTable studentId={c.STUDENT_ID} />
+                    <GuardianGradeTable studentId={c.STUDENT_ID} />
                 </CustomTabPanel>
             ))}
         </Paper>

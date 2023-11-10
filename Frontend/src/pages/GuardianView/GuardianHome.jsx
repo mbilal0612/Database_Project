@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
-import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    Grid,
-    Paper,
-    Typography,
-} from "@mui/material";
-import CircularWithValueLabel from "../../components/util-components/circularProgressWithLabel.jsx";
-import CustomizedProgressBars from "../../components/util-components/FacebookCircularProgress.jsx";
+import { Paper } from "@mui/material";
 import SimpleBackdrop from "../../components/util-components/Loader";
 import GuardianNavbar from "../../components/Navbars/GuardianNavbar";
 import OutlinedCard from "../../components/CardV2";
