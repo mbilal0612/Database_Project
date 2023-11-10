@@ -51,9 +51,7 @@ const AdminHome = () => {
                                 onChange={inputHandler}
                             />
                         </div>
-                        <Grid container spacing={2} style={{ justifyContent: 'center', margin: '1% 0 0 0' }}>
                             <Kards input={inputText}></Kards>
-                        </Grid>
                     </Box>
                 </div>
 

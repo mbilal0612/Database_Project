@@ -1,5 +1,6 @@
 import data from '../ComponentData/AdminHomeKard.json'
 import Kard from '../Kard';
+import Grid from '@mui/system/Unstable_Grid/Grid';
 
 function Kards(props) {
 
@@ -15,7 +16,7 @@ function Kards(props) {
     })
 
     return (
-        <ul>
+        <Grid container spacing={2} style={{ justifyContent: 'center', margin: '1% 0 0 0' }}>
             {filteredData.map
                 (
                     (item) => (
@@ -25,7 +26,7 @@ function Kards(props) {
                     )
                 )
             }
-        </ul>
+        </Grid>
     )
 }
 

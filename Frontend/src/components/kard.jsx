@@ -17,7 +17,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function OutlinedCard({ title = 'Outlined', domain = 'default content', desc = 'This card takes you some place', Click}) {
     return (
-        <Box sx={{ minWidth: 275, maxWidth:275, minHeight:200, maxHeight:275 }}>
+        <Box sx={{ minWidth: 275, maxWidth:275, maxHeight:275, marginRight:"0.5%", marginTop:"1%", boxShadow:3, borderRadius:3 }}>
             <Card variant="outlined">
                 <React.Fragment>
                     <CardContent>
