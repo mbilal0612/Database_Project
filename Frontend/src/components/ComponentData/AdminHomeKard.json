@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Create Credentials",
+        "domain": "ERP",
+        "desc" : "Creates credentials for a user.",
+        "url":"404"
+    },
+    {
+        "title": "Create Arrears By Grade",
+        "domain": "Finance",
+        "desc" : "Creates arrears for a class.",
+        "url":"404"
+    },
+    {
+        "title": "Create Course",
+        "domain": "Academics",
+        "desc" : "Creates course.",
+        "url":"404"
+    }
+]
