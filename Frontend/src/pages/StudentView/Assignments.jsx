@@ -30,7 +30,7 @@ const Assignments = () => {
       <>
         <div className="div1">
           <StudentNavbar />
-          Assignments</div>
+        </div>
         <div className="S1">
           Your Assignments:
         </div>  
@@ -40,16 +40,16 @@ const Assignments = () => {
         <Card sx={{ height:'100%', width:'90%', backgroundColor:'#F2F2F2', fontFamily:'Inter', marginTop:'1%', marginBottom:'1%', borderRadius: '15px' }}>
       <CardContent>
         <Typography sx={ { fontSize:36, fontWeight:800, textAlign:'start', fontFamily:'Arial, Helvetica, sans-serif', paddingLeft: '1%' } }>
-          Assignment1 title
+          Mathematics Assignment 1
         </Typography>
         <Grid container spacing={2} sx={{justifyContent:'space-between'}}>
           <Grid sx={{ textAlign:'start', pl:2, fontSize:24, fontWeight:800, paddingLeft: '3%' }}>
-            <p>Course: CourseName</p>
-            <p>Course ERP: 4286</p>
-            <p>Teacher: Miss Ayesha</p>
+            <p>Course: Mathematics</p>
+            <p>Course ERP: math1</p>
+            <p>Teacher: Miss Sana</p>
           </Grid>
           <Grid sx={{ textAlign:'start', fontSize:24, fontWeight:800, display:'flex', alignItems:'center'}}>
-            <p>Due Date: MM/DD/YY</p>
+            <p>Due Date: 12/04/23</p>
           </Grid>
           <Grid  sx={{ display:'flex', flexDirection:'column-reverse'}}>
             <Button href="/AssignmentPage" sx={{backgroundColor: 'black', color: 'white', borderRadius: '12px', fontSize:15}}>
@@ -63,16 +63,16 @@ const Assignments = () => {
     <Card sx={{ height:'100%', width:'90%', backgroundColor:'#F2F2F2', fontFamily:'Inter', marginTop:'1%', marginBottom:'1%', borderRadius: '15px' }}>
       <CardContent>
         <Typography sx={ { fontSize:36, fontWeight:800, textAlign:'start', fontFamily:'Arial, Helvetica, sans-serif', paddingLeft: '1%' } }>
-          Assignment2 title
+          Physics Assignment 1
         </Typography>
         <Grid container spacing={2} sx={{justifyContent:'space-between'}}>
           <Grid sx={{ textAlign:'start', pl:2, fontSize:24, fontWeight:800, paddingLeft: '3%' }}>
-            <p>Course: CourseName</p>
-            <p>Course ERP: 4286</p>
-            <p>Teacher: Miss Ayesha</p>
+            <p>Course: Physics</p>
+            <p>Course ERP: phys1</p>
+            <p>Teacher: Sir Tariq</p>
           </Grid>
           <Grid sx={{ textAlign:'start', fontSize:24, fontWeight:800, display:'flex', alignItems:'center'}}>
-            <p>Due Date: MM/DD/YY</p>
+            <p>Due Date: 01/12/23</p>
           </Grid>
           <Grid  sx={{ display:'flex', flexDirection:'column-reverse'}}>
             <Button href="/AssignmentPage" sx={{backgroundColor: 'black', color: 'white', borderRadius: '12px', fontSize:15}}>
@@ -88,16 +88,16 @@ const Assignments = () => {
         <Card sx={{ height:'100%', width:'90%', backgroundColor:'#F2F2F2', fontFamily:'Inter', marginTop:'1%', marginBottom:'1%', borderRadius: '15px' }}>
       <CardContent>
         <Typography sx={ { fontSize:36, fontWeight:800, textAlign:'start', fontFamily:'Arial, Helvetica, sans-serif', paddingLeft: '1%' } }>
-          Assignment3 title
+          English Assignment 1
         </Typography>
         <Grid container spacing={2} sx={{justifyContent:'space-between'}}>
           <Grid sx={{ textAlign:'start', pl:2, fontSize:24, fontWeight:800, paddingLeft: '3%' }}>
-            <p>Course: CourseName</p>
-            <p>Course ERP: 4286</p>
+            <p>Course: English</p>
+            <p>Course ERP: eng1</p>
             <p>Teacher: Miss Ayesha</p>
           </Grid>
           <Grid sx={{ textAlign:'start', fontSize:24, fontWeight:800, display:'flex', alignItems:'center'}}>
-            <p>Due Date: MM/DD/YY</p>
+            <p>Due Date: 05/11/23</p>
           </Grid>
           <Grid  sx={{ display:'flex', flexDirection:'column-reverse'}}>
             <Button href="/AssignmentPage" sx={{backgroundColor: 'black', color: 'white', borderRadius: '12px', fontSize:15}}>
