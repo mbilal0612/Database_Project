@@ -26,6 +26,7 @@ import EnterMarks from "./pages/FacultyView/EnterMarks";
 import GuardianAttendance from "./pages/GuardianView/Attendance";
 import GuardianGrade from "./pages/GuardianView/GuardianGrade";
 import ClassDetails from "./pages/FacultyView/ClassDetails";
+import StudentDetails from "./pages/FacultyView/StudentDetails";
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = useState(false);
@@ -75,6 +76,7 @@ function App() {
           <Route path="/Courses" element={<Courses />} />
           <Route path="/EnterMarks" element={<EnterMarks />} />
           <Route path="/ClassDetails" element={<ClassDetails />} />
+          <Route path="/ClassDetails/StudentDetails" element={<StudentDetails/>} />
           //not FOUND
           <Route path="*" Component={NotFound} />
         </Routes>

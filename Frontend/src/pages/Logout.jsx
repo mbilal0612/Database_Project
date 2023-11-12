@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SimpleBackdrop from "../components/util-components/Loader";
 
 function logout() {
-  sessionStorage.removeItem("token");
-  window.location.assign("/");
+  useEffect(() => {
+    sessionStorage.clear();
+    window.location.assign("/");
+  }, []);
 
   return (
     <>

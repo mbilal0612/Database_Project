@@ -191,6 +191,33 @@ const updateCourse = (req, res) => {
   );
 };
 
+const getCourseDetails = (req, res) => {
+  var obj = req.params;
+  if (!obj.classId)
+    return res.status(400).json({ message: "class id is required" });
+  
+  db.query(
+    {
+      sql: "SELECT * FROM ?? JOIN ?? ON ??=??  WHERE ?? = ? ",
+      values: [
+        "USERS",
+        "STUDENT_ACADEMIC_HISTORY",
+        "STUDENT_ID",
+        "USER_ID",
+        "CLASS_ID",
+        obj.classId,
+      ],
+    },
+    (error, results, fields) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Unknown errorrr occured" });
+      }
+      return res.status(200).json(results);
+    }
+  );
+};
+
 module.exports = {
   createCourse,
   getCourseById,
@@ -199,4 +226,5 @@ module.exports = {
   getSimilarCourse,
   getFacultyCourses,
   getStudentCourses,
+  getCourseDetails,
 };

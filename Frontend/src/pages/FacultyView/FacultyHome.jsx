@@ -16,7 +16,8 @@ const FacultyHome = () => {
         decryptedToken.data.id,
         sessionStorage.getItem("token")
       );
-      setName(res.data.FIRST_NAME + " "+ res.data.LAST_NAME);
+      
+      setName(res.data.FIRST_NAME + " " + res.data.LAST_NAME);
       setLoading(false);
     };
 
@@ -32,10 +33,14 @@ const FacultyHome = () => {
           handleClose={() => {}}
         ></SimpleBackdrop>
       ) : (
-        <div className="div1">
-          <FacultyNavbar />
-          <h1 className="S1">Welcome, <br></br>{name} </h1>
-          
+        <div className="temp">
+          <div className="div1">
+            <FacultyNavbar />
+            <h1 className="S1">
+              Welcome, <br></br>
+              {name}{" "}
+            </h1>
+          </div>
         </div>
       )}
     </>
