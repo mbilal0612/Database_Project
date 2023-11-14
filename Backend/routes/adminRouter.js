@@ -22,6 +22,8 @@ var enrollmentService = require("../services/enrollmentService");
 var userService = require("../services/userService");
 let programService = require("../services/programService");
 let ploService = require("../services/ploService");
+let nationalitiesService = require("../services/nationalityService");
+let religionService = require("../services/religionService");
 
 router.post("/createAdmin",[auth,adminAuth] ,tryCatch(adminService.createAdmin));       //not used
 router.post("/createClass",[auth,adminAuth], tryCatch(classService.createClass));
@@ -98,6 +100,8 @@ router.get("/getClassByID/:classID", tryCatch(classService.getClassByID));
 router.get("/allPrograms", tryCatch(programService.getAllPrograms));
 router.get("/getProgram/:programName", tryCatch(programService.getProgramByID));
 router.get("/ploForProgram/:programName", tryCatch(ploService.getPloByProgram));
+router.get("/getNationalities", tryCatch(nationalitiesService.getNationalities));
+router.get("/getReligions", tryCatch(religionService.getReligions));
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));

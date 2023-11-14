@@ -122,11 +122,13 @@ const createUser = (req, res) => {
 							}
 						}
 
-						if (obj.roleID !== "GUARDIAN" || obj.roleID !== "STUDENT") {
+						console.log(obj.roleID);
+
+						if (!(obj.roleID == "STUDENT" || obj.roleID == "GUARDIAN")) {
 							if (!obj.salary) {
 								return res.status(400).json({
 									message:
-										"MissingInputException: Salary is missing for employee type.",
+										"MissingInputException: Salary is missing for employee type. [0]",
 								});
 							}
 						}
@@ -470,7 +472,7 @@ const queryLogin = (req, res) => {
 };
 
 const developmentCreateUser = (req, res) => {
-	
+
 	var obj = req.body;
 
 	if (!obj.firstName) {
@@ -593,7 +595,7 @@ const developmentCreateUser = (req, res) => {
 							if (!obj.salary) {
 								return res.status(400).json({
 									message:
-										"MissingInputException: Salary is missing for employee type.",
+										"MissingInputException: Salary is missing for employee type. [1]",
 								});
 							}
 						}
@@ -721,60 +723,60 @@ const developmentForcePasswordReset = (req, res) => {
 
 	var obj = req.body;
 
-	if(!obj.password){
-		return res.status(400).json({message: "MissingDataException: Password is needed!"});
+	if (!obj.password) {
+		return res.status(400).json({ message: "MissingDataException: Password is needed!" });
 	}
-	if(!obj.email){
-		return res.status(400).json({message: "MissingDataException: Email is needed!"});
+	if (!obj.email) {
+		return res.status(400).json({ message: "MissingDataException: Email is needed!" });
 	}
 
 	db.query(
 		{
 			sql: "SELECT * FROM ?? WHERE ?? = ?",
-			values:[
+			values: [
 				"USERS",
 				"EMAIL_ADDRESS",
 				obj.email
 			]
 		}, (errors, results, fields) => {
 
-			if(errors){
-				return res.status(500).json({message: "SQLSkill_IssueException: Get better at it my nigga!"});
+			if (errors) {
+				return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga!" });
 			}
 
-			if(results.length == 0){
-				return res.status(401).json({message: "MissingDataException: Queried user DNE."});
+			if (results.length == 0) {
+				return res.status(401).json({ message: "MissingDataException: Queried user DNE." });
 			}
 
-			bcrypt.genSalt(12, function(errors, salt){
+			bcrypt.genSalt(12, function (errors, salt) {
 
-				if(errors){
-					return res.status(500).json({message: "Skill_IssueException: Learn2Salt"});
+				if (errors) {
+					return res.status(500).json({ message: "Skill_IssueException: Learn2Salt" });
 				}
 
-				bcrypt.hash(obj.password, salt, function(errors, hash){
+				bcrypt.hash(obj.password, salt, function (errors, hash) {
 
-					if(errors){
-						return res.status(500).json({message: "Skill_IssueException: Learn2Hash"});
+					if (errors) {
+						return res.status(500).json({ message: "Skill_IssueException: Learn2Hash" });
 					}
 
 					db.query(
 						{
-							sql:"UPDATE ?? SET ?? = ? WHERE ?? = ?;",
-							values:[
+							sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?;",
+							values: [
 								"USERS",
 								"P_HASH",
 								hash,
 								"EMAIL_ADDRESS",
 								obj.email
 							]
-						}, (errors, results, fields) =>{
+						}, (errors, results, fields) => {
 
-							if(errors){
-								return res.status(500).json({message: "SQLSkill_IssueException: Get better at it my nigga!"});
+							if (errors) {
+								return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga!" });
 							}
 
-							return res.status(200).json({message:"Password Changed Sarge!"});
+							return res.status(200).json({ message: "Password Changed Sarge!" });
 
 						}
 					)
@@ -786,7 +788,7 @@ const developmentForcePasswordReset = (req, res) => {
 			)
 
 		}
-		)
+	)
 
 };
 

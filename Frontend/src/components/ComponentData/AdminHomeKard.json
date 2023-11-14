@@ -2,91 +2,55 @@
     {
         "title": "Create Credentials",
         "domain": "ERP",
-        "desc" : "Creates credentials for a user.",
-        "url":"404"
+        "desc": "Creates credentials for a user.",
+        "status": true,
+        "url": "/AdminHome/CreateUser"
     },
     {
-        "title": "Create Arrears By Grade",
+        "title": "Create Arrears",
         "domain": "Finance",
-        "desc" : "Creates arrears for a class.",
-        "url":"404"
+        "desc": "Creates ledgerizable arrears.",
+        "url": "404"
     },
     {
-        "title": "Create Course",
-        "domain": "Academics",
-        "desc" : "Creates course.",
-        "url":"404"
-    },
+        "title": "Assign Guardian",
+        "domain": "Student Affairs",
+        "desc": "Assign Guardian to Students.",
+        "url": "404"
+    },    
     {
-        "title": "Create Arrears By Grade",
+        "title": "Delete Arrears",
         "domain": "Finance",
-        "desc" : "Creates arrears for a class.",
-        "url":"404"
+        "desc": "Deletes ledgerized arrears.",
+        "url": "404"
     },
     {
-        "title": "Create Course",
+        "title": "Create Program",
         "domain": "Academics",
-        "desc" : "Creates course.",
-        "url":"404"
+        "desc": "Creates an enrollable program.",
+        "url": "404"
     },
     {
-        "title": "Create Arrears By Grade",
-        "domain": "Finance",
-        "desc" : "Creates arrears for a class.",
-        "url":"404"
+        "title": "Add Classroom",
+        "domain": "Architecture",
+        "desc": "Creates an assignable classroom.",
+        "url": "404"
     },
     {
-        "title": "Create Course",
+        "title": "Create Academic Year",
         "domain": "Academics",
-        "desc" : "Creates course.",
-        "url":"404"
+        "desc": "Start a new term.",
+        "url": "404"
+    },    {
+        "title": "Force Change Password",
+        "domain": "ERP",
+        "desc": "Reset User Password",
+        "url": "404"
     },
     {
-        "title": "Create Arrears By Grade",
-        "domain": "Finance",
-        "desc" : "Creates arrears for a class.",
-        "url":"404"
-    },
-    {
-        "title": "Create Course",
-        "domain": "Academics",
-        "desc" : "Creates course.",
-        "url":"404"
-    },
-    {
-        "title": "Create Arrears By Grade",
-        "domain": "Finance",
-        "desc" : "Creates arrears for a class.",
-        "url":"404"
-    },
-    {
-        "title": "Create Course",
-        "domain": "Academics",
-        "desc" : "Creates course.",
-        "url":"404"
-    },
-    {
-        "title": "Create Arrears By Grade",
-        "domain": "Finance",
-        "desc" : "Creates arrears for a class.",
-        "url":"404"
-    },
-    {
-        "title": "Create Course",
-        "domain": "Academics",
-        "desc" : "Creates course.",
-        "url":"404"
-    },
-    {
-        "title": "Create Arrears By Grade",
-        "domain": "Finance",
-        "desc" : "Creates arrears for a class.",
-        "url":"404"
-    },
-    {
-        "title": "Create Course",
-        "domain": "Academics",
-        "desc" : "Creates course.",
-        "url":"404"
+        "title": "Delete System32",
+        "domain": "Operating System",
+        "desc": "Press Proceed if have balls!",
+        "url": "404"
     }
 ]

@@ -25,64 +25,65 @@ import Courses from "./pages/FacultyView/Courses";
 import EnterMarks from "./pages/FacultyView/EnterMarks";
 import GuardianAttendance from "./pages/GuardianView/Attendance";
 import GuardianGrade from "./pages/GuardianView/GuardianGrade";
+import CreateCredentials from "./pages/AdminView/CreateCredentials";
 import ClassDetails from "./pages/FacultyView/ClassDetails";
 import StudentDetails from "./pages/FacultyView/StudentDetails";
 
 function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(false);
 
+    const [isLoggedIn, setisLoggedIn] = useState(false);
 
-
-  React.useEffect(() => {
-    const check = () => {
-      const token = sessionStorage.getItem("token");
-      console.log(token);
-      if (token) return true;
-      else return false;
-    };
-    setisLoggedIn(check);
-  }, []);
-  return (
-    <BrowserRouter>
-      {!isLoggedIn ? (
-        <Routes>
-          <Route path="/" Component={Login2} />
-          <Route path="*" Component={NotFound} />
-        </Routes>
-      ) : (
-        <Routes>
+    React.useEffect(() => {
+        const check = () => {
+            const token = sessionStorage.getItem("token");
+            console.log(token);
+            if (token) return true;
+            else return false;
+        };
+        setisLoggedIn(check);
+    }, []);
+    return (
+        <BrowserRouter>
+            {!isLoggedIn ? (
+                <Routes>
+                    <Route path="/" Component={Login2} />
+                    <Route path="*" Component={NotFound} />
+                </Routes>
+            ) : (
+                <Routes>
           //routes for admin view
-          <Route path="/AdminHome" element={<AdminHome />} />
-          <Route path="/Student" element={<Student />} />
-          <Route path="/Guardian" element={<Guardian />} />
-          <Route path="/Admin" element={<Admin />} />
-          <Route path="/Faculty" element={<Faculty />} />
+                    <Route path="/AdminHome" element={<AdminHome />} />
+                    <Route path="/AdminHome/CreateUser" element={<CreateCredentials />}></Route>
+                    <Route path="/Student" element={<Student />} />
+                    <Route path="/Guardian" element={<Guardian />} />
+                    <Route path="/Admin" element={<Admin />} />
+                    <Route path="/Faculty" element={<Faculty />} />
           //routes for student view
-          <Route path="/StudentHome" element={<StudentHome />} />
-          <Route path="/Assignments" element={<Assignments />} />
-          <Route path="/Attendance" element={<Attendance />} />
-          <Route path="/Grades" element={<Grades />} />
-          <Route path="/Schedule" element={<Schedule />} />
-          <Route path="/Course" element={<Course />} />
-          <Route path="/AssignmentPage" element={<AssignmentPage />} />
+                    <Route path="/StudentHome" element={<StudentHome />} />
+                    <Route path="/Assignments" element={<Assignments />} />
+                    <Route path="/Attendance" element={<Attendance />} />
+                    <Route path="/Grades" element={<Grades />} />
+                    <Route path="/Schedule" element={<Schedule />} />
+                    <Route path="/Course" element={<Course />} />
+                    <Route path="/AssignmentPage" element={<AssignmentPage />} />
           //routes for guardian view
-          <Route path="/GuardianHome" element={<GuardianHome />} />
-          <Route path="/Ledger" element={<Ledger />} />
-          <Route path="/GuardianAttendance" element={<GuardianAttendance />} />
-          <Route path="/GuardianGrade" element={ <GuardianGrade/>} />
+                    <Route path="/GuardianHome" element={<GuardianHome />} />
+                    <Route path="/Ledger" element={<Ledger />} />
+                    <Route path="/GuardianAttendance" element={<GuardianAttendance />} />
+                    <Route path="/GuardianGrade" element={<GuardianGrade />} />
           //routes for faculty view
-          <Route path="/FacultyHome" element={<FacultyHome />} />
-          <Route path="/APCreation" element={<APCreation />} />
-          <Route path="/Courses" element={<Courses />} />
-          <Route path="/EnterMarks" element={<EnterMarks />} />
-          <Route path="/ClassDetails" element={<ClassDetails />} />
-          <Route path="/ClassDetails/StudentDetails" element={<StudentDetails/>} />
+                    <Route path="/FacultyHome" element={<FacultyHome />} />
+                    <Route path="/APCreation" element={<APCreation />} />
+                    <Route path="/Courses" element={<Courses />} />
+                    <Route path="/EnterMarks" element={<EnterMarks />} />
+                    <Route path="/ClassDetails" element={<ClassDetails />} />
+                    <Route path="/ClassDetails/StudentDetails" element={<StudentDetails />} />
           //not FOUND
-          <Route path="*" Component={NotFound} />
-        </Routes>
-      )}
-    </BrowserRouter>
-  );
+                    <Route path="*" Component={NotFound} />
+                </Routes>
+            )}
+        </BrowserRouter>
+    );
 }
 
 export default App;
