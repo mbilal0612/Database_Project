@@ -10,7 +10,7 @@
         "title": "Create Arrears",
         "domain": "Finance",
         "desc": "Creates ledgerizable arrears.",
-        "url": "404"
+        "url": "/AdminHome/CreateArrears"
     },
     {
         "title": "Assign Guardian",

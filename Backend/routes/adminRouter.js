@@ -94,14 +94,16 @@ router.get("/getStudentsByClass/:classAcademicYear/:classGrade/:classSection", t
 router.get("/getStudentsByClassID/:classID", tryCatch(enrollmentService.getStudentsByClassID));
 router.get("/getStudentEntireAttendanceReport/:studentID", tryCatch(attendanceService.getStudentEntireAttendanceReport));
 router.get("/getStudentAttendanceReportByAcademicYear/:studentID/:startYear", tryCatch(attendanceService.getStudentAttendanceReportByAcademicYear));
-router.get("/getAcademicYears", tryCatch(academicYearService.getAcademicYears));
+router.get("/getAcademicYears", [auth], tryCatch(academicYearService.getAcademicYears));
 router.get("/getClassByAcademicYear/:startYear", tryCatch(classService.getClassByAcademicYear));
 router.get("/getClassByID/:classID", tryCatch(classService.getClassByID));
+router.get("/getClassesForArrears", [auth],tryCatch(classService.getClassesForArrears));
 router.get("/allPrograms", tryCatch(programService.getAllPrograms));
 router.get("/getProgram/:programName", tryCatch(programService.getProgramByID));
 router.get("/ploForProgram/:programName", tryCatch(ploService.getPloByProgram));
 router.get("/getNationalities", tryCatch(nationalitiesService.getNationalities));
 router.get("/getReligions", tryCatch(religionService.getReligions));
+router.get("/getAllClasses", [auth], tryCatch(classService.getAllClasses))
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));

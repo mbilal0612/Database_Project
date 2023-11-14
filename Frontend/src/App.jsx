@@ -26,6 +26,7 @@ import EnterMarks from "./pages/FacultyView/EnterMarks";
 import GuardianAttendance from "./pages/GuardianView/Attendance";
 import GuardianGrade from "./pages/GuardianView/GuardianGrade";
 import CreateCredentials from "./pages/AdminView/CreateCredentials";
+import CreateArrears from "./pages/AdminView/CreateArrears";
 import ClassDetails from "./pages/FacultyView/ClassDetails";
 import StudentDetails from "./pages/FacultyView/StudentDetails";
 
@@ -54,6 +55,7 @@ function App() {
           //routes for admin view
                     <Route path="/AdminHome" element={<AdminHome />} />
                     <Route path="/AdminHome/CreateUser" element={<CreateCredentials />}></Route>
+                    <Route path="/AdminHome/CreateArrears" element={<CreateArrears />}></Route>
                     <Route path="/Student" element={<Student />} />
                     <Route path="/Guardian" element={<Guardian />} />
                     <Route path="/Admin" element={<Admin />} />

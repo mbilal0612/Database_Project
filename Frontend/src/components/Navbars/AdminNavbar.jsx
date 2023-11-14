@@ -13,7 +13,7 @@ const AdminNavbar = () => {
 
     return (
         <nav>
-            <Link to="/AdminHome" className="title">LOGO</Link>
+            <Link style={{paddingLeft:'1%', paddingRight:'0'}} to="/AdminHome" className="title">Home</Link>
             <div className="menu" onClick={() => {
                 setMenuOpen(!menuOpen);
             }}>
@@ -21,8 +21,8 @@ const AdminNavbar = () => {
                 <span></span>
                 <span></span>
             </div>
-            <ul className={menuOpen ? "open" : ""}>
-                <li>
+            <ul className={menuOpen ? "open" : ""} style={{paddingRight:'1%', display:'flex', flexDirection:'row'}}>
+                <li> 
                     <Link onClick={handleLogout} to='/' className="logout">LOGOUT</Link>
                 </li>
             </ul>
