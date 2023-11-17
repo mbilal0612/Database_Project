@@ -1,18 +1,14 @@
 const db = require("../config/db").connection;
 var backendUtility = require("../services/backendUtility");
 
-const createArrearsByGrade = (req, res) =>{
+const createArrearsByGradeID = (req, res) =>{
 
     const obj = req.body;
 
-    if(!obj.grade){
+    if(!obj.gradeID){
         return res.status(500).json("MissingInputException: Grade must be defined!");
     }
     
-    if(!obj.academicYear){
-        return res.status(500).json("MissingInputException: Academic Year must be defined!");
-    }
-
     if(!obj.amount){
         return res.status(500).json("MissingInputException: Arrear amount must be defined!");
     }
@@ -20,17 +16,15 @@ const createArrearsByGrade = (req, res) =>{
     if(!obj.name){
         return res.status(500).json("MissingInputException: Arrear must have a name!");
     }
-    
-    var quer = obj.grade + "-%-"+obj.academicYear;
 
     //Example = SELECT * FROM `STUDENT` JOIN `CLASS` ON STUDENT.CLASS_ID = CLASS.CLASS_ID WHERE START_YEAR = 2023 AND YEAR = 11;
-    db.query({sql: "SELECT ?? FROM ?? WHERE ?? LIKE ?",
+    db.query({sql: "SELECT ?? FROM ?? WHERE ?? = ?",
             timeout: 40000,
             values :[
                 "STUDENT_ID",
                 "STUDENT_ACADEMIC_HISTORY",
                 "CLASS_ID",
-                quer,
+                obj.gradeID,
             ]
         }, (errors, results, fields) => {
             if(errors){
@@ -69,6 +63,81 @@ const createArrearsByGrade = (req, res) =>{
         }
         );
 };
+
+const createArrearsByGrade = (req,res) =>{
+
+    var obj = req.body;
+
+    if(!obj.name){
+        return res.status(400).json("MissingInputException: Arrear Name is missing!");
+    }
+
+    if(!obj.data){
+        return res.status(400).json("MissingInputException: ClassID is missing!");
+    }
+
+    if(!obj.amount){
+        return res.status(400).json("MissingInputException: Amount is missing!");
+    }
+
+    const grade = obj.data.split(" | ");
+
+    db.query(
+        {
+            sql:"SELECT ?? FROM ?? NATURAL JOIN ?? WHERE ?? = ? AND ?? = ?",
+            values: [
+                "STUDENT_ID",
+                "STUDENT_ACADEMIC_HISTORY",
+                "CLASS",
+                "YEAR",
+                grade[0],
+                "START_YEAR",
+                grade[1]
+            ]
+        }, (errors, results, fields)=>{
+            if(errors){
+                return res.status(400).json("SQLSkill_IssueException: Learn 2 SQL Nigga!");
+            }
+
+            if(results.length == 0){
+                return res.status(400).json("MissingDataException: Class has no students enrolled!");
+            }
+
+            let date = new Date();
+
+            console.log(results);
+
+            for(i = 0; i< results.length; i++){
+
+                db.query({
+                    sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
+                    timeout:40000,
+                    values: [
+                        "TRANSACTION",
+                        "STUDENT_ID",
+                        "T_NAME",
+                        "T_DATE",
+                        "T_AMOUNT",
+                        results[i].STUDENT_ID,
+                        obj.name,
+                        date.toISOString().slice(0, 10),
+                        obj.amount
+                    ]
+                    }, (errors, results, fields) => {
+
+                        if(errors){
+                            return res.status(500).json(error);
+                        }
+                    }
+                );
+            }
+
+            return res.status(200).json({message:"Successfully generated arrears hehe"});
+            
+        }
+    )
+
+}
 
 const createArrearsByStudentID = (req, res) =>{
 
@@ -552,6 +621,7 @@ const restoreTransactionByName = (req, res) =>{
 
 module.exports = {
     createArrearsByGrade,
+    createArrearsByGradeID,
     createArrearsByAcademicYear,
     createArrearsByStudentID,
     getStudentFee,

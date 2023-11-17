@@ -13,7 +13,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { getNat } from "../../apis/Admin/nationality"
 import { getReligions } from "../../apis/Admin/religions"
-import funcs from '../../apis/Admin/createBundle.js'
+import createUser from '../../apis/Admin/createBundle.js'
 
 const CreateCredentials = () => {
     //System States
@@ -65,7 +65,7 @@ const CreateCredentials = () => {
         console.log(req);
 
         setRender(false);
-        let x = await funcs.createUser(req, sessionStorage.getItem('token'));
+        let x = await createUser(req, sessionStorage.getItem('token'));
         setRender(true);
     };
 

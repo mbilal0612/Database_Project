@@ -10,6 +10,7 @@
         "title": "Create Arrears",
         "domain": "Finance",
         "desc": "Creates ledgerizable arrears.",
+        "status":true,
         "url": "/AdminHome/CreateArrears"
     },
     {
@@ -51,6 +52,12 @@
         "title": "Delete System32",
         "domain": "Operating System",
         "desc": "Press Proceed if have balls!",
+        "url": "404"
+    },
+    {
+        "title": "Inquire Student Fee",
+        "domain": "Finance",
+        "desc": "Return ledger of a student",
         "url": "404"
     }
 ]

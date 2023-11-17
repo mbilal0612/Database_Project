@@ -8,6 +8,7 @@ import { FormControl, FormLabel, TextField, Button, Box, Select, Checkbox, FormG
 import CardContent from '@mui/material/CardContent';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
+import { createArrearsByGrade, createArrearsByStudentID, createArrearsByGradeID, createArrearsByAcademicYear } from '../../apis/Admin/createBundle';
 
 const CreateArrears = () => {
 
@@ -15,12 +16,13 @@ const CreateArrears = () => {
     const [render, setRender] = useState(false);
 
     //Form States
-    const [grade, setGrade] = useState('');
+    const [grade, setGrade] = useState(''); //grade => GG | YYYY
     const [academicYear, setAcademicYear] = useState('');
     const [amount, setAmount] = useState(0);
     const [freq, setFreq] = useState('E');
     const [studentID, setStudentID] = useState('');
-    const [xclass, setClass] = useState('');
+    const [xclass, setClass] = useState(''); //xclass => GG-S-YYYY
+    const [name, setName] = useState('');
 
     //Mapping States
     const [years, setYears] = useState([]);
@@ -28,6 +30,57 @@ const CreateArrears = () => {
     const [classes, setClasses] = useState([]);
 
     const handleCreateArrears = async () => {
+
+        if(freq == 'A'){
+            const req = {
+                "data": grade,
+                "amount" : amount,
+                "name" : name
+            }
+
+            setRender(false);
+            let x = await createArrearsByGrade(req, sessionStorage.getItem('token'));
+            setRender(true);
+        }
+
+        if(freq == 'B'){
+            const req = {
+                "academicYear": academicYear,
+                "amount" : amount,
+                "name" : name
+            }
+
+            setRender(false);
+            let x = await createArrearsByGradeID(req, sessionStorage.getItem('token'));
+            setRender(true);
+        }
+
+        if(freq == 'C'){
+            const req = {
+                "grade": grade,
+                "academicYear":academicYear,
+                "amount" : amount,
+                "name" : name
+            }
+
+            setRender(false);
+            let x = await createArrearsByAcademicYear(req, sessionStorage.getItem('token'));
+            setRender(true);
+
+        }
+
+        if(freq == 'D'){
+            const req = {
+                "studentID": studentID,
+                "amount" : amount,
+                "name" : name
+            }
+
+            setRender(false);
+            let x = await createArrearsByStudentID(req, sessionStorage.getItem('token'));
+            setRender(true);
+
+        }
 
     }
 
@@ -89,7 +142,11 @@ const CreateArrears = () => {
                                     <MenuItem value={'D'}>By StudentID</MenuItem>
                                     <MenuItem value={'E'}>None</MenuItem>
                                 </Select>
-                                <TextField style={{ marginTop: '3%' }} label='Arrear Name'></TextField>
+                                <TextField style={{ marginTop: '3%' }} label='Arrear Name' onChange={
+                                    (data) => {
+                                        setName(data.target.value);
+                                    }
+                                }></TextField>
                                 <TextField style={{ marginTop: '3%' }} type='Number'
                                     label="Amount" size='large' onChange={(data) => {
                                         if (data.target.value < 1) {
@@ -148,7 +205,7 @@ const CreateArrears = () => {
                                         {
                                             grades.results.map(
                                                 (item) => (
-                                                    <MenuItem value={item.YEAR}>{item.YEAR + " | " + item.START_YEAR}</MenuItem>
+                                                    <MenuItem value={item.YEAR + " | " + item.START_YEAR}>{item.YEAR + " | " + item.START_YEAR}</MenuItem>
                                                 )
                                             )
                                         }
@@ -177,6 +234,10 @@ const CreateArrears = () => {
                                     </Select>
                                 </FormControl> :
                                 <></>}
+
+                                {
+                                    freq != 'E' ?  <Button variant='contained' style={{ marginTop: '2%' }} onClick={handleCreateArrears}>Submit</Button> : <></>
+                                }
 
                         </CardContent>
                     </Box>
