@@ -29,6 +29,9 @@ import CreateCredentials from "./pages/AdminView/CreateCredentials";
 import CreateArrears from "./pages/AdminView/CreateArrears";
 import ClassDetails from "./pages/FacultyView/ClassDetails";
 import StudentDetails from "./pages/FacultyView/StudentDetails";
+import AssessmentCourse from "./pages/FacultyView/AssessmentCourse";
+import AddAssessment from "./pages/FacultyView/AddAssessment";
+import AssessmentDetails from "./pages/FacultyView/AssessmentDetails";
 
 function App() {
 
@@ -75,11 +78,14 @@ function App() {
                     <Route path="/GuardianGrade" element={<GuardianGrade />} />
           //routes for faculty view
                     <Route path="/FacultyHome" element={<FacultyHome />} />
-                    <Route path="/APCreation" element={<APCreation />} />
                     <Route path="/Courses" element={<Courses />} />
                     <Route path="/EnterMarks" element={<EnterMarks />} />
                     <Route path="/ClassDetails" element={<ClassDetails />} />
                     <Route path="/ClassDetails/StudentDetails" element={<StudentDetails />} />
+                    <Route path="/APCreation" element={<APCreation />} />
+                    <Route path="/APCreation/AssessmentCourse" element={<AssessmentCourse />} />
+                    <Route path="/AssessmentCreation/AddAssessment" element={<AddAssessment />}/>
+                    <Route path="/AssessmentCourse/AssessmentDetails" element={<AssessmentDetails />}/>
           //not FOUND
                     <Route path="*" Component={NotFound} />
                 </Routes>

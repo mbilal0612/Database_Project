@@ -149,12 +149,12 @@ const getStudentPerformance = (req, res) => {
       sql: "SELECT * FROM ?? JOIN ?? ON ??=?? JOIN ?? USING(??) JOIN ?? USING (??) WHERE ??=? AND ??=? AND ??= ?",
       values: [
         "USERS",
-        "student_academic_history",
+        "STUDENT_ACADEMIC_HISTORY",
         "USER_ID",
         "STUDENT_ID",
-        "std_asmnt",
+        "STD_ASMNT",
         "STUDENT_ID",
-        "assessment",
+        "ASSESSMENT",
         "ASSESSMENT_ID",
         "COURSE_ID",
         obj.courseId,
@@ -173,9 +173,28 @@ const getStudentPerformance = (req, res) => {
         total += results[i].MAX_MARKS;
         sum += results[i].OBTAINED_MARKS;
       }
-      var avg = sum / total;
-      var tbr = { details: results, average: (avg*100) };
-      return res.status(200).json(tbr);
+      var avg;
+      if (total == 0) avg = 0;
+      else avg = sum / total;
+      var tbr = { details: results, average: avg * 100 };
+      if (results.length > 0) {
+        return res.status(200).json(tbr);
+      } else {
+        db.query(
+          {
+            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            values: ["USERS", "USER_ID", obj.studentId],
+          },
+          (error, resu, fields) => {
+            if (error) {
+              console.log(error);
+              return res.status(500).json({ message: "unkown error occured" });
+            }
+            tbr.details.push(resu[0]);
+            return res.status(200).json(tbr);
+          }
+        );
+      }
     }
   );
 };

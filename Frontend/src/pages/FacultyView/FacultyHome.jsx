@@ -11,12 +11,15 @@ const FacultyHome = () => {
   useEffect(() => {
     const getDetail = async () => {
       const token = sessionStorage.getItem("token");
+      if(!token)  window.location.assign('/notfound');
       const decryptedToken = await decryptToken(token);
       const res = await getDetails(
         decryptedToken.data.id,
         sessionStorage.getItem("token")
       );
-      
+      if(decryptedToken.data.userType!="FACULTY"){
+        window.location.assign('/notfound');
+      }
       setName(res.data.FIRST_NAME + " " + res.data.LAST_NAME);
       setLoading(false);
     };

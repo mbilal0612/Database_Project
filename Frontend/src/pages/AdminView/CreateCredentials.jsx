@@ -11,11 +11,12 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { getNat } from "../../apis/Admin/nationality"
-import { getReligions } from "../../apis/Admin/religions"
-import createUser from '../../apis/Admin/createBundle.js'
+import { getNat } from "../../apis/Admin/nationality";
+import { getReligions } from "../../apis/Admin/religions";
+import { createUser } from '../../apis/Admin/createBundle.js';
 
 const CreateCredentials = () => {
+    var i = 0;
     //System States
     const [render, setRender] = useState(false);
     const [response, setResponse] = useState('');
@@ -151,7 +152,7 @@ const CreateCredentials = () => {
                                     label="Role"
                                     onChange={handleRoleChange}
                                 >
-                                    <MenuItem value={'GUARDIAN'}>Guardian</MenuItem>
+                                    <MenuItem  value={'GUARDIAN'}>Guardian</MenuItem>
                                     <MenuItem value={'STUDENT'}>Student</MenuItem>
                                     <MenuItem value={'ADMIN'}>Admin</MenuItem>
                                     <MenuItem value={'STAFF'}>Staff</MenuItem>
@@ -194,7 +195,7 @@ const CreateCredentials = () => {
                                     {
                                         nationalities.map(
                                             (item) => (
-                                                <MenuItem value={item.NAT_ID}>{item.NAT_ID}</MenuItem>
+                                                <MenuItem key = {i++} value={item.NAT_ID}>{item.NAT_ID}</MenuItem>
                                             )
                                         )
                                     }
@@ -212,7 +213,7 @@ const CreateCredentials = () => {
                                     {
                                         religions.map(
                                             (item) => (
-                                                <MenuItem value={item.RELIGION_ID}>{item.RELIGION_ID}</MenuItem>
+                                                <MenuItem key = {i++} value={item.RELIGION_ID}>{item.RELIGION_ID}</MenuItem>
                                             )
                                         )
                                     }
@@ -232,7 +233,7 @@ const CreateCredentials = () => {
                                                     setSalary(data.target.value)
                                                 }}></TextField>
                                             <FormGroup style={{ justifyContent: 'center' }}>
-                                                <FormControlLabel style={{ justifyContent: 'center' }} control={<Checkbox defaultChecked />} label="Fulltime Employee?" />
+                                                <FormControlLabel style={{ justifyContent: 'center' }} control={<Checkbox defaultChecked onChange={(event)=>{setFulltime(event.target.value)}}/>} label="Fulltime Employee?" />
                                             </FormGroup>
                                         </React.Fragment> : <></>
                                 }

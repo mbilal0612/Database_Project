@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { createTheme } from "@mui/material";
 
+
 // function createData(
 //   Student_Name,
 //   Student_ID,
@@ -45,7 +46,7 @@ export default function BasicTable({ contents }) {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Student ID</TableCell>
+            <TableCell align="right">Student ID</TableCell>
             <TableCell align="right">Student Name</TableCell>
             <TableCell align="right">Gender</TableCell>
             <TableCell align="right">Phone no.</TableCell>
@@ -59,7 +60,7 @@ export default function BasicTable({ contents }) {
               key={i++}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell align="right" component="th" scope="row">
                 {row.STUDENT_ID}
               </TableCell>
               <TableCell align="right">

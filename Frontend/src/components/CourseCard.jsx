@@ -15,7 +15,7 @@ const bull = (
   </Box>
 );
 
-export default function OutlinedCard({ subject_code, subject, grade, click }) {
+export default function OutlinedCard({ subject_code, subject, grade, click, buttonName }) {
   return (
     <Box sx={{ minWidth: 275, boxShadow: 3, borderRadius: '10%'}}>
       <Card variant="outlined">
@@ -41,7 +41,7 @@ export default function OutlinedCard({ subject_code, subject, grade, click }) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button onClick={click} size="small">View Details</Button>
+              <Button onClick={click} size="small">{buttonName}</Button>
             </CardActions>
           </React.Fragment>
         }

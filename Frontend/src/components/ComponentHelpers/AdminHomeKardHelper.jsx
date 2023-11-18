@@ -3,7 +3,7 @@ import Kard from '../kard';
 import Grid from '@mui/system/Unstable_Grid/Grid';
 
 function Kards(props) {
-
+    var i = 0;
     const filteredData = data.filter((T) => {
 
         if (props.input === '') {
@@ -20,7 +20,7 @@ function Kards(props) {
             {filteredData.map
                 (
                     (item) => (
-                        <Kard title={item.title} domain={item.domain} desc={item.desc} status={item.status} Click={() => {
+                        <Kard key = {i++} title={item.title} domain={item.domain} desc={item.desc} status={item.status} Click={() => {
                             window.location.assign(item.url);
                         }}></Kard>
                     )

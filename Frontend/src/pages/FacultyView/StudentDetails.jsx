@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
-import { getDetails } from "../../apis/Faculty/getDetails";
 import SimpleBackdrop from "../../components/util-components/Loader";
 import FacultyNavbar from "../../components/Navbars/FacultyNavbar";
 import PerformanceCard from "../../components/FacultyComponents/PerformanceCard";
@@ -13,18 +12,12 @@ const StudentDetails = () => {
   const [name, setName] = useState();
   const [performance, setPerformance] = useState([]);
   const [average, setAverage] = useState();
+  const [hasMarks, setHasMarks] = useState(false);
   const [attendance, setAttendance] = useState({
     daysPresent: 0,
     totalDays: 10,
   });
   var i = 0;
-  const tempData = [
-    { label: "Marks", pcntg: 66 },
-    { label: "PLO1", pcntg: 92 },
-    { label: "PLO2", pcntg: 38 },
-    { label: "PLO3", pcntg: 100 },
-    { label: "PLO4", pcntg: 98 },
-  ];
   useEffect(() => {
     const getDetail = async () => {
       const token = sessionStorage.getItem("token");
@@ -44,9 +37,10 @@ const StudentDetails = () => {
         sessionStorage.getItem("token")
       );
       setAttendance(res2);
-      console.log(res2);
       setPerformance(res.details);
+      console.log(res.details);
       setName(res.details[0].FIRST_NAME + " " + res.details[0].LAST_NAME);
+      if(res.details[0].MAX_MARKS) setHasMarks(true);
       setAverage(res.average);
       setLoading(false);
     };
@@ -69,7 +63,7 @@ const StudentDetails = () => {
           <TypographyTheme label={sessionStorage.getItem("classId")} />
           <TypographyTheme label={sessionStorage.getItem("courseId")} />
           <div className="flexHorizontal">
-            {performance.map((row) => {
+            {hasMarks ? (performance.map((row) => {
               return (
                 <div key={i++} className="spacingCards">
                   <PerformanceCard
@@ -78,9 +72,9 @@ const StudentDetails = () => {
                   />
                 </div>
               );
-            })}
+            })):(<div></div>)}
             <div className="spacingCards">
-              <PerformanceCard label={`Overall`} percentage={average} />
+              <PerformanceCard label={`Overall`} percentage={parseInt(average)} />
             </div>
             <div className="spacingCards">
               <PerformanceCard

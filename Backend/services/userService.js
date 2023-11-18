@@ -263,7 +263,7 @@ const createUser = (req, res) => {
 													data: errors,
 												});
 											}
-
+										
 											db.query(
 												{
 													sql: "SELECT ?? FROM ?? WHERE ?? = ?",

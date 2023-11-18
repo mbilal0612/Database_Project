@@ -2,7 +2,6 @@ const db = require("../config/db").connection;
 const bcrypt = require("bcrypt");
 const defaultPass = "12345678";
 
-
 const createFaculty = (req, res) => {
   var obj = req.body;
   if (!obj.CNIC) {
@@ -255,9 +254,106 @@ const getFacultyById = (req, res) => {
       if (error) {
         return res.status(500).send(error);
       }
-      if(results.length===0) return res.status(400).json({message:"invalid id"});
-      if(results[0].ROLE_ID!="FACULTY") return res.status(400).json({message:"The following id does not belong to a teacher"});
+      if (results.length === 0)
+        return res.status(400).json({ message: "invalid id" });
+      if (results[0].ROLE_ID != "FACULTY")
+        return res
+          .status(400)
+          .json({ message: "The following id does not belong to a teacher" });
       return res.status(200).send(results[0]);
+    }
+  );
+};
+
+const getAssessmentsByCourseId = (req, res) => {
+  var obj = req.params;
+  if (!obj.courseId)
+    return res.status(400).json({ message: "course ID is required" });
+  if (!obj.facultyId)
+    return res.status(400).json({ message: "course ID is required" });
+  db.query(
+    {
+      sql: "SELECT * FROM ?? WHERE ??=? AND ??=?",
+      values: [
+        "ASSESSMENT",
+        "COURSE_ID",
+        obj.courseId,
+        "FACULTY_ID",
+        obj.facultyId,
+      ],
+    },
+    (error, results, fields) => {
+      if (error)
+        return res.status(500).json({ message: "Unknown error occured" });
+      return res.status(200).json({ results });
+    }
+  );
+};
+
+const createQuestion = (req, res) => {
+  var obj = req.body;
+  if (!obj.assessmentId)
+    return res.status(400).json({ message: "Assessment ID is required" });
+  if (!obj.questionDesc)
+    return res
+      .status(400)
+      .json({ message: "Question Description is required" });
+  if (!obj.maxMarks)
+    return res.status(400).json({ message: "Maximum Marks is required" });
+  db.query(
+    {
+      sql: "INSERT INTO ?? (??,??) VALUES (?,?)",
+      values: [
+        "QUESTION",
+        "QUESTION_DESC",
+        "MAX_MARKS",
+        obj.questionDesc,
+        obj.maxMarks,
+      ],
+    },
+    (error, results, fields) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Unknown error occured" });
+      }
+      // console.log(results.insertId);
+      var quesId = results.insertId;
+      db.query(
+        {
+          sql: "INSERT INTO ?? VALUES (?,?)",
+          values: ["QUESTION_ASSESSMENT", quesId, obj.assessmentId],
+        },
+        (error, results, fields) => {
+          if(error) {
+            console.log(error);
+            return res.status(500).json({ message: "Unknown error occured" });
+          }
+          return res.status(200).json({ message: "successfully added" });
+        }
+      );
+    }
+  );
+};
+
+const getQuestionsByAssessmentId = (req, res) => {
+  var obj = req.params;
+  if (!obj.assessmentId)
+    return res.status(400).json({ message: "Assessment ID is required" });
+  db.query(
+    {
+      sql: "SELECT * FROM ?? JOIN ?? USING (??) WHERE ?? = ?",
+      values: [
+        "QUESTION_ASSESSMENT",
+        "QUESTION",
+        "QUESTION_ID",
+        "ASSESSMENT_ID",
+        obj.assessmentId,
+      ],
+    },
+    (error, results, fields) => {
+      if (error)
+        return res.status(500).json({ message: "Unknown error occured" });
+      return res.status(200).json({ results });
     }
   );
 };
@@ -267,4 +363,7 @@ module.exports = {
   getFacultyById,
   getAllFaculty,
   updateFaculty,
+  getAssessmentsByCourseId,
+  getQuestionsByAssessmentId,
+  createQuestion,
 };

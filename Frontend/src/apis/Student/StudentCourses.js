@@ -1,8 +1,10 @@
 import { axiosInstance } from "../axios";
 
-export const getStudentCourses = async (tok, token) => {
+export const getStudentCourses = async (id, token) => {
   try {
-    const res = await axiosInstance.get(`student/getStudentCourses/${tok}`,{headers:{'Authorization':token}});
+    const res = await axiosInstance.get(`student/getStudentCourses/${id}`, {
+      headers: { Authorization: token },
+    });
 
     return res;
   } catch (ex) {
