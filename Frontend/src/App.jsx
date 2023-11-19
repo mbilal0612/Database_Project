@@ -29,9 +29,11 @@ import CreateCredentials from "./pages/AdminView/CreateCredentials";
 import CreateArrears from "./pages/AdminView/CreateArrears";
 import ClassDetails from "./pages/FacultyView/ClassDetails";
 import StudentDetails from "./pages/FacultyView/StudentDetails";
-import AssessmentCourse from "./pages/FacultyView/AssessmentCourse";
-import AddAssessment from "./pages/FacultyView/AddAssessment";
-import AssessmentDetails from "./pages/FacultyView/AssessmentDetails";
+//import AssessmentCourse from "./pages/FacultyView/AssessmentCourse";
+//import AddAssessment from "./pages/FacultyView/AddAssessment";
+//import AssessmentDetails from "./pages/FacultyView/AssessmentDetails";
+import CreateAcademicYear from "./pages/AdminView/CreateAcademicYear";
+import StudentFeeInquiry from "./pages/AdminView/StudentFeeInquiry";
 
 function App() {
 
@@ -57,8 +59,13 @@ function App() {
                 <Routes>
           //routes for admin view
                     <Route path="/AdminHome" element={<AdminHome />} />
+                    
+                    //Card routes
                     <Route path="/AdminHome/CreateUser" element={<CreateCredentials />}></Route>
                     <Route path="/AdminHome/CreateArrears" element={<CreateArrears />}></Route>
+                    <Route path="/AdminHome/CreateAcademicYear" element={<CreateAcademicYear />}></Route>
+                    <Route path="/AdminHome/StudentFeeInquiry" element={<StudentFeeInquiry />}></Route>
+
                     <Route path="/Student" element={<Student />} />
                     <Route path="/Guardian" element={<Guardian />} />
                     <Route path="/Admin" element={<Admin />} />
@@ -83,9 +90,9 @@ function App() {
                     <Route path="/ClassDetails" element={<ClassDetails />} />
                     <Route path="/ClassDetails/StudentDetails" element={<StudentDetails />} />
                     <Route path="/APCreation" element={<APCreation />} />
-                    <Route path="/APCreation/AssessmentCourse" element={<AssessmentCourse />} />
+                    {/* <Route path="/APCreation/AssessmentCourse" element={<AssessmentCourse />} />
                     <Route path="/AssessmentCreation/AddAssessment" element={<AddAssessment />}/>
-                    <Route path="/AssessmentCourse/AssessmentDetails" element={<AssessmentDetails />}/>
+                    <Route path="/AssessmentCourse/AssessmentDetails" element={<AssessmentDetails />}/> */}
           //not FOUND
                     <Route path="*" Component={NotFound} />
                 </Routes>

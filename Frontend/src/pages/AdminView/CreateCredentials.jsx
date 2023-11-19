@@ -137,9 +137,9 @@ const CreateCredentials = () => {
                 <div style={{ justifyContent: 'center', display: 'flex' }}>
 
                     <Box sx={{ display: 'flex', minWidth: '50%', marginTop: "1%", boxShadow: 3, borderRadius: 3, justifyContent: 'center' }}>
-                        
+
                         <CardContent variant="outlined" style={{ justifyContent: 'space-between', minWidth: '60%' }}>
-                            
+
                             <div>
                                 <FormLabel>Create Credentials</FormLabel>
                             </div>
@@ -152,7 +152,7 @@ const CreateCredentials = () => {
                                     label="Role"
                                     onChange={handleRoleChange}
                                 >
-                                    <MenuItem  value={'GUARDIAN'}>Guardian</MenuItem>
+                                    <MenuItem value={'GUARDIAN'}>Guardian</MenuItem>
                                     <MenuItem value={'STUDENT'}>Student</MenuItem>
                                     <MenuItem value={'ADMIN'}>Admin</MenuItem>
                                     <MenuItem value={'STAFF'}>Staff</MenuItem>
@@ -195,7 +195,7 @@ const CreateCredentials = () => {
                                     {
                                         nationalities.map(
                                             (item) => (
-                                                <MenuItem key = {i++} value={item.NAT_ID}>{item.NAT_ID}</MenuItem>
+                                                <MenuItem key={i++} value={item.NAT_ID}>{item.NAT_ID}</MenuItem>
                                             )
                                         )
                                     }
@@ -213,7 +213,7 @@ const CreateCredentials = () => {
                                     {
                                         religions.map(
                                             (item) => (
-                                                <MenuItem key = {i++} value={item.RELIGION_ID}>{item.RELIGION_ID}</MenuItem>
+                                                <MenuItem key={i++} value={item.RELIGION_ID}>{item.RELIGION_ID}</MenuItem>
                                             )
                                         )
                                     }
@@ -227,13 +227,13 @@ const CreateCredentials = () => {
                                         <React.Fragment>
                                             <TextField style={{ marginTop: '1.5%' }} type='Number'
                                                 label="Salary" size='large' onChange={(data) => {
-                                                    if(data.target.value < 1){
+                                                    if (data.target.value < 1) {
                                                         data.target.value = '1';
                                                     }
                                                     setSalary(data.target.value)
                                                 }}></TextField>
                                             <FormGroup style={{ justifyContent: 'center' }}>
-                                                <FormControlLabel style={{ justifyContent: 'center' }} control={<Checkbox defaultChecked onChange={(event)=>{setFulltime(event.target.value)}}/>} label="Fulltime Employee?" />
+                                                <FormControlLabel style={{ justifyContent: 'center' }} control={<Checkbox defaultChecked onChange={(event) => { setFulltime(event.target.value) }} />} label="Fulltime Employee?" />
                                             </FormGroup>
                                         </React.Fragment> : <></>
                                 }

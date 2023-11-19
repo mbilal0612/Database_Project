@@ -3,146 +3,146 @@ const bcrypt = require("bcrypt");
 const defaultPass = "12345678";
 
 const createStudent = (req, res) => {
-  const obj = req.body;
+    const obj = req.body;
 
-  if (!obj.firstName) {
-    return res.status(400).json({ message: "firstName is required!" });
-  }
-  if (!obj.lastName) {
-    return res.status(400).json({ message: "lastName is required!" });
-  }
-  if (!obj.CNIC) {
-    return res.status(400).json({ message: "CNIC is required!" });
-  }
-  if (!obj.gender) {
-    return res.status(400).json({ message: "Gender is required!" });
-  }
-  if (!obj.religion) {
-    return res.status(400).json({ message: "religion is required!" });
-  }
-  if (!obj.nationality) {
-    return res.status(400).json({ message: "nationality is required!" });
-  }
-  if (!obj.dateOfBirth) {
-    return res.status(400).json({ message: "dateOfBirth is required!" });
-  }
-  if (!obj.admissionDate) {
-    return res.status(400).json({ message: "admissionDate is required!" });
-  }
-  if (!obj.emergencyContact) {
-    return res.status(400).json({ message: "emergency contact is required!" });
-  }
-
-  //TODO: QUERY INTO DATABASE
-  db.query(
-    {
-      sql: "INSERT INTO ?? (??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?)",
-      timeout: 40000, //40s
-      values: [
-        "STUDENT",
-        "CNIC",
-        "FIRST_NAME",
-        "LAST_NAME",
-        "DOB",
-        "GENDER",
-        "EMERGENCY_CONTACT",
-        "ADMISSION_DATE",
-        "NATIONALITY",
-        "RELIGION",
-        obj.CNIC,
-        obj.firstName,
-        obj.lastName,
-        obj.dateOfBirth,
-        obj.gender,
-        obj.emergencyContact,
-        obj.admissionDate,
-        obj.nationality,
-        obj.religion,
-      ],
-    },
-
-    function (error, results, fields) {
-      if (error) {
-        //TODO:UPDATE error response properly
-        return res.status(500).send(error.message);
-      } else {
-        //generate erp for the user
-        db.query(
-          {
-            sql: "SELECT ?? FROM ?? WHERE ?? = ?",
-            timeout: 40000,
-            values: ["STUDENT_ID", "STUDENT", "CNIC", obj.CNIC],
-          },
-          (error1, results1, fields1) => {
-            if (error1) {
-              return res.status(500).send(error1);
-            } else {
-              bcrypt.hash(defaultPass, 10, function (err, hash) {
-                if (err) return res.status(500).send(err);
-                else {
-                  // console.log(results1);
-                  // console.log(fields1);
-                  var userName = results1[0].STUDENT_ID;
-
-                  userName = "S" + userName;
-                  db.query(
-                    {
-                      sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
-                      timeout: 40000,
-                      values: [
-                        "USERS",
-                        "USERNAME",
-                        "PASSWORD",
-                        "STUDENT_ID",
-                        userName,
-                        hash,
-                        results1[0].STUDENT_ID,
-                      ],
-                    },
-                    (error, results, fields) => {
-                      if (error) return res.status(500).send(error);
-                      else {
-                        return res.json({
-                          message: "successfully created and added to users",
-                          username: userName,
-                          password: defaultPass,
-                          student: {
-                            studentID: userName,
-                            CNIC: obj.CNIC,
-                            firstName: obj.firstName,
-                            lastName: obj.lastName,
-                            DOB: obj.dateOfBirth,
-                            gender: obj.gender,
-                            emergencyContact: obj.emergenceyContact,
-                            admissionDate: obj.admissionDate,
-                            nationality: obj.nationality,
-                            religion: obj.religion,
-                          },
-                        });
-                      }
-                    }
-                  );
-                }
-              });
-            }
-          }
-        );
-      }
-      // error will be an Error if one occurred during the query
-      // results will contain the results of the query
-      // fields will contain information about the returned results fields (if any)
+    if (!obj.firstName) {
+        return res.status(400).json({ message: "firstName is required!" });
     }
-  );
+    if (!obj.lastName) {
+        return res.status(400).json({ message: "lastName is required!" });
+    }
+    if (!obj.CNIC) {
+        return res.status(400).json({ message: "CNIC is required!" });
+    }
+    if (!obj.gender) {
+        return res.status(400).json({ message: "Gender is required!" });
+    }
+    if (!obj.religion) {
+        return res.status(400).json({ message: "religion is required!" });
+    }
+    if (!obj.nationality) {
+        return res.status(400).json({ message: "nationality is required!" });
+    }
+    if (!obj.dateOfBirth) {
+        return res.status(400).json({ message: "dateOfBirth is required!" });
+    }
+    if (!obj.admissionDate) {
+        return res.status(400).json({ message: "admissionDate is required!" });
+    }
+    if (!obj.emergencyContact) {
+        return res.status(400).json({ message: "emergency contact is required!" });
+    }
+
+    //TODO: QUERY INTO DATABASE
+    db.query(
+        {
+            sql: "INSERT INTO ?? (??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?)",
+            timeout: 40000, //40s
+            values: [
+                "STUDENT",
+                "CNIC",
+                "FIRST_NAME",
+                "LAST_NAME",
+                "DOB",
+                "GENDER",
+                "EMERGENCY_CONTACT",
+                "ADMISSION_DATE",
+                "NATIONALITY",
+                "RELIGION",
+                obj.CNIC,
+                obj.firstName,
+                obj.lastName,
+                obj.dateOfBirth,
+                obj.gender,
+                obj.emergencyContact,
+                obj.admissionDate,
+                obj.nationality,
+                obj.religion,
+            ],
+        },
+
+        function (error, results, fields) {
+            if (error) {
+                //TODO:UPDATE error response properly
+                return res.status(500).send(error.message);
+            } else {
+                //generate erp for the user
+                db.query(
+                    {
+                        sql: "SELECT ?? FROM ?? WHERE ?? = ?",
+                        timeout: 40000,
+                        values: ["STUDENT_ID", "STUDENT", "CNIC", obj.CNIC],
+                    },
+                    (error1, results1, fields1) => {
+                        if (error1) {
+                            return res.status(500).send(error1);
+                        } else {
+                            bcrypt.hash(defaultPass, 10, function (err, hash) {
+                                if (err) return res.status(500).send(err);
+                                else {
+                                    // console.log(results1);
+                                    // console.log(fields1);
+                                    var userName = results1[0].STUDENT_ID;
+
+                                    userName = "S" + userName;
+                                    db.query(
+                                        {
+                                            sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
+                                            timeout: 40000,
+                                            values: [
+                                                "USERS",
+                                                "USERNAME",
+                                                "PASSWORD",
+                                                "STUDENT_ID",
+                                                userName,
+                                                hash,
+                                                results1[0].STUDENT_ID,
+                                            ],
+                                        },
+                                        (error, results, fields) => {
+                                            if (error) return res.status(500).send(error);
+                                            else {
+                                                return res.json({
+                                                    message: "successfully created and added to users",
+                                                    username: userName,
+                                                    password: defaultPass,
+                                                    student: {
+                                                        studentID: userName,
+                                                        CNIC: obj.CNIC,
+                                                        firstName: obj.firstName,
+                                                        lastName: obj.lastName,
+                                                        DOB: obj.dateOfBirth,
+                                                        gender: obj.gender,
+                                                        emergencyContact: obj.emergenceyContact,
+                                                        admissionDate: obj.admissionDate,
+                                                        nationality: obj.nationality,
+                                                        religion: obj.religion,
+                                                    },
+                                                });
+                                            }
+                                        }
+                                    );
+                                }
+                            });
+                        }
+                    }
+                );
+            }
+            // error will be an Error if one occurred during the query
+            // results will contain the results of the query
+            // fields will contain information about the returned results fields (if any)
+        }
+    );
 };
 
 const getStudentPerformance = (req, res) => {
-  var obj = req.params;
-  if (!obj.studentId)
-    return res.status(400).json({ message: "Student ID is required" });
-  if (!obj.courseId)
-    return res.status(400).json({ message: "Course ID is required" });
-  if (!obj.classId)
-    return res.status(400).json({ message: "Year is required" });
+    var obj = req.params;
+    if (!obj.studentId)
+        return res.status(400).json({ message: "Student ID is required" });
+    if (!obj.courseId)
+        return res.status(400).json({ message: "Course ID is required" });
+    if (!obj.classId)
+        return res.status(400).json({ message: "Year is required" });
 
   db.query(
     {
@@ -200,118 +200,179 @@ const getStudentPerformance = (req, res) => {
 };
 
 const getStudentById = (req, res) => {
-  const obj = req.params;
+    const obj = req.params;
 
-  if (!obj.id) {
-    return res.status(400).json({ message: "studentId is required!" });
-  }
-  var temp = parseInt(obj.id.substring(1, obj.id.length));
-
-  db.query(
-    {
-      sql: "SELECT * FROM ?? WHERE ??=? AND ?? = ?",
-      timeout: 4000,
-      values: ["USERS", "USER_ID", obj.id, "ROLE_ID", "STUDENT"],
-    },
-    (error, results, fields) => {
-      if (error) {
-        return res
-          .status(500)
-          .json({ message: "Something went wrong please try again later..." });
-      } else {
-        if (results.length === 0)
-          return res
-            .status(400)
-            .json({ message: "This ID does not belong to any student" });
-        return res.status(200).json({
-          results: results,
-        });
-      }
+    if (!obj.id) {
+        return res.status(400).json({ message: "studentId is required!" });
     }
-  );
+    var temp = parseInt(obj.id.substring(1, obj.id.length));
+
+    db.query(
+        {
+            sql: "SELECT * FROM ?? WHERE ??=? AND ?? = ?",
+            timeout: 4000,
+            values: ["USERS", "USER_ID", obj.id, "ROLE_ID", "STUDENT"],
+        },
+        (error, results, fields) => {
+            if (error) {
+                return res
+                    .status(500)
+                    .json({ message: "Something went wrong please try again later..." });
+            } else {
+                if (results.length === 0)
+                    return res
+                        .status(400)
+                        .json({ message: "This ID does not belong to any student" });
+                return res.status(200).json({
+                    results: results,
+                });
+            }
+        }
+    );
 };
 
 const getAllStudents = (req, res) => {
-  db.query(
-    {
-      sql: "SELECT * FROM ??",
-      values: ["USERS"],
-      timeout: 40000,
-    },
-    (error, results, fields) => {
-      if (error) {
-        return res.status(500).json({ message: "student_id is required" });
-      }
+    db.query(
+        {
+            sql: "SELECT * FROM ??",
+            values: ["USERS"],
+            timeout: 40000,
+        },
+        (error, results, fields) => {
+            if (error) {
+                return res.status(500).json({ message: "student_id is required" });
+            }
 
-      return res.status(200).send(results);
-    }
-  );
+            return res.status(200).send(results);
+        }
+    );
 };
 
 const assignStudentECA = (req, res) => {
-  const obj = req.body;
+    const obj = req.body;
 
-  if (!obj.student_Id) {
-    return res.status(400).json({ message: "student Id is required" });
-  }
-
-  if (!obj.eca_Id) {
-    return res.status(400).json({ message: "eca Id is required" });
-  }
-
-  db.query(
-    {
-      sql: "INSERT INTO STUDENT_ECA (STUDENT_ID, ECA_ID) VALUES (?,?)",
-      timeout: 40000,
-      values: [obj.student_Id, obj.eca_Id],
-    },
-
-    (error, results, fields) => {
-      if (error) {
-        return res.status(500).json({ message: "student_id is required" });
-      }
-
-      return res.status(200).json({ message: "successful entry" });
+    if (!obj.student_Id) {
+        return res.status(400).json({ message: "student Id is required" });
     }
-  );
+
+    if (!obj.eca_Id) {
+        return res.status(400).json({ message: "eca Id is required" });
+    }
+
+    db.query(
+        {
+            sql: "INSERT INTO STUDENT_ECA (STUDENT_ID, ECA_ID) VALUES (?,?)",
+            timeout: 40000,
+            values: [obj.student_Id, obj.eca_Id],
+        },
+
+        (error, results, fields) => {
+            if (error) {
+                return res.status(500).json({ message: "student_id is required" });
+            }
+
+            return res.status(200).json({ message: "successful entry" });
+        }
+    );
 };
 
 const getStudentECA = (req, res) => {
-  const obj = req.params;
+    const obj = req.params;
 
-  if (!obj.id) {
-    return res.status(400).json({ message: "student_id is required" });
-  }
-
-  db.query(
-    {
-      sql: "SELECT * FROM ?? INNER JOIN ?? USING (??) INNER JOIN ?? USING (??) WHERE  ??= ?",
-      timeout: 40000,
-      values: [
-        "STUDENT_ECA",
-        "ECA",
-        "ECA_ID",
-        "STUDENT",
-        "STUDENT_ID",
-        "STUDENT_ID",
-        obj.id,
-      ],
-    },
-    (error, results, fields) => {
-      if (error) {
-        return res.status(500).json({ message: "unkown error" });
-      }
-
-      return res.status(200).json(results);
+    if (!obj.id) {
+        return res.status(400).json({ message: "student_id is required" });
     }
-  );
+
+    db.query(
+        {
+            sql: "SELECT * FROM ?? INNER JOIN ?? USING (??) INNER JOIN ?? USING (??) WHERE  ??= ?",
+            timeout: 40000,
+            values: [
+                "STUDENT_ECA",
+                "ECA",
+                "ECA_ID",
+                "STUDENT",
+                "STUDENT_ID",
+                "STUDENT_ID",
+                obj.id,
+            ],
+        },
+        (error, results, fields) => {
+            if (error) {
+                return res.status(500).json({ message: "unkown error" });
+            }
+
+            return res.status(200).json(results);
+        }
+    );
 };
 
+const getStudentInfo = (req, res) => {
+
+    const obj = req.params;
+
+    if (!obj.ID) {
+        return res.status(400).json({ message: "studentId is required!" });
+    }
+
+    db.query(
+        {
+            sql: "SELECT ??,??,??,??,?? FROM ?? WHERE ?? = ? AND ?? = ?",
+            values: [
+                "FIRST_NAME",
+                "LAST_NAME",
+                "JOIN_DATE",
+                "PHONE",
+                "EMAIL_ADDRESS",
+                "USERS",
+                "ROLE_ID",
+                "STUDENT",
+                "USER_ID",
+                obj.ID
+            ]
+        }, (errors, results, fields) => {
+
+            if (errors) {
+                res.status(400).json({ message: "BadRequestException: SQL Skill Issue!", EC: -1 });
+            }
+
+            if (results.length == 0) {
+                res.status(200).json({ message: "BadRequestException: Student Does Not Exist!", EC: -1 });
+            } else {
+                var personal_data = results[0];
+
+                db.query(
+                    {
+                        sql: "SELECT ?? FROM ?? WHERE ?? = ? ORDER BY ?? LIMIT 1",
+                        values: [
+                            "CLASS_ID",
+                            "STUDENT_ACADEMIC_HISTORY",
+                            "STUDENT_ID",
+                            obj.ID,
+                            "ENROLLMENT_DATE"]
+                    }, (errors, results, fields) => {
+
+                        if (errors) {
+                            res.status(400).json({ message: "BadRequestException: SQL Skill Issue!", EC: -1 });
+                        }else{
+
+                            let enrolled_class = results[0];
+
+                            return res.status(200).json({ EC: 1, class: enrolled_class, data: personal_data });
+                        }
+                    }
+                )
+            }
+        }
+    )
+}
+
 module.exports = {
-  createStudent,
-  getStudentById,
-  getAllStudents,
-  assignStudentECA,
-  getStudentECA,
-  getStudentPerformance,
+    createStudent,
+    getStudentById,
+    getStudentInfo,
+    getAllStudents,
+    assignStudentECA,
+    getStudentECA,
+    getStudentPerformance,
 };

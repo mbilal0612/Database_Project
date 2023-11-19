@@ -1,0 +1,65 @@
+import { useEffect, useState } from 'react';
+import { ClassesForArrears, AcademicYears, AllClasses } from '../../apis/Admin/getBundle'
+import AdminNavbar from '../../components/Navbars/AdminNavbar';
+import SimpleBackdrop from '../../components/util-components/Loader';
+import { decryptToken } from '../../apis/auth/getUserType';
+import React from 'react';
+import { FormControl, FormLabel, TextField, Button, Box, Select, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import CardContent from '@mui/material/CardContent';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import { createArrearsByGrade, createArrearsByStudentID, createArrearsByGradeID, createArrearsByAcademicYear } from '../../apis/Admin/createBundle';
+
+const CreateAcademicYear = () => {
+
+    //System States
+    const [render, setRender] = useState(false);
+
+    //Form States
+    const [startYear, setStartYear] = useState('');
+    const [desc, setDesc] = useState('');
+    const [days, setDays] = useState(0);
+
+    const handleCreateArrears = async () => {
+    }
+
+    useEffect(() => {
+        const checkUserType = async () => {
+
+            const token = sessionStorage.getItem('token');
+            const decryptedToken = await decryptToken(token);
+
+            if (decryptedToken.data["userType"] !== 'ADMIN') {
+                window.location.assign("/UNAUTHORIZEDACCESS");
+            } else {
+                setRender(true);
+            }
+        }
+
+        checkUserType();
+
+    }, []);
+
+
+    return (render ? <div style={{ width: "100%", height: "100%", justifyContent: 'center' }}>
+        <div>
+            <AdminNavbar />
+        </div>
+
+        <div style={{ justifyContent: 'center', display: 'flex' }}>
+            <Box sx={{ display: 'flex', minWidth: '50%', marginTop: "1%", boxShadow: 3, borderRadius: 3, justifyContent: 'center' }}>
+                <CardContent variant="outlined" style={{ justifyContent: 'space-between', minWidth: '60%' }}>
+                    <div>
+                        <FormLabel>Create Arrears</FormLabel>
+                    </div>
+                </CardContent>
+            </Box>
+        </div>
+    </div>
+        : (<SimpleBackdrop currentOpenState={true} handleClose={() => { }}></SimpleBackdrop>)
+    )
+
+}
+
+
+export default CreateAcademicYear;

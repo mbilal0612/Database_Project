@@ -1,5 +1,6 @@
 import { axiosInstance } from "../axios";
 
+//AcademicYearService
 export async function AcademicYears(token) {
 
     let headers = {
@@ -16,6 +17,7 @@ export async function AcademicYears(token) {
     }
 }
 
+//Class Service
 export async function ClassesForArrears(token) {
 
     let headers = {
@@ -46,4 +48,57 @@ export async function AllClasses(token) {
     } else {
         console.log("Failure in Fetching Classes. [Database must be down!]");
     }
+}
+
+//StudentService
+export async function StudentInfo(token, ID) {
+
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/admin/getStudentInfo/${ID}`, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Student Information. [Database must be down!]");
+    }
+
+}
+
+//FinanceService
+export async function StudentLedger(token, ID) {
+
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/admin/generateStudentLedger/${ID}`, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Student Ledger. [Database must be down!]");
+    }
+
+}
+
+export async function StudentFee(token, ID) {
+
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/admin/getStudentFee/${ID}`, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Student Information. [Database must be down!]");
+    }
+
 }

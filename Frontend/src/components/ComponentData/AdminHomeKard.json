@@ -41,7 +41,8 @@
         "title": "Create Academic Year",
         "domain": "Academics",
         "desc": "Start a new term.",
-        "url": "404"
+        "url": "/AdminHome/CreateAcademicYear",
+        "status": true
     },    {
         "title": "Force Change Password",
         "domain": "ERP",
@@ -58,6 +59,7 @@
         "title": "Inquire Student Fee",
         "domain": "Finance",
         "desc": "Return ledger of a student",
-        "url": "404"
+        "url": "/AdminHome/StudentFeeInquiry",
+        "status": true
     }
 ]

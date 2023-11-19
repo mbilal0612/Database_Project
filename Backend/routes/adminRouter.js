@@ -33,16 +33,17 @@ router.post("/createRelation",[auth,adminAuth] , tryCatch(relationService.create
 router.post("/assignStudentGuardian",[auth,adminAuth] , tryCatch(relationService.assignStudentGuardian));
 router.post("/createStudent", tryCatch(studentService.createStudent)); // not used
 router.post("/createFaculty", tryCatch(facultyService.createFaculty));      //not used
-router.post("/createECA",[auth,adminAuth] ,tryCatch(ecaService.createEca));   
-router.post("/assignEca",[auth,adminAuth] , tryCatch(studentService.assignStudentECA));
-router.post("/linkQualification",[auth,adminAuth] , tryCatch(qualificationService.linkQualification));
-router.post("/createQualification", [auth,adminAuth] ,tryCatch(qualificationService.createQualification));
-router.post("/createCourse", [auth,adminAuth] ,tryCatch(courseService.createCourse));
-router.post("/createAttendance",tryCatch(attendanceService.createAttendance));
-router.post("/createBatchAttendance",tryCatch(attendanceService.createBatchAttendance));
-router.post("/createAcademicYear",[auth,adminAuth] , tryCatch(academicYearService.createAcademicYear));
-router.post("/enrollStudentToClass",[auth,adminAuth] , tryCatch(enrollmentService.enrollStudentToClass));
-router.post("/createUser",[auth,adminAuth] , tryCatch(userService.createUser));
+router.post("/createECA", [auth, adminAuth], tryCatch(ecaService.createEca));
+router.post("/assignEca", [auth, adminAuth], tryCatch(studentService.assignStudentECA));
+router.post("/linkQualification", [auth, adminAuth], tryCatch(qualificationService.linkQualification));
+router.post("/createQualification", [auth, adminAuth], tryCatch(qualificationService.createQualification));
+router.post("/createCourse", [auth, adminAuth], tryCatch(courseService.createCourse));
+router.post("/createAttendance", tryCatch(attendanceService.createAttendance));
+router.post("/createBatchAttendance", tryCatch(attendanceService.createBatchAttendance));
+router.post("/createAcademicYear", [auth, adminAuth], tryCatch(academicYearService.createAcademicYear));
+router.post("/createAcademicYearWithDays", [auth, adminAuth], tryCatch(academicYearService.createAcademicYearWithDays));
+router.post("/enrollStudentToClass", [auth, adminAuth], tryCatch(enrollmentService.enrollStudentToClass));
+router.post("/createUser", [auth, adminAuth], tryCatch(userService.createUser));
 router.post("/queryLogin", tryCatch(userService.queryLogin));
 router.post("/createProgram", tryCatch(programService.createProgram));
 router.post("/devCreateUser", tryCatch(userService.developmentCreateUser));
@@ -74,6 +75,7 @@ router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));
 router.get("/getRelations", tryCatch(relationService.getRelations));
 router.get("/getStudentByID/:id", tryCatch(studentService.getStudentById));
+router.get("/getStudentInfo/:ID", [auth, adminAuth], tryCatch(studentService.getStudentInfo));
 router.get("/getAllEca", tryCatch(ecaService.getAllEca));
 router.get("/getEcaId", tryCatch(ecaService.getEcaId));
 router.get("/getAllStudents",tryCatch(studentService.getAllStudents));

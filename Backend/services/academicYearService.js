@@ -55,6 +55,68 @@ const createAcademicYear = (req, res) =>{
     )
 }
 
+const createAcademicYearWithDays = (req, res) =>{
+
+    var obj = req.body;
+
+    if(!obj.startYear){
+        return res.status(400).json({message: "MissingInputException: startYear is required!"})
+    }
+
+    if(!obj.academicDesc){
+        return res.status(400).json({message: "MissingInputException: academicDesc is required!"})
+    }
+
+    if(!obj.days){
+        return res.status(400).json({message: "MissingInputException: Term duration is required!"})
+    }
+
+
+    db.query(
+        {
+            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            values: [
+                "AcademicYear",
+                "Start_Year",
+                obj.startYear
+            ]
+        }, (errors, results, fields) => {
+
+            if(errors){
+                return res.status(400).json({message: "SQLSkillIssueException: SQL Error!"})
+            }
+
+            if(results.length > 0){
+                return res.status(400).json({message: "DataDuplicationException: Current start year already exists!"})
+            }
+
+            db.query(
+                {
+                    sql: "INSERT INTO ?? (??, ??,??) VALUES (?,?,?)",
+                    values: [
+                        "AcademicYear",
+                        "START_YEAR",
+                        "ACADEMICDESC",
+                        "DAYS",
+                        obj.startYear,
+                        obj.academicDesc,
+                        obj.days
+                    ]
+                }, (errors, results, fields) => {
+                
+                    if(errors){
+                        return res.status(400).json({message: "SQLSkillIssueException: SQL Error!"})
+                    }
+
+                    return res.status(200).json({message: "Successfully added new academic year!"});
+
+                }
+                )
+
+        }
+    )
+}
+
 const getAcademicYears = (req, res) => {
 
     db.query(
@@ -240,6 +302,7 @@ const setAcademicYearDays = (req, res) => {
 
 module.exports = {
     createAcademicYear,
+    createAcademicYearWithDays,
     getAcademicYears,
     deleteAcademicYear,
     restoreAcademicYear,

@@ -97,3 +97,23 @@ export async function createArrearsByAcademicYear(data, token) {
         return ex;
     }
 }
+
+//academicYearService
+export async function createAcademicYearWithDays(data, token) {
+    try {
+
+        let headers = {
+            "Authorization": token,
+            "Content-Type": "application/json",
+        };
+
+        const res = await axiosInstance.post('admin/createAcademicYearWithDays', data, { headers: headers });
+        if (res.status === 200) {
+            console.log("SUCCESS");
+        } else {
+            console.log("Something's wrong I can feel it");
+        }
+    } catch (ex) {
+        return ex;
+    }
+}
