@@ -263,7 +263,7 @@ const createUser = (req, res) => {
 													data: errors,
 												});
 											}
-										
+
 											db.query(
 												{
 													sql: "SELECT ?? FROM ?? WHERE ?? = ?",
@@ -723,9 +723,6 @@ const developmentForcePasswordReset = (req, res) => {
 
 	var obj = req.body;
 
-	if (!obj.password) {
-		return res.status(400).json({ message: "MissingDataException: Password is needed!" });
-	}
 	if (!obj.email) {
 		return res.status(400).json({ message: "MissingDataException: Email is needed!" });
 	}
@@ -741,23 +738,31 @@ const developmentForcePasswordReset = (req, res) => {
 		}, (errors, results, fields) => {
 
 			if (errors) {
-				return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga!" });
+				return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga!", EC: -1 });
 			}
 
 			if (results.length == 0) {
-				return res.status(401).json({ message: "MissingDataException: Queried user DNE." });
+				return res.status(401).json({ message: "MissingDataException: Queried user DNE.", EC: -1 });
 			}
 
 			bcrypt.genSalt(12, function (errors, salt) {
 
 				if (errors) {
-					return res.status(500).json({ message: "Skill_IssueException: Learn2Salt" });
+					return res.status(500).json({ message: "Skill_IssueException: Learn2Salt", EC: -1 });
+				}
+
+				var USER = results[0];
+
+				if (!obj.password) {
+					obj.password = USER.ROLE_ID + "@";
+					var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
+					obj.password += seq;
 				}
 
 				bcrypt.hash(obj.password, salt, function (errors, hash) {
 
 					if (errors) {
-						return res.status(500).json({ message: "Skill_IssueException: Learn2Hash" });
+						return res.status(500).json({ message: "Skill_IssueException: Learn2Hash", EC: -1 });
 					}
 
 					db.query(
@@ -773,11 +778,32 @@ const developmentForcePasswordReset = (req, res) => {
 						}, (errors, results, fields) => {
 
 							if (errors) {
-								return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga!" });
+								return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga!", EC: -1 });
+							} else {
+
+								var mx = {
+									from: "SchoolDB Team",
+									to: USER.EMAIL_ADDRESS,
+									subject: "SchoolDB Registration",
+									text: `Dear ${USER.FIRST_NAME} ${USER.LAST_NAME} \r\n\r\nYour password has been changed! Your credentials are as follows: \r\nERP : ${USER.USER_ID}\r\nPassword : ${obj.password}\r\n\r\nRegards,\r\nSchoolDB Team.`,
+								};
+
+								mailer.transporter.sendMail(mx, function (err, result) {
+									if (err) {
+										console.log(err);
+										return res.status(400).json({
+											message: "DumbFuckException: SMTP Failure because no ENV_VARS added",
+											EC: -1
+										}
+										);
+									}
+									return res.status(200).json({
+										message:
+											`Successfully changed password. Password reset details have been sent to ${USER.EMAIL_ADDRESS}.`,
+										EC: 1,
+									});
+								})
 							}
-
-							return res.status(200).json({ message: "Password Changed Sarge!" });
-
 						}
 					)
 

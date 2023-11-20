@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import AdminNavbar from '../../components/Navbars/AdminNavbar';
 import SimpleBackdrop from '../../components/util-components/Loader';
 import { decryptToken } from '../../apis/auth/getUserType';
-import React from 'react';
-import { FormControl, FormLabel, TextField, Button, Box, Select, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { FormControl, FormLabel, TextField, Button, Box } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { StudentInfo, StudentLedger, StudentFee } from '../../apis/Admin/getBundle';
@@ -200,7 +199,7 @@ const StudentFeeInquiry = () => {
                 <CardContent variant="outlined" style={{ justifyContent: 'space-between', minWidth: '50%' }}>
                     <div>
                         <FormLabel>Student Fee Inquiry</FormLabel>
-                        <div>
+                        <div style={{ justifyContent: 'center', display: 'flex' }}>
                             <FormControl style={{ width: '85%', justifyContent: 'space-between', marginTop: '4%' }}>
                                 <TextField style={{ marginTop: '3%' }} type='Number'
                                     label="StudentID" size='large' onChange={(data) => {

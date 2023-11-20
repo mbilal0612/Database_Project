@@ -1,15 +1,11 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import { useState } from "react";
 import React from "react";
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
 import Login2 from "./pages/Login2";
 import NotFound from "./pages/NotFound";
 import AdminHome from "./pages/AdminView/AdminHome";
-import Admin from "./pages/AdminView/Admin";
-import Student from "./pages/AdminView/Student";
-import Guardian from "./pages/AdminView/Guardian";
-import Faculty from "./pages/AdminView/Faculty";
 import StudentHome from "./pages/StudentView/StudentHome";
 import Assignments from "./pages/StudentView/Assignments";
 import Attendance from "./pages/StudentView/Attendance";
@@ -34,6 +30,7 @@ import StudentDetails from "./pages/FacultyView/StudentDetails";
 //import AssessmentDetails from "./pages/FacultyView/AssessmentDetails";
 import CreateAcademicYear from "./pages/AdminView/CreateAcademicYear";
 import StudentFeeInquiry from "./pages/AdminView/StudentFeeInquiry";
+import ForcePasswordReset from "./pages/AdminView/ForcePasswordReset";
 
 function App() {
 
@@ -57,20 +54,16 @@ function App() {
                 </Routes>
             ) : (
                 <Routes>
-          //routes for admin view
+                    //routes for admin view
                     <Route path="/AdminHome" element={<AdminHome />} />
-                    
+
                     //Card routes
                     <Route path="/AdminHome/CreateUser" element={<CreateCredentials />}></Route>
                     <Route path="/AdminHome/CreateArrears" element={<CreateArrears />}></Route>
                     <Route path="/AdminHome/CreateAcademicYear" element={<CreateAcademicYear />}></Route>
                     <Route path="/AdminHome/StudentFeeInquiry" element={<StudentFeeInquiry />}></Route>
-
-                    <Route path="/Student" element={<Student />} />
-                    <Route path="/Guardian" element={<Guardian />} />
-                    <Route path="/Admin" element={<Admin />} />
-                    <Route path="/Faculty" element={<Faculty />} />
-          //routes for student view
+                    <Route path="/AdminHome/ForcePasswordReset" element={<ForcePasswordReset />}></Route>
+                        //routes for student view
                     <Route path="/StudentHome" element={<StudentHome />} />
                     <Route path="/Assignments" element={<Assignments />} />
                     <Route path="/Attendance" element={<Attendance />} />
@@ -78,12 +71,12 @@ function App() {
                     <Route path="/Schedule" element={<Schedule />} />
                     <Route path="/Course" element={<Course />} />
                     <Route path="/AssignmentPage" element={<AssignmentPage />} />
-          //routes for guardian view
+                        //routes for guardian view
                     <Route path="/GuardianHome" element={<GuardianHome />} />
                     <Route path="/Ledger" element={<Ledger />} />
                     <Route path="/GuardianAttendance" element={<GuardianAttendance />} />
                     <Route path="/GuardianGrade" element={<GuardianGrade />} />
-          //routes for faculty view
+                        //routes for faculty view
                     <Route path="/FacultyHome" element={<FacultyHome />} />
                     <Route path="/Courses" element={<Courses />} />
                     <Route path="/EnterMarks" element={<EnterMarks />} />
@@ -93,7 +86,7 @@ function App() {
                     {/* <Route path="/APCreation/AssessmentCourse" element={<AssessmentCourse />} />
                     <Route path="/AssessmentCreation/AddAssessment" element={<AddAssessment />}/>
                     <Route path="/AssessmentCourse/AssessmentDetails" element={<AssessmentDetails />}/> */}
-          //not FOUND
+                    //not FOUND
                     <Route path="*" Component={NotFound} />
                 </Routes>
             )}

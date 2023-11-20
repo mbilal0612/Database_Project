@@ -69,7 +69,7 @@ router.patch("/restoreAcademicYear",[auth,adminAuth] , tryCatch(academicYearServ
 router.patch("/setAcademicYearDays", [auth,adminAuth] ,tryCatch(academicYearService.setAcademicYearDays));
 router.patch("/denrollStudentFromClass", [auth,adminAuth] ,tryCatch(enrollmentService.denrollStudentFromClass));
 router.patch("/changeUserPassword", [auth,adminAuth] ,tryCatch(userService.changeUserPassword));
-router.post("/devForcePasswordReset", tryCatch(userService.developmentForcePasswordReset));
+router.patch("/devForcePasswordReset", tryCatch(userService.developmentForcePasswordReset));
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));

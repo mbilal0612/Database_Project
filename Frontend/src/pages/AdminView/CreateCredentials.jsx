@@ -19,7 +19,6 @@ const CreateCredentials = () => {
     var i = 0;
     //System States
     const [render, setRender] = useState(false);
-    const [response, setResponse] = useState('');
 
     //Form States
     const [role, setRole] = useState('ADMIN');
@@ -66,7 +65,7 @@ const CreateCredentials = () => {
         console.log(req);
 
         setRender(false);
-        let x = await createUser(req, sessionStorage.getItem('token'));
+        await createUser(req, sessionStorage.getItem('token'));
         setRender(true);
     };
 
