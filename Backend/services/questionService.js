@@ -32,6 +32,85 @@ const createQuestion = (req, res) => {
   );
 };
 
+const createAssessment = (req, res) => {
+  var obj = req.body;
+  if (!obj.assessmentTitle) {
+    return res.status(400).json({ message: "Title is required" });
+  }
+  if (!obj.maxMarks) {
+    return res.status(400).json({ message: "Maximum Marks are required" });
+  }
+  if (!obj.assessmentDate) {
+    return res.status(400).json({ message: "Assessment Date is required" });
+  }
+  if (!obj.facultyId) {
+    return res.status(400).json({ message: "Faculty ID is required" });
+  }
+  if (!obj.courseId) {
+    return res.status(400).json({ message: "Course ID is required" });
+  }
+  if (!obj.classId) {
+    return res.status(400).json({ message: "Class ID is required" });
+  }
+  db.query(
+    {
+      sql: "INSERT INTO ?? (??,??,??,??,??) VALUES (?,?,?,?,?)",
+      values: [
+        "ASSESSMENT",
+        "COURSE_ID",
+        "FACULTY_ID",
+        "MAX_MARKS",
+        "ASSESSMENT_DATE",
+        "ASSESSMENT_TYPE",
+        obj.courseId,
+        obj.facultyId,
+        obj.maxMarks,
+        obj.assessmentDate,
+        obj.assessmentTitle,
+      ],
+    },
+    (error, resu, fields) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "unkown error occured" });
+      }
+      db.query(
+        {
+          sql: "SELECT * FROM ?? WHERE ?? = ?",
+          values: ["STUDENT_ACADEMIC_HISTORY", "CLASS_ID", obj.classId],
+        },
+        (error, results, fields) => {
+          if (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Unkown error occured" });
+          }
+          for (var i = 0; i < results.length; i++) {
+            db.query(
+              {
+                sql: "INSERT INTO ?? (??, ??) VALUES (?, ?)",
+                values: [
+                  "STD_ASMNT",
+                  "STUDENT_ID",
+                  "ASSESSMENT_ID",
+                  results[i].STUDENT_ID,
+                  resu.insertId,
+                ],
+              },
+              (error, results, fields) => {
+                if(error){
+                  console.log(error);
+                  return res.status(500).json({message:"Unknown error occured"});
+                }
+                return res.status(200).json({message:"Successful insertion"});
+              }
+            );
+          }
+        }
+      );
+    }
+  );
+};
+
 // write a function to get all questions
 
 const getAllQuestions = (req, res) => {
@@ -164,12 +243,10 @@ const assignCLOToQuestion = (req, res) => {
       if (error)
         return res.status(500).json({ message: "unkown error occured" });
       if (results.length > 0)
-        return res
-          .status(400)
-          .json({
-            message:
-              "Data Duplication Exception: Question was already linked to CLO",
-          });
+        return res.status(400).json({
+          message:
+            "Data Duplication Exception: Question was already linked to CLO",
+        });
       else {
         db.query(
           {
@@ -183,8 +260,12 @@ const assignCLOToQuestion = (req, res) => {
             ],
           },
           (err, results, fields) => {
-            if(err) return res.status(500).json({ message: "unkown error occured" });
-            else return res.status(200).json({message: "CLO successfully assigned to question"});
+            if (err)
+              return res.status(500).json({ message: "unkown error occured" });
+            else
+              return res
+                .status(200)
+                .json({ message: "CLO successfully assigned to question" });
           }
         );
       }
@@ -198,5 +279,6 @@ module.exports = {
   getAllQuestions,
   updateQuestion,
   getQuestionsByCLO,
-  assignCLOToQuestion
+  assignCLOToQuestion,
+  createAssessment
 };

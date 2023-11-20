@@ -54,7 +54,7 @@ const Courses = () => {
                 click={() => {
                   sessionStorage.setItem("classId", iter.CLASS_ID);
                   sessionStorage.setItem("courseId", iter.COURSE_ID);
-                  window.location.assign("/CourseAssessment");
+                  window.location.assign("/ClassDetails");
                 }}
                 buttonName={"View Details"}
               />

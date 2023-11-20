@@ -23,17 +23,18 @@ router.get("/getAllCLO", tryCatch(cloService.getAllClo));
 router.get("/getClo/:cloId", tryCatch(cloService.getCloById));
 router.get("/getAllPlos", tryCatch(ploService.getPLOs));
 router.get("/getplo/:ploID", tryCatch(ploService.getPLOByID));
-router.get("/getCloByCourse/:courseId", tryCatch(cloService.getCloByCourse));
-router.get("/getCourseDetails/:classId", tryCatch(courseService.getCourseDetails));
-router.get("/getStudentPerformance/:studentId/:classId/:courseId", tryCatch(studentService.getStudentPerformance));
-router.get("/getAssessmentsByCourseId/:courseId/:facultyId", [auth],tryCatch(facultyService.getAssessmentsByCourseId));
+router.get("/getCloByCourse/:courseId", [auth, facultyAuth],tryCatch(cloService.getCloByCourse));
+router.get("/getCourseDetails/:classId", [auth, facultyAuth],tryCatch(courseService.getCourseDetails));
+router.get("/getStudentPerformance/:studentId/:classId/:courseId",[auth, facultyAuth] ,tryCatch(studentService.getStudentPerformance));
+router.get("/getAssessmentsByCourseId/:courseId/:facultyId", [auth, facultyAuth],tryCatch(facultyService.getAssessmentsByCourseId));
 
 router.post("/createClo", tryCatch(cloService.createClo));
 router.post("/linkCLOtoQuestion", tryCatch(questionService.assignCLOToQuestion));
 router.post("/createQuestionType", tryCatch(questionTypeService.createQuestionType));
 router.post("/createPlo", tryCatch(ploService.createPLO));
 router.post("/assignPlo", tryCatch(cloService.assignToPlo));
-router.post("/createQuestion", [auth], tryCatch(facultyService.createQuestion));
+router.post("/createQuestion", [auth, facultyAuth], tryCatch(facultyService.createQuestion));
+router.post("/insertAssessment", [auth,facultyAuth], tryCatch(questionService.createAssessment));
 
 router.put("/updateQuestion", tryCatch(questionService.updateQuestion));
 router.put("/updateClo", tryCatch(cloService.updateClo));
