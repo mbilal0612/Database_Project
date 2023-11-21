@@ -22,6 +22,7 @@ var enrollmentService = require("../services/enrollmentService");
 var userService = require("../services/userService");
 let programService = require("../services/programService");
 let ploService = require("../services/ploService");
+let tfaService = require("../services/tfaService");
 
 router.post("/createAdmin",[auth,adminAuth] ,tryCatch(adminService.createAdmin));       //not used
 router.post("/createClass",[auth,adminAuth], tryCatch(classService.createClass));
@@ -47,6 +48,7 @@ router.post("/createUser", [auth, adminAuth], tryCatch(userService.createUser));
 router.post("/queryLogin", tryCatch(userService.queryLogin));
 router.post("/createProgram", tryCatch(programService.createProgram));
 router.post("/devCreateUser", tryCatch(userService.developmentCreateUser));
+router.post("/createTFAKey", tryCatch(tfaService.createTFAKey));
 
 router.patch("/deleteTransactionByID",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByID));
@@ -70,6 +72,7 @@ router.patch("/setAcademicYearDays", [auth,adminAuth] ,tryCatch(academicYearServ
 router.patch("/denrollStudentFromClass", [auth,adminAuth] ,tryCatch(enrollmentService.denrollStudentFromClass));
 router.patch("/changeUserPassword", [auth,adminAuth] ,tryCatch(userService.changeUserPassword));
 router.patch("/devForcePasswordReset", tryCatch(userService.developmentForcePasswordReset));
+router.patch("/queryTFA", tryCatch(tfaService.queryTFA));
 
 router.get("/getStudentFee/:id", tryCatch(financeService.getStudentFee));
 router.get("/generateStudentLedger/:id", tryCatch(financeService.generateStudentLedger));

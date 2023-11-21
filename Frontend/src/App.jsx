@@ -31,6 +31,7 @@ import AssessmentDetails from "./pages/FacultyView/AssessmentDetails";
 import CreateAcademicYear from "./pages/AdminView/CreateAcademicYear";
 import StudentFeeInquiry from "./pages/AdminView/StudentFeeInquiry";
 import ForcePasswordReset from "./pages/AdminView/ForcePasswordReset";
+import PasswordForghetti from "./pages/PasswordForghetti";
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
             {!isLoggedIn ? (
                 <Routes>
                     <Route path="/" Component={Login2} />
+                    <Route path="/PasswordForghetti" Component={PasswordForghetti}/>
                     <Route path="*" Component={NotFound} />
                 </Routes>
             ) : (
@@ -63,7 +65,8 @@ function App() {
                     <Route path="/AdminHome/CreateAcademicYear" element={<CreateAcademicYear />}></Route>
                     <Route path="/AdminHome/StudentFeeInquiry" element={<StudentFeeInquiry />}></Route>
                     <Route path="/AdminHome/ForcePasswordReset" element={<ForcePasswordReset />}></Route>
-                        //routes for student view
+                    
+                    //routes for student view
                     <Route path="/StudentHome" element={<StudentHome />} />
                     <Route path="/Assignments" element={<Assignments />} />
                     <Route path="/Attendance" element={<Attendance />} />
@@ -71,12 +74,12 @@ function App() {
                     <Route path="/Schedule" element={<Schedule />} />
                     <Route path="/Course" element={<Course />} />
                     <Route path="/AssignmentPage" element={<AssignmentPage />} />
-                        //routes for guardian view
+                    //routes for guardian view
                     <Route path="/GuardianHome" element={<GuardianHome />} />
                     <Route path="/Ledger" element={<Ledger />} />
                     <Route path="/GuardianAttendance" element={<GuardianAttendance />} />
                     <Route path="/GuardianGrade" element={<GuardianGrade />} />
-                        //routes for faculty view
+                    //routes for faculty view
                     <Route path="/FacultyHome" element={<FacultyHome />} />
                     <Route path="/Courses" element={<Courses />} />
                     <Route path="/EnterMarks" element={<EnterMarks />} />
@@ -86,7 +89,7 @@ function App() {
                     <Route path="/APCreation/AssessmentCourse" element={<AssessmentCourse />} />
                     <Route path="/AssessmentCreation/AddAssessment" element={<AddAssessment />}/>
                     <Route path="/AssessmentCourse/AssessmentDetails" element={<AssessmentDetails />}/>
-          //not FOUND
+                    //not FOUND
                     <Route path="*" Component={NotFound} />
                 </Routes>
             )}

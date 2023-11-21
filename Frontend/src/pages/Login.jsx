@@ -63,7 +63,7 @@ function Login() {
             <Textbox
               onChange={handlePwordchange}
               Label="Password"
-              Type={showPass ? 'text' : 'password'}
+              Type={showPass ? 'text' : 'password'} //MyNigga, when will you declare showPass?
             />
             {isAlert ? (
               <BasicAlerts errormessage={response}></BasicAlerts>

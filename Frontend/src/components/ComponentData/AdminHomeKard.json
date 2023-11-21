@@ -47,7 +47,8 @@
         "title": "Force Change Password",
         "domain": "ERP",
         "desc": "Reset User Password",
-        "url": "/AdminHome/ForcePasswordReset"
+        "url": "/AdminHome/ForcePasswordReset",
+        "status": true
     },
     {
         "title": "Delete System32",

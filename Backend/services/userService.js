@@ -784,7 +784,7 @@ const developmentForcePasswordReset = (req, res) => {
 								var mx = {
 									from: "SchoolDB Team",
 									to: USER.EMAIL_ADDRESS,
-									subject: "SchoolDB Registration",
+									subject: "SchoolDB Password Reset",
 									text: `Dear ${USER.FIRST_NAME} ${USER.LAST_NAME} \r\n\r\nYour password has been changed! Your credentials are as follows: \r\nERP : ${USER.USER_ID}\r\nPassword : ${obj.password}\r\n\r\nRegards,\r\nSchoolDB Team.`,
 								};
 

@@ -117,3 +117,22 @@ export async function createAcademicYearWithDays(data, token) {
         return ex;
     }
 }
+
+//academicYearService
+export async function createTFAKey(data) {
+    try {
+
+        let headers = {
+            "Content-Type": "application/json",
+        };
+
+        const res = await axiosInstance.post('admin/createTFAKey', data, { headers: headers });
+        if (res.status === 200) {
+            return res;
+        } else {
+            console.log("Something's wrong I can feel it");
+        }
+    } catch (ex) {
+        return ex;
+    }
+}
