@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
-import { getDetails } from "../../apis/Faculty/getDetails";
+//import { getDetails } from "../../apis/Faculty/getDetails";
 import SimpleBackdrop from "../../components/util-components/Loader";
 import FacultyNavbar from "../../components/Navbars/FacultyNavbar";
 import OutlinedCard from "../../components/CourseCard";

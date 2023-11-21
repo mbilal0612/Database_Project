@@ -4,9 +4,6 @@ const tryCatch = require("../middleware/tryCatch");
 var router = express.Router();
 var auth = require("../middleware/auth");
 var adminAuth = require("../middleware/adminAuth");
-var facultyAuth = require("../middleware/facultyAuth");
-var studentAuth = require("../middleware/studentAuth");
-var guardianAuth = require("../middleware/guardianAuth");
 var adminService = require("../services/adminService");
 var classService = require("../services/classService");
 var financeService = require("../services/financeService");
@@ -23,6 +20,8 @@ var userService = require("../services/userService");
 let programService = require("../services/programService");
 let ploService = require("../services/ploService");
 let tfaService = require("../services/tfaService");
+let nationalityService = require("../services/nationalityService");
+let religionService = require("../services/religionService");
 
 router.post("/createAdmin",[auth,adminAuth] ,tryCatch(adminService.createAdmin));       //not used
 router.post("/createClass",[auth,adminAuth], tryCatch(classService.createClass));
@@ -102,6 +101,10 @@ router.get("/getClassByID/:classID", tryCatch(classService.getClassByID));
 router.get("/allPrograms", tryCatch(programService.getAllPrograms));
 router.get("/getProgram/:programName", tryCatch(programService.getProgramByID));
 router.get("/ploForProgram/:programName", tryCatch(ploService.getPloByProgram));
+router.get("/getNationalities", tryCatch(nationalityService.getNationalities));
+router.get("/getReligions", tryCatch(religionService.getReligions));
+router.get("/getAllClasses", [auth], tryCatch(classService.getAllClasses))
+
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));

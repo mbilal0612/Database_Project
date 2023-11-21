@@ -3,8 +3,7 @@ import { ClassesForArrears, AcademicYears, AllClasses } from '../../apis/Admin/g
 import AdminNavbar from '../../components/Navbars/AdminNavbar';
 import SimpleBackdrop from '../../components/util-components/Loader';
 import { decryptToken } from '../../apis/auth/getUserType';
-import React from 'react';
-import { FormControl, FormLabel, TextField, Button, Box, Select, Checkbox, FormGroup, FormControlLabel } from '@mui/material';
+import { FormControl, FormLabel, TextField, Button, Box, Select} from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
@@ -39,7 +38,7 @@ const CreateArrears = () => {
             }
 
             setRender(false);
-            let x = await createArrearsByGrade(req, sessionStorage.getItem('token'));
+            await createArrearsByGrade(req, sessionStorage.getItem('token'));
             setRender(true);
         }
 
@@ -51,7 +50,7 @@ const CreateArrears = () => {
             }
 
             setRender(false);
-            let x = await createArrearsByGradeID(req, sessionStorage.getItem('token'));
+            await createArrearsByGradeID(req, sessionStorage.getItem('token'));
             setRender(true);
         }
 
@@ -64,7 +63,7 @@ const CreateArrears = () => {
             }
 
             setRender(false);
-            let x = await createArrearsByAcademicYear(req, sessionStorage.getItem('token'));
+            await createArrearsByAcademicYear(req, sessionStorage.getItem('token'));
             setRender(true);
 
         }
@@ -77,7 +76,7 @@ const CreateArrears = () => {
             }
 
             setRender(false);
-            let x = await createArrearsByStudentID(req, sessionStorage.getItem('token'));
+            await createArrearsByStudentID(req, sessionStorage.getItem('token'));
             setRender(true);
 
         }

@@ -109,6 +109,14 @@ const CreateCredentials = () => {
         setGender(event.target.value);
     };
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
     useEffect(() => {
 
         const checkUserType = async () => {
@@ -116,6 +124,8 @@ const CreateCredentials = () => {
             const decryptedToken = await decryptToken(token);
             const datas = await getNat();
             const datas2 = await getReligions();
+            console.log(datas);
+            console.log(datas2);
             setNationalities(datas);
             setReligions(datas2)
             const userType = decryptedToken.data["userType"];
@@ -242,7 +252,7 @@ const CreateCredentials = () => {
                                             <TextField style={{ marginTop: '1.5%' }} label="Occupation" size='large' onChange={(newvalue) => setOccupation(newvalue.target.value)}></TextField>
                                         </React.Fragment> : <></>
                                 }
-                                <Button variant='contained' style={{ marginTop: '2%' }} onClick={handleCreateUser}>Submit</Button>
+                                {validateEmail(email) ? <Button variant='contained' style={{ marginTop: '2%' }} onClick={handleCreateUser}>Submit</Button> : <></>}
                             </FormControl>
 
                         </CardContent>

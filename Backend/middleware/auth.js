@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
       values: ["USERS", "USER_ID", tbf.id],
     },
     (errors, results, fields) => {
-        console.log(results);
+        //console.log(results);
         if(errors) return res.status(500).json({message: "An unknown error has occured"});
         if(results.length===0) return res.status(401).json({message: "User not found"});
         req.details = results[0];

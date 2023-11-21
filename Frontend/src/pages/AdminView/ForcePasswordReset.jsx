@@ -20,6 +20,14 @@ const ForcePasswordReset = () => {
     //Data States
     const [data, setData] = useState({EC:0});
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
     const handleForcePasswordReset = async () => {
 
         var req = {
@@ -95,7 +103,7 @@ const ForcePasswordReset = () => {
                                 label="User Email" size='large' onChange={(data) => {
                                     setUserEmail(data.target.value)
                                 }}></TextField>
-                            {userEmail != '' ?
+                            {validateEmail(userEmail) ?
                                 <div style={{ display: 'flex', flexDirection:'column' }} >
                                     <TextField style={{ marginTop: '3%' }}
                                         label="Password" size='large' onChange={(data) => {

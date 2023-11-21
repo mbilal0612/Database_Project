@@ -118,7 +118,7 @@ export async function createAcademicYearWithDays(data, token) {
     }
 }
 
-//academicYearService
+//tfaService
 export async function createTFAKey(data) {
     try {
 
@@ -129,6 +129,46 @@ export async function createTFAKey(data) {
         const res = await axiosInstance.post('admin/createTFAKey', data, { headers: headers });
         if (res.status === 200) {
             return res;
+        } else {
+            console.log("Something's wrong I can feel it");
+        }
+    } catch (ex) {
+        return ex;
+    }
+}
+
+//courseService
+export async function createCourse(data, token) {
+    try {
+
+        let headers = {
+            "Authorization": token,
+            "Content-Type": "application/json",
+        };
+
+        const res = await axiosInstance.post('admin/createCourse', data, { headers: headers });
+        if (res.status === 200) {
+            return res.data;
+        } else {
+            console.log("Something's wrong I can feel it");
+        }
+    } catch (ex) {
+        return ex;
+    }
+}
+
+//programService
+export async function createProgram(data, token) {
+    try {
+
+        let headers = {
+            "Authorization": token,
+            "Content-Type": "application/json",
+        };
+
+        const res = await axiosInstance.post('admin/createProgram', data, { headers: headers });
+        if (res.status === 200) {
+            return res.data;
         } else {
             console.log("Something's wrong I can feel it");
         }

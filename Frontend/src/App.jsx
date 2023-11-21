@@ -32,6 +32,8 @@ import CreateAcademicYear from "./pages/AdminView/CreateAcademicYear";
 import StudentFeeInquiry from "./pages/AdminView/StudentFeeInquiry";
 import ForcePasswordReset from "./pages/AdminView/ForcePasswordReset";
 import PasswordForghetti from "./pages/PasswordForghetti";
+import CreateCourse from "./pages/AdminView/CreateCourse";
+import CreateProgram from "./pages/AdminView/CreateProgram";
 
 function App() {
 
@@ -65,6 +67,8 @@ function App() {
                     <Route path="/AdminHome/CreateAcademicYear" element={<CreateAcademicYear />}></Route>
                     <Route path="/AdminHome/StudentFeeInquiry" element={<StudentFeeInquiry />}></Route>
                     <Route path="/AdminHome/ForcePasswordReset" element={<ForcePasswordReset />}></Route>
+                    <Route path="/AdminHome/CreateCourse" element={<CreateCourse />}></Route>
+                    <Route path="/AdminHome/CreateProgram" element={<CreateProgram />}></Route>
                     
                     //routes for student view
                     <Route path="/StudentHome" element={<StudentHome />} />

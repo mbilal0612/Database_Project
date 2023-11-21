@@ -29,7 +29,8 @@
         "title": "Create Program",
         "domain": "Academics",
         "desc": "Creates an enrollable program.",
-        "url": "404"
+        "url": "/AdminHome/CreateProgram",
+        "status": true
     },
     {
         "title": "Add Classroom",
@@ -61,6 +62,13 @@
         "domain": "Finance",
         "desc": "Return ledger of a student",
         "url": "/AdminHome/StudentFeeInquiry",
+        "status": true
+    },
+    {
+        "title": "Create Course",
+        "domain": "Academics",
+        "desc": "Create a course.",
+        "url": "/AdminHome/CreateCourse",
         "status": true
     }
 ]
