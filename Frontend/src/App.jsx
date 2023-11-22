@@ -34,6 +34,7 @@ import ForcePasswordReset from "./pages/AdminView/ForcePasswordReset";
 import PasswordForghetti from "./pages/PasswordForghetti";
 import CreateCourse from "./pages/AdminView/CreateCourse";
 import CreateProgram from "./pages/AdminView/CreateProgram";
+import AssignClassTeacher from "./pages/AdminView/AssignClassTeacher";
 
 function App() {
 
@@ -69,6 +70,8 @@ function App() {
                     <Route path="/AdminHome/ForcePasswordReset" element={<ForcePasswordReset />}></Route>
                     <Route path="/AdminHome/CreateCourse" element={<CreateCourse />}></Route>
                     <Route path="/AdminHome/CreateProgram" element={<CreateProgram />}></Route>
+                    <Route path="/AdminHome/AssignClassTeacher" element={<AssignClassTeacher />}></Route>
+
                     
                     //routes for student view
                     <Route path="/StudentHome" element={<StudentHome />} />

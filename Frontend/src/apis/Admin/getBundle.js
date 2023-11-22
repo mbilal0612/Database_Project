@@ -102,3 +102,21 @@ export async function StudentFee(token, ID) {
     }
 
 }
+
+//userService
+export async function Faculty(token) {
+
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/admin/getFaculty`, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Student Information. [Database must be down!]");
+    }
+
+}

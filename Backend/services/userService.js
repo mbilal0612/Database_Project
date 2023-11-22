@@ -818,11 +818,32 @@ const developmentForcePasswordReset = (req, res) => {
 
 };
 
+const getFaculty = (req, res) => {
+
+	db.query(
+		{
+			sql: "SELECT ??, CONCAT(??,' ',??) AS ?? FROM ?? WHERE ?? = ? AND ?? = ?",
+			values: ["USER_ID", "FIRST_NAME", "LAST_NAME", "NAME", "USERS", "BLOCK", 0, "ROLE_ID", "FACULTY"]
+		}, (errors, results, fields) => {
+
+			if (errors) {
+				console.log(errors);
+				if (errors) {
+					return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga! [1]", EC: -1 });
+				}
+			}
+
+			return res.status(200).json({ results });
+		}
+	)
+
+}
 
 module.exports = {
 	createUser,
 	changeUserPassword,
 	queryLogin,
 	developmentCreateUser,
-	developmentForcePasswordReset
+	developmentForcePasswordReset,
+	getFaculty
 };

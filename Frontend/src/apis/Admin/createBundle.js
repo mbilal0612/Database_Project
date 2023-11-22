@@ -1,5 +1,8 @@
 import { axiosInstance } from "../axios";
 
+export default function numbNuts() {
+
+}
 
 //userService
 export async function createUser(data, token) {
@@ -175,4 +178,22 @@ export async function createProgram(data, token) {
     } catch (ex) {
         return ex;
     }
+}
+
+//adminService
+export async function ClassTeacher(data, token) {
+
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.post(`/admin/assignClassTeacher`, data, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Something's wrong I can feel it");
+    }
+
 }

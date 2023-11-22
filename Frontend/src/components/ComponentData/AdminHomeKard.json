@@ -70,5 +70,12 @@
         "desc": "Create a course.",
         "url": "/AdminHome/CreateCourse",
         "status": true
+    },
+    {
+        "title": "Assign Class Teacher",
+        "domain": "Academics",
+        "desc": "Assigns a teacher to a class.",
+        "url": "/AdminHome/AssignClassTeacher",
+        "status": true
     }
 ]

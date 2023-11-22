@@ -48,6 +48,7 @@ router.post("/queryLogin", tryCatch(userService.queryLogin));
 router.post("/createProgram", tryCatch(programService.createProgram));
 router.post("/devCreateUser", tryCatch(userService.developmentCreateUser));
 router.post("/createTFAKey", tryCatch(tfaService.createTFAKey));
+router.post("/assignClassTeacher",[auth, adminAuth], tryCatch(adminService.assignClassTeacher));
 
 router.patch("/deleteTransactionByID",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByID));
@@ -103,7 +104,8 @@ router.get("/getProgram/:programName", tryCatch(programService.getProgramByID));
 router.get("/ploForProgram/:programName", tryCatch(ploService.getPloByProgram));
 router.get("/getNationalities", tryCatch(nationalityService.getNationalities));
 router.get("/getReligions", tryCatch(religionService.getReligions));
-router.get("/getAllClasses", [auth], tryCatch(classService.getAllClasses))
+router.get("/getAllClasses", [auth, adminAuth], tryCatch(classService.getAllClasses))
+router.get("/getFaculty", [auth,adminAuth], tryCatch(userService.getFaculty))
 
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
