@@ -2,7 +2,7 @@ const db = require("../config/db").connection;
 
 const createQuestion = (req, res) => {
   const obj = req.body;
-
+  console.log(obj);
   if (!obj.questionDesc) {
     return res.status(400).json({ message: " Question Description required" });
   }
@@ -27,7 +27,36 @@ const createQuestion = (req, res) => {
       if (error) {
         return res.status(500).send(error);
       }
-      return res.status(200).json({ message: "successfully added" });
+      var quesId = results.insertId;
+      console.log(quesId);
+      if (obj.cloList) {
+        var isError = false;
+        for (var i = 0; i < obj.cloList.length; i++) {
+          if (isError) break;
+          db.query(
+            {
+              sql: "INSERT INTO ?? (??, ??) VALUES (?,?)",
+              values: [
+                "QUESTION_CLO",
+                "QUESTION_ID",
+                "CLO_ID",
+                quesId,
+                obj.cloList[i],
+              ],
+            },
+            (error, results, fields) => {
+              if (error) {
+                isError = true;
+                return res.status(500).send(error);
+              }
+            }
+          );
+        }
+        if (!isError)
+          return res
+            .status(200)
+            .json({ message: "Successfully Added along with CLO's" });
+      } else return res.status(200).json({ message: "successfully added" });
     }
   );
 };
@@ -84,7 +113,9 @@ const createAssessment = (req, res) => {
             console.log(error);
             return res.status(500).json({ message: "Unkown error occured" });
           }
+          var isError = false;
           for (var i = 0; i < results.length; i++) {
+            if (isError) break;
             db.query(
               {
                 sql: "INSERT INTO ?? (??, ??) VALUES (?, ?)",
@@ -97,14 +128,18 @@ const createAssessment = (req, res) => {
                 ],
               },
               (error, results, fields) => {
-                if(error){
+                if (error) {
+                  isError = true;
                   console.log(error);
-                  return res.status(500).json({message:"Unknown error occured"});
+                  return res
+                    .status(500)
+                    .json({ message: "Unknown error occured" });
                 }
-                return res.status(200).json({message:"Successful insertion"});
               }
             );
           }
+          if (!isError)
+            return res.status(200).json({ message: "Successful insertion" });
         }
       );
     }
@@ -125,6 +160,76 @@ const getAllQuestions = (req, res) => {
         return res.status(500).send(error);
       }
       return res.status(200).send(results);
+    }
+  );
+};
+
+const getAssessmentQuestions = (req, res) => {
+  const obj = req.params;
+  if (!obj.assessmentId)
+    return res.status(400).json({ message: "Assessment ID is required" });
+  db.query(
+    {
+      sql: "SELECT * FROM ?? JOIN ?? USING (??) WHERE ?? = ?",
+      values: [
+        "QUESTION_ASSESSMENT",
+        "QUESTION",
+        "QUESTION_ID",
+        "ASSESSMENT_ID",
+        obj.assessmentId,
+      ],
+    },
+    (error, results, fields) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Unknown error occured" });
+      }
+      if (results.length == 0) return res.status(200).json({ results });
+      var isError = false;
+      var k = 0;
+
+      for (var i = 0; i < results.length; i++) {
+        if (isError) {
+          break;
+        }
+        // console.log(i);
+        console.log(k);
+        db.query(
+          {
+            sql: "SELECT * FROM ?? JOIN ?? USING (??) WHERE ?? = ?",
+            values: [
+              "CLO",
+              "QUESTION_CLO",
+              "CLO_ID",
+              "QUESTION_ID",
+              results[i].QUESTION_ID,
+            ],
+          },
+          (err, result, field) => {
+            if (err) {
+              isError = true;
+              console.log(error);
+              return res.status(500).json({ message: "Unkown Error Occured" });
+            }
+            var temp = [];
+            // console.log(results[k].QUESTION_ID,": ",result,field);
+            for (var j = 0; j < result.length; j++) {
+              temp.push(result[j].CLO_NAME);
+              console.log(temp);
+            }
+            // console.log(temp);
+            // console.log(k);
+            results[k].CLO_LIST = temp;
+            // console.log(results);
+            k++;
+            if (!isError && k == results.length) {
+              console.log(results);
+              return res.status(200).json({ results });
+            }
+          }
+        );
+      }
+      // if(!isError) return res.status(200).json({ results });
     }
   );
 };
@@ -280,5 +385,6 @@ module.exports = {
   updateQuestion,
   getQuestionsByCLO,
   assignCLOToQuestion,
-  createAssessment
+  createAssessment,
+  getAssessmentQuestions,
 };

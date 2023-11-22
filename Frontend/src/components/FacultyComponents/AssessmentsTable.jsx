@@ -87,7 +87,8 @@ export default function AssessmentTable({
                   variant="outlined"
                   border="black"
                   onClick={() => {
-                    sessionStorage.setItem("assessmentId", row.STUDENT_ID);
+                    sessionStorage.setItem("assessmentId", row.ASSESSMENT_ID);
+                    sessionStorage.setItem("assessmentName", row.ASSESSMENT_TYPE);
                     window.location.assign(
                       "/AssessmentCourse/AssessmentDetails"
                     );

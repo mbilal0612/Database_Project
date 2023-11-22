@@ -11,7 +11,7 @@ export async function getAssessmentsByCourseId(courseId, facultyId, token) {
     const res = await axiosInstance.get(`/faculty/getAssessmentsByCourseId/${courseId}/${facultyId}`, { headers: headers });
     //console.log(res.data.results);
     if (res.status == 200) {
-        console.log(res.data);
+        // console.log(res.data);
         return res.data;
     } else {
         console.log("Failure in Fetching Assessments. [Database must be down!]");
@@ -53,5 +53,37 @@ export async function createQuestion(data,token){
         }
     } catch (ex) {
         return ex;
+    }
+}
+
+export async function getQuestions(assessmentId, token) {
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/faculty/getAssessmentQuestions/${assessmentId}`, { headers: headers });
+    // console.log(res.data.results);
+    if (res.status == 200) {
+        // console.log(res.data);
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Questions. [Database must be down!]");
+    }
+}
+
+export async function getClos(courseId, token) {
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/faculty/getCloByCourse/${courseId}`, { headers: headers });
+    // console.log(res.data.results);
+    if (res.status == 200) {
+        // console.log(res.data);
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Questions. [Database must be down!]");
     }
 }
