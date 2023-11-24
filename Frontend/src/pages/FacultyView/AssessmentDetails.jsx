@@ -65,30 +65,22 @@ const AssessmentDetails = () => {
       window.location.reload(false);
     }
   };
-  const formatting = async (list) => {
-    var newList = [];
-    for (var i = 0; i < list.length; i++) {
-      newList.push(list[i].PLO_ID);
-    }
-    return newList;
-  };
   const handleNewClo = async () => {
     if (newCloId != "" && newCloDesc != "" && newCloName != "") {
-      const newList = await formatting(ploList);
       var obj = {
         courseId: sessionStorage.getItem("courseId"),
         cloDesc: newCloDesc,
         cloName: newCloName,
-        cloId: newCloId,
-        ploIds: newList,
+        cloId: sessionStorage.getItem("courseId")+"-"+newCloId,
+        ploIds: selectedPlo,
       };
       var api = await createClo(obj, sessionStorage.getItem("token"));
       // console.log(api);
       window.location.reload(false);
       // console.log(newCloDesc);
       // console.log(newCloName);
-      // console.log(newCloId);
-      // console.log(newList);
+      // console.log(sessionStorage.getItem("courseId")+"-"+newCloId);
+      // console.log(selectedPlo);
       
     }
   };

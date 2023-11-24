@@ -36,6 +36,7 @@ export default function CLOCard({
         marginTop: "5%",
         alignSelf: "center",
         marginLeft: "35%",
+        boxShadow: "12"
       }}
     >
       <CardContent>
