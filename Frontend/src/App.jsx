@@ -35,6 +35,8 @@ import PasswordForghetti from "./pages/PasswordForghetti";
 import CreateCourse from "./pages/AdminView/CreateCourse";
 import CreateProgram from "./pages/AdminView/CreateProgram";
 import AssignClassTeacher from "./pages/AdminView/AssignClassTeacher";
+import CreateCLO from "./pages/AdminView/CreateCLO";
+import CreatePLO from "./pages/AdminView/CreatePLO";
 
 function App() {
 
@@ -71,6 +73,8 @@ function App() {
                     <Route path="/AdminHome/CreateCourse" element={<CreateCourse />}></Route>
                     <Route path="/AdminHome/CreateProgram" element={<CreateProgram />}></Route>
                     <Route path="/AdminHome/AssignClassTeacher" element={<AssignClassTeacher />}></Route>
+                    <Route path="/AdminHome/CreateCLO" element={<CreateCLO/>}></Route>
+                    <Route path="/AdminHome/CreatePLO" element={<CreatePLO/>}></Route>
 
                     
                     //routes for student view

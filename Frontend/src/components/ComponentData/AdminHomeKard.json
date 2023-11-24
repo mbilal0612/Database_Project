@@ -77,5 +77,19 @@
         "desc": "Assigns a teacher to a class.",
         "url": "/AdminHome/AssignClassTeacher",
         "status": true
+    },
+    {
+        "title": "Create CLO",
+        "domain": "Academics",
+        "desc": "Creates a CLO to a Course",
+        "url": "/AdminHome/CreateCLO",
+        "status": true
+    },
+    {
+        "title": "Create PLO",
+        "domain": "Academics",
+        "desc": "Creates a PLO for a Program",
+        "url": "/AdminHome/CreatePLO",
+        "status": true
     }
 ]

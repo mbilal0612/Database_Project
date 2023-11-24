@@ -15,18 +15,60 @@ const createPLO = (req, res) => {
     if (!obj.ploDesc) {
         return res.status(400).json({ message: "PLO Description required!" });
     }
+
     db.query(
         {
-            sql: "INSERT INTO ?? (??,??) VALUES (?,?)",
-            timeout: 40000,
-            values: ["PLO", "PLO_NAME", "PLO_DESC", obj.ploName, obj.ploDesc],
-        },
-        (error, results, fields) => {
-            if (error)
-                return res.status(500).json({ message: "unkown error!" });
-            return res.status(200).json({ message: "PLO successfully added" });
+            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            values: ["PLO", "PLO_NAME", obj.ploName]
+        }, (errors, results, fields) => {
+
+            if (errors) {
+                return res.status(500).json(
+                    {
+                        message: "SQLSkill_IssueException: Learn2SQL!"
+                    }
+                );
+            }
+
+            if (results.length == 0) {
+
+                db.query(
+                    {
+                        sql: "INSERT INTO ?? (??,??) VALUES (?,?)",
+                        timeout: 40000,
+                        values: ["PLO", "PLO_NAME", "PLO_DESC", obj.ploName, obj.ploDesc],
+                    },
+                    (errors, results, fields) => {
+                        
+                        if (errors) {
+                            return res.status(500).json(
+                                {
+                                    message: "SQLSkill_IssueException: Learn2SQL!"
+                                }
+                            );
+                        }
+
+                        return res.status(200).json(
+                            {
+                                message: `PLO [Name : ${obj.ploName}] successfully added!`,
+                                EC: 1
+                            }
+                        );
+                    }
+                );
+
+            } else {
+
+                return res.status(200).json(
+                    {
+                        message: `PLO [Name : ${obj.ploName}] already exists in the database!`,
+                        EC: -1
+                    }
+                );
+
+            }
         }
-    );
+    )
 };
 
 const getPLOs = (req, res) => {

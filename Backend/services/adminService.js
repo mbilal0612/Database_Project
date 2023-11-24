@@ -190,8 +190,6 @@ const assignClassTeacher = (req, res) => {
 									);
 								} else {
 
-									console.log(3);
-
 									db.query(
 										{
 											sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
@@ -214,8 +212,6 @@ const assignClassTeacher = (req, res) => {
 														}
 													);
 												} else {
-	
-													console.log(4);
 	
 													db.query(
 														{

@@ -1,6 +1,6 @@
 db = require("../config/db").connection;
 
-const createClo = (req, res) => {
+const createCLO = (req, res) => {
     const obj = req.body;
 
     if (!obj.cloName) {
@@ -19,30 +19,76 @@ const createClo = (req, res) => {
         return res.status(400).json({ message: " clo Id is required" });
     }
 
+    //Fuck the guy who made this request
+
     db.query(
         {
-            sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
-            timeout: 40000,
-            values: [
-                "CLO",
-                "CLO_NAME",
-                "CLO_DESC",
-                "COURSE_ID",
-                "CLO_ID",
-                obj.cloName,
-                obj.cloDesc,
-                obj.courseId,
-                obj.cloId,
-            ],
-        },
-        (error, results, fields) => {
-            if (error) {
-                return res.status(500).send(error);
+            sql: "SELECT * FROM ?? WHERE ?? = ?",
+            values: ["COURSE", "COURSE_ID", obj.courseId]
+        }, (errors, results, fields) => {
+
+            if (errors) {
+                return res.status(500).json({ message: "SQLSkill_IssueException: Learn2SQL Dumb fuck." });
             }
 
-            return res.status(200).json({ message: "clo successfully added" });
+            if (results.length == 0) {
+
+                return res.status(200).json({ message: `Course [ID : ${obj.courseId}] does not exist in the database!`, EC: -1 });
+
+            } else {
+
+
+                db.query(
+                    {
+                        sql: "SELECT * FROM ?? WHERE ?? = ?",
+                        values: ["CLO", "CLO_ID", obj.cloId]
+                    }, (errors, results, fields) => {
+
+                        if (errors) {
+                            return res.status(500).json({ message: "SQLSkill_IssueException: Learn2SQL Dumb fuck." });
+                        }
+
+                        if (results.length == 0) {
+                            db.query(
+                                {
+                                    sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
+                                    timeout: 40000,
+                                    values: [
+                                        "CLO",
+                                        "CLO_NAME",
+                                        "CLO_DESC",
+                                        "COURSE_ID",
+                                        "CLO_ID",
+                                        obj.cloName,
+                                        obj.cloDesc,
+                                        obj.courseId,
+                                        obj.cloId,
+                                    ],
+                                },
+                                (errors, results, fields) => {
+                                    
+                                    if (errors) {
+                                        return res.status(500).json({ message: "SQLSkill_IssueException: Learn2SQL Dumb fuck." });
+                                    }
+                                    
+                                    return res.status(200).json({ message: `CLO [ID : ${obj.cloId}] was added successfully and bound to course [ID : ${obj.courseId}]`, EC: 1 });
+
+                                }
+                            );
+                        } else {
+                            return res.status(200).json({ message: `CLO [ID : ${obj.cloId}] already exists for course [ID : ${results[0].COURSE_ID}]!`, EC: 2 });
+                        }
+                    }
+                )
+
+            }
+
         }
-    );
+
+    )
+
+
+
 };
 
 const getAllClo = (req, res) => {
@@ -157,29 +203,29 @@ const assignToPlo = (req, res) => {
 };
 
 
-const getCloByCourse = (req,res) => {
+const getCloByCourse = (req, res) => {
     const obj = req.params;
 
-    if(!obj.courseId){
-        return res.status(400).json({message: "Course ID is required"});
+    if (!obj.courseId) {
+        return res.status(400).json({ message: "Course ID is required" });
     }
 
     db.query({
-        sql:"SELECT * FROM ?? WHERE ?? = ?",
-        timeout:40000,
-        values:["CLO", "COURSE_ID", obj.courseId]
+        sql: "SELECT * FROM ?? WHERE ?? = ?",
+        timeout: 40000,
+        values: ["CLO", "COURSE_ID", obj.courseId]
     },
-    (error,results,fields) => {
-        if(error){
-            return res.status(500).json({message: "Unknown error!"});
-        }
-        return res.status(200).json(results);
-    });
+        (error, results, fields) => {
+            if (error) {
+                return res.status(500).json({ message: "Unknown error!" });
+            }
+            return res.status(200).json(results);
+        });
 
 }
 
 module.exports = {
-    createClo,
+    createCLO,
     getCloById,
     getAllClo,
     updateClo,

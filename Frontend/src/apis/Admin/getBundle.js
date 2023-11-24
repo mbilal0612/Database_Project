@@ -50,7 +50,25 @@ export async function AllClasses(token) {
     }
 }
 
-//StudentService
+//courseService
+export async function AllCourses(token) {
+
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/admin/getAllCourses`, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        console.log(res.data);
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Courses Information. [Database must be down!]");
+    }
+}
+
+//studentService
 export async function StudentInfo(token, ID) {
 
     let headers = {
@@ -65,7 +83,6 @@ export async function StudentInfo(token, ID) {
     } else {
         console.log("Failure in Fetching Student Information. [Database must be down!]");
     }
-
 }
 
 //FinanceService

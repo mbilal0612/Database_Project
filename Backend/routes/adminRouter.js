@@ -22,6 +22,7 @@ let ploService = require("../services/ploService");
 let tfaService = require("../services/tfaService");
 let nationalityService = require("../services/nationalityService");
 let religionService = require("../services/religionService");
+let cloService = require("../services/cloService");
 
 router.post("/createAdmin",[auth,adminAuth] ,tryCatch(adminService.createAdmin));       //not used
 router.post("/createClass",[auth,adminAuth], tryCatch(classService.createClass));
@@ -49,6 +50,8 @@ router.post("/createProgram", tryCatch(programService.createProgram));
 router.post("/devCreateUser", tryCatch(userService.developmentCreateUser));
 router.post("/createTFAKey", tryCatch(tfaService.createTFAKey));
 router.post("/assignClassTeacher",[auth, adminAuth], tryCatch(adminService.assignClassTeacher));
+router.post("/createCLO",[auth], tryCatch(cloService.createCLO));
+router.post("/createPLO",[auth], tryCatch(ploService.createPLO));
 
 router.patch("/deleteTransactionByID",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByID));
@@ -106,7 +109,6 @@ router.get("/getNationalities", tryCatch(nationalityService.getNationalities));
 router.get("/getReligions", tryCatch(religionService.getReligions));
 router.get("/getAllClasses", [auth, adminAuth], tryCatch(classService.getAllClasses))
 router.get("/getFaculty", [auth,adminAuth], tryCatch(userService.getFaculty))
-
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));

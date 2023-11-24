@@ -197,3 +197,35 @@ export async function ClassTeacher(data, token) {
     }
 
 }
+
+//cloService
+export async function CLO(data, token){
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.post(`/admin/createCLO`, data, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Something's wrong I can feel it");
+    }
+}
+
+//ploService
+export async function PLO(data, token){
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.post(`/admin/createPLO`, data, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Something's wrong I can feel it");
+    }
+}

@@ -4,10 +4,10 @@ import SimpleBackdrop from '../../components/util-components/Loader';
 import { decryptToken } from '../../apis/auth/getUserType';
 import { FormControl, FormLabel, TextField, Button, Box } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import { createCourse } from '../../apis/Admin/createBundle';
+import { PLO } from '../../apis/Admin/createBundle';
 import Alert from '@mui/material/Alert';
 
-const CreateCourse = () => {
+const CreatePLO = () => {
 
     //System States
     const [render, setRender] = useState(false);
@@ -23,7 +23,6 @@ const CreateCourse = () => {
         }
     );
 
-
     const DrawAlert = () => {
 
         if (verificado.EC == 1) {
@@ -36,15 +35,15 @@ const CreateCourse = () => {
 
     }
 
-    const handleCreateCourse = async () => {
+    const handleCreatePLO = async () => {
 
         var req = {
-            courseId: name,
-            courseName: desc
+            ploName: name,
+            ploDesc: desc
         };
 
         setRender(false);
-        let x = await createCourse(req, sessionStorage.getItem('token'));
+        let x = await PLO(req, sessionStorage.getItem('token'));
         setVerificado(x);
         setRender(true);
 
@@ -79,12 +78,12 @@ const CreateCourse = () => {
                     <div>
                         <FormLabel>Create Course</FormLabel>
                         <FormControl style={{ width: '85%', justifyContent: 'space-between', marginTop: '2%' }}>
-                            <TextField style={{ marginTop: '4%' }} label="Course ID" value={name} inputProps={{ maxLength: 7 }} onChange={(data) => { setName(data.target.value) }}></TextField>
-                            <TextField style={{ marginTop: '4%' }} label="Course Name" value={desc} inputProps={{ maxLength: 128 }} onChange={(data) => { setDesc(data.target.value) }}></TextField>
+                            <TextField style={{ marginTop: '4%' }} label="PLO Name" value={name} inputProps={{ maxLength: 128}} onChange={(data) => { setName(data.target.value) }}></TextField>
+                            <TextField style={{ marginTop: '4%' }} label="PLO Desc" value={desc} inputProps={{ maxLength: 512 }} onChange={(data) => { setDesc(data.target.value) }}></TextField>
                             {
-                                (name != '' && desc != '') ? <Button variant='contained' style={{ marginTop: '2%' }} onClick={handleCreateCourse}>Submit</Button> : <></>
+                                (name != '' && desc != '') ? <Button variant='contained' style={{ marginTop: '2%' }} onClick={handleCreatePLO}>Submit</Button> : <></>
                             }
-                            <div style={{marginTop:"4%"}}>
+                            <div style={{ marginTop: "4%" }}>
                                 <DrawAlert></DrawAlert>
                             </div>
                         </FormControl>
@@ -98,5 +97,4 @@ const CreateCourse = () => {
 
 }
 
-
-export default CreateCourse;
+export default CreatePLO;
