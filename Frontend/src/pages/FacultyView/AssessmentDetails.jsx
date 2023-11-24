@@ -1,17 +1,30 @@
-import React, { useEffect, useState, setState } from "react";
+import React, { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
 import SimpleBackdrop from "../../components/util-components/Loader";
 import FacultyNavbar from "../../components/Navbars/FacultyNavbar";
-import { getClos, getQuestions } from "../../apis/Faculty/Assessments";
+import {
+  createClo,
+  createQuestion,
+  getClos,
+  getPlos,
+  getQuestions,
+} from "../../apis/Faculty/Assessments";
 import QuestionsTable from "../../components/FacultyComponents/QuestionsList";
+import CLOCard from "../../components/FacultyComponents/CLOCard";
 
 const AssessmentDetails = () => {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [cloList, setCloList] = useState([]);
-  const [maxMarks, setMaxMarks] = useState([]);
-  const [question, setQuestion] = useState([]);
+  const [maxMarks, setMaxMarks] = useState(0);
+  const [question, setQuestion] = useState("");
   const [selectedClo, setSelectedClo] = useState([]);
+  const [ploList, setPloList] = useState([]);
+  const [selectedPlo, setSelectedPlo] = useState([]);
+  const [newCloId, setNewCloId] = useState("");
+  const [newCloName, setNewCloName] = useState("");
+  const [newCloDesc, setNewCloDesc] = useState("");
+
   useEffect(() => {
     const getDetail = async () => {
       const token = sessionStorage.getItem("token");
@@ -28,12 +41,11 @@ const AssessmentDetails = () => {
         sessionStorage.getItem("assessmentId"),
         token
       );
-      console.log(getList);
       const getClo = await getClos(sessionStorage.getItem("courseId"), token);
       setCloList(getClo);
       setQuestions(getList.results);
-      console.log(getList);
-
+      const getPlo = await getPlos(token);
+      setPloList(getPlo);
       setLoading(false);
     };
 
@@ -41,7 +53,43 @@ const AssessmentDetails = () => {
     getDetail();
   }, []);
   const handleEntry = async () => {
-    if (maxMarks >= 0 && question) {
+    if (maxMarks >= 0 && question != "") {
+      var obj = {
+        assessmentId: sessionStorage.getItem("assessmentId"),
+        questionDesc: question,
+        maxMarks: maxMarks,
+        cloList: selectedClo,
+      };
+      var api = await createQuestion(obj, sessionStorage.getItem("token"));
+      console.log("done");
+      window.location.reload(false);
+    }
+  };
+  const formatting = async (list) => {
+    var newList = [];
+    for (var i = 0; i < list.length; i++) {
+      newList.push(list[i].PLO_ID);
+    }
+    return newList;
+  };
+  const handleNewClo = async () => {
+    if (newCloId != "" && newCloDesc != "" && newCloName != "") {
+      const newList = await formatting(ploList);
+      var obj = {
+        courseId: sessionStorage.getItem("courseId"),
+        cloDesc: newCloDesc,
+        cloName: newCloName,
+        cloId: newCloId,
+        ploIds: newList,
+      };
+      var api = await createClo(obj, sessionStorage.getItem("token"));
+      // console.log(api);
+      window.location.reload(false);
+      // console.log(newCloDesc);
+      // console.log(newCloName);
+      // console.log(newCloId);
+      // console.log(newList);
+      
     }
   };
   return (
@@ -69,6 +117,15 @@ const AssessmentDetails = () => {
             }}
             setSelectedClo={setSelectedClo}
             buttonPressed={handleEntry}
+          />
+          <CLOCard
+            courseId={sessionStorage.getItem("courseId")}
+            setSelectedPlo={setSelectedPlo}
+            ploList={ploList}
+            handleNewClo={handleNewClo}
+            setCloDesc={setNewCloDesc}
+            setCloId={setNewCloId}
+            setCloName={setNewCloName}
           />
         </div>
       )}

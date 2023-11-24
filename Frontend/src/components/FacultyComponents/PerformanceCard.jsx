@@ -16,10 +16,16 @@ export default function ({ label, percentage }) {
         marginBottom: "1%",
         borderRadius: "15px",
         margin: "10px",
-        boxShadow: "3"
+        boxShadow: "3",
       }}
     >
-      <TypographyTheme label={label} /> <br></br>{" "}
+      <TypographyTheme
+        sx={{ maxWidth: "2px" }}
+        label={label.length <= 11 ? label : label.substr(0, 10) + "..."}
+      >
+        {" "}
+        <br></br>{" "}
+      </TypographyTheme>
       <CircularProgressbar
         minValue={0}
         maxValue={100}
@@ -37,8 +43,12 @@ export default function ({ label, percentage }) {
           // pathTransition: 'none',
 
           // Colors
-          pathColor: `rgba(${255 - ((percentage / 100)*255) }, ${(percentage / 100)*255 }, 0, 100)`,
-          textColor: `rgba(${255 - ((percentage / 100)*255) }, ${(percentage / 100)*255 }, 0, 100)`,
+          pathColor: `rgba(${255 - (percentage / 100) * 255}, ${
+            (percentage / 100) * 255
+          }, 0, 100)`,
+          textColor: `rgba(${255 - (percentage / 100) * 255}, ${
+            (percentage / 100) * 255
+          }, 0, 100)`,
           trailColor: "#d6d6d6",
           backgroundColor: "#3e98c7",
         })}

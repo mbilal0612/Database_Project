@@ -8,10 +8,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { TextField } from "@mui/material";
 import { MultipleSelect } from "./CLODropDown";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteQuestion } from "../../apis/Faculty/Assessments";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,7 +47,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 var i = 0;
 
-export default function QuestionsTable({ rows, CLO, handleQuestion, handleMax, buttonPressed, setSelectedClo }) {
+export default function QuestionsTable({
+  rows,
+  CLO,
+  handleQuestion,
+  handleMax,
+  buttonPressed,
+  setSelectedClo,
+}) {
   // console.log(CLO);
   return (
     <TableContainer
@@ -62,7 +70,7 @@ export default function QuestionsTable({ rows, CLO, handleQuestion, handleMax, b
             </StyledTableCell>
             <StyledTableCell align="right">CLO</StyledTableCell>
             <StyledTableCell align="right" sx={{ width: "10%" }}>
-              Edit
+              Delete/Add
             </StyledTableCell>
           </TableRow>
         </TableHead>
@@ -75,17 +83,26 @@ export default function QuestionsTable({ rows, CLO, handleQuestion, handleMax, b
               <StyledTableCell sx={{ width: "10%" }} align="right">
                 {row.MAX_MARKS}
               </StyledTableCell>
-              <StyledTableCell size="small" align="right">{row.CLO_LIST.toString()}</StyledTableCell>
+              <StyledTableCell size="small" align="right">
+                {row.CLO_LIST.toString()}
+              </StyledTableCell>
               <StyledTableCell sx={{ width: "10%" }} align="right">
                 {
                   <Button
                     theme={theme}
                     variant="outlined"
                     border="black"
-                    onClick={buttonPressed}
+                    onClick={async () => {
+                      console.log("clicked");
+                      var api = await deleteQuestion(
+                        row.QUESTION_ID,
+                        sessionStorage.getItem("token")
+                      );
+                      window.location.reload(false);
+                    }}
                     fullWidth
                     sx={{
-                      width: "30%",
+                      width: "50%",
                       color: "black",
                       // backgroundColor: "black",
                       ":hover": {
@@ -94,7 +111,7 @@ export default function QuestionsTable({ rows, CLO, handleQuestion, handleMax, b
                       },
                     }}
                   >
-                    <EditIcon />
+                    <DeleteIcon />
                   </Button>
                 }
               </StyledTableCell>
@@ -107,7 +124,7 @@ export default function QuestionsTable({ rows, CLO, handleQuestion, handleMax, b
                 variant="outlined"
                 fullWidth
                 label="Question"
-                  onChange={handleQuestion}
+                onChange={handleQuestion}
               />
             </StyledTableCell>
             <StyledTableCell sx={{ width: "10%" }} align="right">
@@ -116,11 +133,11 @@ export default function QuestionsTable({ rows, CLO, handleQuestion, handleMax, b
                 variant="outlined"
                 fullWidth
                 label="Marks"
-                  onChange={handleMax}
+                onChange={handleMax}
               />
             </StyledTableCell>
             <StyledTableCell size="small" align="right">
-              <MultipleSelect names={CLO} setSelectedClo = {setSelectedClo}/>
+              <MultipleSelect names={CLO} setSelectedClo={setSelectedClo} />
             </StyledTableCell>
             <StyledTableCell sx={{ width: "10%" }} align="right">
               {
@@ -131,7 +148,7 @@ export default function QuestionsTable({ rows, CLO, handleQuestion, handleMax, b
                   onClick={buttonPressed}
                   fullWidth
                   sx={{
-                    width: "30%",
+                    width: "50%",
                     color: "black",
                     // backgroundColor: "black",
                     ":hover": {

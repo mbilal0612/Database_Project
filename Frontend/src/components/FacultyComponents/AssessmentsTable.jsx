@@ -12,6 +12,8 @@ import { createTheme } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import BasicDatePicker from "./DateField";
 import { TextField } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { deleteAssessment } from "../../apis/Faculty/Assessments";
 
 // function createData(
 //   Student_Name,
@@ -48,18 +50,31 @@ export default function AssessmentTable({
   setDate,
   handleMax,
   handleTitle,
-  buttonPressed
+  buttonPressed,
 }) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={{ boxShadow: "20" }} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="right">Assessment ID</TableCell>
-            <TableCell align="center">Assessment Title</TableCell>
-            <TableCell align="center">Maximum Marks</TableCell>
-            <TableCell align="center">Date</TableCell>
-            <TableCell align="center">Update</TableCell>
+            <TableCell sx={{ width: "10%" }} align="right">
+              Delete
+            </TableCell>
+            <TableCell sx={{ width: "10%" }} align="right">
+              Assessment ID
+            </TableCell>
+            <TableCell sx={{ width: "45%" }} align="center">
+              Assessment Title
+            </TableCell>
+            <TableCell sx={{ width: "10%" }} align="center">
+              Maximum Marks
+            </TableCell>
+            <TableCell sx={{ width: "15%" }} align="center">
+              Date
+            </TableCell>
+            <TableCell sx={{ width: "10%" }} align="center">
+              Update
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -68,19 +83,57 @@ export default function AssessmentTable({
               key={i++}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell align="right" component="th" scope="row">
+              <TableCell sx={{ width: "10%" }} align="right">
+                {
+                  <Button
+                    theme={theme}
+                    variant="outlined"
+                    border="black"
+                    onClick={async () => {
+                      console.log("clicked");
+                      var api = await deleteAssessment(
+                        row.ASSESSMENT_ID,
+                        sessionStorage.getItem("token")
+                      );
+                      window.location.reload(false);
+                    }}
+                    fullWidth
+                    sx={{
+                      width: "50%",
+                      color: "black",
+                      // backgroundColor: "black",
+                      ":hover": {
+                        bgcolor: "#999",
+                        color: "white",
+                      },
+                    }}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                }
+              </TableCell>
+              <TableCell
+                sx={{ width: "10%" }}
+                align="right"
+                component="th"
+                scope="row"
+              >
                 {row.ASSESSMENT_ID}
               </TableCell>
-              <TableCell align="center">{row.ASSESSMENT_TYPE}</TableCell>
-              <TableCell align="center">{row.MAX_MARKS}</TableCell>
-              <TableCell align="center">
+              <TableCell sx={{ width: "45%" }} align="center">
+                {row.ASSESSMENT_TYPE}
+              </TableCell>
+              <TableCell sx={{ width: "10%" }} align="center">
+                {row.MAX_MARKS}
+              </TableCell>
+              <TableCell sx={{ width: "15%" }} align="center">
                 {new Date(row.ASSESSMENT_DATE).getDate() +
                   "-" +
                   new Date(row.ASSESSMENT_DATE).getMonth() +
                   "-" +
                   new Date(row.ASSESSMENT_DATE).getFullYear()}
               </TableCell>
-              <TableCell align="center">
+              <TableCell sx={{ width: "10%" }} align="center">
                 {" "}
                 <Button
                   theme={theme}
@@ -88,7 +141,10 @@ export default function AssessmentTable({
                   border="black"
                   onClick={() => {
                     sessionStorage.setItem("assessmentId", row.ASSESSMENT_ID);
-                    sessionStorage.setItem("assessmentName", row.ASSESSMENT_TYPE);
+                    sessionStorage.setItem(
+                      "assessmentName",
+                      row.ASSESSMENT_TYPE
+                    );
                     window.location.assign(
                       "/AssessmentCourse/AssessmentDetails"
                     );
@@ -110,8 +166,9 @@ export default function AssessmentTable({
             </TableRow>
           ))}
           <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-            <TableCell />
-            <TableCell>
+            <TableCell sx={{ width: "10%" }} align="right" />
+            <TableCell sx={{ width: "10%" }} />
+            <TableCell sx={{ width: "45%" }}>
               <TextField
                 id="outlined-basic"
                 variant="outlined"
@@ -120,7 +177,7 @@ export default function AssessmentTable({
                 onChange={handleTitle}
               />
             </TableCell>
-            <TableCell>
+            <TableCell sx={{ width: "10%" }}>
               <TextField
                 id="outlined-basic"
                 variant="outlined"
@@ -143,7 +200,7 @@ export default function AssessmentTable({
                 setValue={setDate}
               />
             </TableCell>
-            <TableCell align="center">
+            <TableCell sx={{ width: "10%" }} align="center">
               <Button
                 theme={theme}
                 variant="outlined"

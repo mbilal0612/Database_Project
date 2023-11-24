@@ -39,7 +39,7 @@ const AssessmentCourse = () => {
     getDetail();
   }, []);
 
-  const assessmentAdded = () => {
+  const assessmentAdded = async () => {
     
     if (title && maxMarks > 0) {
       var obj = {
@@ -50,8 +50,8 @@ const AssessmentCourse = () => {
         courseId: sessionStorage.getItem("courseId"),
         classId: sessionStorage.getItem("classId")
       };
-      var api = createAssessment(obj, sessionStorage.getItem("token"));
-      window.location.assign("/APCreation/AssessmentCourse");
+      var api = await createAssessment(obj, sessionStorage.getItem("token"));
+      window.location.reload(false);
     }
   };
 

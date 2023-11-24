@@ -50,8 +50,8 @@ router.post("/createProgram", tryCatch(programService.createProgram));
 router.post("/devCreateUser", tryCatch(userService.developmentCreateUser));
 router.post("/createTFAKey", tryCatch(tfaService.createTFAKey));
 router.post("/assignClassTeacher",[auth, adminAuth], tryCatch(adminService.assignClassTeacher));
-router.post("/createCLO",[auth], tryCatch(cloService.createCLO));
-router.post("/createPLO",[auth], tryCatch(ploService.createPLO));
+router.post("/createCLO",[auth, adminAuth], tryCatch(cloService.createCLO));
+router.post("/createPLO",[auth, adminAuth], tryCatch(ploService.createPLO));
 
 router.patch("/deleteTransactionByID",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByID));
@@ -110,7 +110,7 @@ router.get("/getReligions", tryCatch(religionService.getReligions));
 router.get("/getAllClasses", [auth, adminAuth], tryCatch(classService.getAllClasses));
 router.get("/getFaculty", [auth,adminAuth], tryCatch(userService.getFaculty));
 router.get("/getCLOByCourse/:courseId", [auth,adminAuth], tryCatch(cloService.getCloByCourse));
-router.get("/getAllPlos", [auth], tryCatch(ploService.getPLOs));
+router.get("/getAllPlos", [auth, adminAuth], tryCatch(ploService.getPLOs));
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));

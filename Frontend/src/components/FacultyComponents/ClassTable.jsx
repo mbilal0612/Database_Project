@@ -42,7 +42,7 @@ const theme = createTheme({
 });
 export default function BasicTable({ contents }) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={{boxShadow:"20"}} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>

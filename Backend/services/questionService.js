@@ -2,13 +2,20 @@ const db = require("../config/db").connection;
 
 const createQuestion = (req, res) => {
   const obj = req.body;
-  console.log(obj);
+  // console.log(obj);
   if (!obj.questionDesc) {
     return res.status(400).json({ message: " Question Description required" });
   }
 
   if (!obj.maxMarks) {
     return res.status(400).json({ message: "Max Marks is required" });
+  }
+
+  if (!obj.assessmentId) {
+    return res.status(400).json({ message: "Assessment-ID is required" });
+  }
+  if (!obj.cloList) {
+    return res.status(400).json({ message: "CLO List is required" });
   }
 
   db.query(
@@ -28,35 +35,58 @@ const createQuestion = (req, res) => {
         return res.status(500).send(error);
       }
       var quesId = results.insertId;
-      console.log(quesId);
-      if (obj.cloList) {
-        var isError = false;
-        for (var i = 0; i < obj.cloList.length; i++) {
-          if (isError) break;
-          db.query(
-            {
-              sql: "INSERT INTO ?? (??, ??) VALUES (?,?)",
-              values: [
-                "QUESTION_CLO",
-                "QUESTION_ID",
-                "CLO_ID",
-                quesId,
-                obj.cloList[i],
-              ],
-            },
-            (error, results, fields) => {
-              if (error) {
-                isError = true;
-                return res.status(500).send(error);
-              }
+      db.query(
+        {
+          sql: "INSERT INTO ?? VALUES (?,?)",
+          values: ["QUESTION_ASSESSMENT", quesId, obj.assessmentId],
+        },
+        (error, result, fields) => {
+          if (error) {
+            return res.status(500).send(error);
+          }
+          if (obj.cloList.length > 0) {
+            var isError = false;
+            var k = 0;
+            var i = 0;
+            for (i = 0; i < obj.cloList.length; i++) {
+              if (isError) break;
+              db.query(
+                {
+                  sql: "INSERT INTO ?? (??, ??) VALUES (?,?)",
+                  values: [
+                    "QUESTION_CLO",
+                    "QUESTION_ID",
+                    "CLO_ID",
+                    quesId,
+                    obj.cloList[i],
+                  ],
+                },
+                (error, results, fields) => {
+                  if (error) {
+                    isError = true;
+                    console.log(error);
+                    // return res.status(500).send(error);
+                  }
+                  console.log(results);
+                  k++;
+
+                  if (k == obj.cloList.length) {
+                    return res
+                      .status(200)
+                      .json({ message: "Successfully added with CLO's" });
+                  }
+                }
+              );
             }
-          );
+            if (isError) {
+              return res.status(500).send(error);
+            }
+          } else
+            return res
+              .status(200)
+              .json({ message: "Successfully added without CLO's" });
         }
-        if (!isError)
-          return res
-            .status(200)
-            .json({ message: "Successfully Added along with CLO's" });
-      } else return res.status(200).json({ message: "successfully added" });
+      );
     }
   );
 };
@@ -378,6 +408,46 @@ const assignCLOToQuestion = (req, res) => {
   );
 };
 
+const deleteQuestion = (req, res) => {
+  var obj = req.params;
+  if (!obj.questionId) {
+    return res.status(400).json({ message: "Question ID is required" });
+  }
+  db.query(
+    {
+      sql: "DELETE FROM ?? WHERE ?? = ?",
+      values: ["QUESTION", "QUESTION_ID", obj.questionId],
+    },
+    (error, results, fields) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Unkown error occured" });
+      }
+      return res.status(200).json({ message: "Successfully deleted" });
+    }
+  );
+};
+
+const deleteAssessment = (req, res) => {
+  var obj = req.params;
+  if (!obj.assessmentId) {
+    return res.status(400).json({ message: "Assessment ID is required" });
+  }
+  db.query(
+    {
+      sql: "DELETE FROM ?? WHERE ?? = ?",
+      values: ["ASSESSMENT", "ASSESSMENT_ID", obj.assessmentId],
+    },
+    (error, results, fields) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Unkown error occured" });
+      }
+      return res.status(200).json({ message: "Successfully deleted" });
+    }
+  );
+};
+
 module.exports = {
   createQuestion,
   getQuestionById,
@@ -387,4 +457,6 @@ module.exports = {
   assignCLOToQuestion,
   createAssessment,
   getAssessmentQuestions,
+  deleteQuestion,
+  deleteAssessment,
 };
