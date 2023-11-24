@@ -8,8 +8,16 @@ import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
-import { AllCourses } from '../../apis/Admin/getBundle';
+import { AllCourses, CLOByCourse, AllPlos } from '../../apis/Admin/getBundle';
 import { CLO } from '../../apis/Admin/createBundle';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import MultipleSelectChip from '../../components/AdminComponents/MultipleSelectChip';
 
 const CreateCLO = () => {
 
@@ -21,9 +29,12 @@ const CreateCLO = () => {
     const [id, setid] = useState('');
     const [name, setName] = useState('');
     const [desc, setDesc] = useState('');
+    const [splos, setsplos] = useState('');
 
     //Map States
     const [courses, setCourses] = useState([]);
+    const [clos, setClos] = useState([]);
+    const [plos, setPlos] = useState([]);
 
     const [verificado, setVerificado] = useState(
         {
@@ -79,15 +90,22 @@ const CreateCLO = () => {
     const handleCreateCLO = async () => {
 
         var req = {
-            cloId: course+"-"+id,
+            cloId: course + "-" + id,
             courseId: course,
-            cloName:name,
-            cloDesc: desc
+            cloName: name,
+            cloDesc: desc,
+            ploIds: splos
         };
+
+        console.log(req);
 
         setRender(false);
         let x = await CLO(req, sessionStorage.getItem('token'));
         setVerificado(x);
+        if (x.EC == 2) {
+            let y = await CLOByCourse(sessionStorage.getItem('token'), course);
+            setClos(y);
+        }
         setRender(true);
 
     }
@@ -101,6 +119,8 @@ const CreateCLO = () => {
             let y = await AllCourses(sessionStorage.getItem('token'));
             setCourses(y);
 
+            let x = await AllPlos(sessionStorage.getItem('token'));
+            setPlos(x);
             if (decryptedToken.data["userType"] !== 'ADMIN') {
                 window.location.assign("/UNAUTHORIZEDACCESS");
             } else {
@@ -126,13 +146,16 @@ const CreateCLO = () => {
                         <DrawLists></DrawLists>
                         <FormControl style={{ width: '100%', justifyContent: 'center', marginTop: '2%' }}>
                             {
-                                course != '' ? <TextField label="CLO ID" value={course+"-"+id} inputProps={{ maxLength: 12 }} onChange={(data) => { setid(data.target.value.substring(course.length+1)) }} style={{ marginTop: "5%" }}></TextField> : <></>
+                                course != '' ? <TextField label="CLO ID" value={course + "-" + id} inputProps={{ maxLength: 12 }} onChange={(data) => { setid(data.target.value.substring(course.length + 1)) }} style={{ marginTop: "5%" }}></TextField> : <></>
                             }
                             {
                                 id != '' ? <TextField label="CLO Name" value={name} inputProps={{ maxLength: 256 }} onChange={(data) => { setName(data.target.value) }} style={{ marginTop: "5%" }}></TextField> : <></>
                             }
                             {
-                                name != '' ? <TextField label="CLO Description" value={desc} inputProps={{ maxLength: 1024 }}  onChange={(data) => { setDesc(data.target.value) }} style={{ marginTop: "5%" }}></TextField> : <></>
+                                name != '' ? <TextField label="CLO Description" value={desc} inputProps={{ maxLength: 1024 }} onChange={(data) => { setDesc(data.target.value) }} style={{ marginTop: "5%" }}></TextField> : <></>
+                            }
+                            {
+                                desc != '' ? <MultipleSelectChip plos={plos} setter = {setsplos}></MultipleSelectChip> : <></>
                             }
                         </FormControl>
 
@@ -147,6 +170,45 @@ const CreateCLO = () => {
                     </div>
                 </CardContent>
             </Box>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {
+
+                verificado.EC == 2 ?
+                    <Box sx={{ display: 'flex', minWidth: '30%', marginTop: "4%", boxShadow: 3, borderRadius: 3, justifyContent: 'center' }}>
+                        <CardContent variant="outlined" style={{ justifyContent: 'space-between', minWidth: '60%' }}>
+                            <FormLabel>
+                                <Typography style={{ marginTop: "1%" }} color="gray">{`CLOs of ${course}`}</Typography>
+                            </FormLabel>
+                            <div>
+                                <TableContainer component={Paper} style={{ marginTop: '2%' }}>
+                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                        <TableHead style={{ backgroundColor: 'darkgray' }}>
+                                            <TableRow>
+                                                <TableCell align="right"><Typography style={{ marginTop: "3%" }} color="white">CLO ID</Typography></TableCell>
+                                                <TableCell align="right"><Typography style={{ marginTop: "3%" }} color="white">CLO Name</Typography></TableCell>
+                                                <TableCell align="right"><Typography style={{ marginTop: "3%" }} color="white">CLO Description</Typography></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {clos.map((row) => (
+                                                <TableRow
+                                                    key={row.CLO_ID}
+                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                >
+                                                    <TableCell align="right">{row.CLO_ID}</TableCell>
+                                                    <TableCell align="right">{row.CLO_NAME}</TableCell>
+                                                    <TableCell align="right">{row.CLO_DESC}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </div>
+                        </CardContent>
+                    </Box>
+                    : <></>
+            }
         </div>
     </div>
         : (<SimpleBackdrop currentOpenState={true} handleClose={() => { }}></SimpleBackdrop>)

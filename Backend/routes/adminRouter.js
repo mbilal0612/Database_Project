@@ -107,8 +107,10 @@ router.get("/getProgram/:programName", tryCatch(programService.getProgramByID));
 router.get("/ploForProgram/:programName", tryCatch(ploService.getPloByProgram));
 router.get("/getNationalities", tryCatch(nationalityService.getNationalities));
 router.get("/getReligions", tryCatch(religionService.getReligions));
-router.get("/getAllClasses", [auth, adminAuth], tryCatch(classService.getAllClasses))
-router.get("/getFaculty", [auth,adminAuth], tryCatch(userService.getFaculty))
+router.get("/getAllClasses", [auth, adminAuth], tryCatch(classService.getAllClasses));
+router.get("/getFaculty", [auth,adminAuth], tryCatch(userService.getFaculty));
+router.get("/getCLOByCourse/:courseId", [auth,adminAuth], tryCatch(cloService.getCloByCourse));
+router.get("/getAllPlos", [auth], tryCatch(ploService.getPLOs));
 
 router.put("/updateECA", tryCatch(ecaService.updateEcaName));
 router.put("/updateCourseName", tryCatch(courseService.updateCourse));
@@ -117,6 +119,5 @@ router.put("/updateProgram", tryCatch(programService.updateProgram));
 router.put("/assignPlo", tryCatch(programService.assignPlo));
 
 router.delete("/deleteProgram/:programName", tryCatch(programService.deleteProgram));
-
 
 module.exports = router

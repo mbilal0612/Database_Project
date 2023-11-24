@@ -137,3 +137,39 @@ export async function Faculty(token) {
     }
 
 }
+
+//cloService
+export async function CLOByCourse(token, courseID) {
+
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/admin/getCLOByCourse/${courseID}`, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Student Information. [Database must be down!]");
+    }
+
+}
+
+//ploService
+export async function AllPlos(token) {
+
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.get(`/admin/getAllPlos`, { headers: headers });
+    //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Failure in Fetching Student Information. [Database must be down!]");
+    }
+
+}

@@ -19,7 +19,12 @@ const createCLO = (req, res) => {
         return res.status(400).json({ message: " clo Id is required" });
     }
 
+    if (!obj.ploIds) {
+        return res.status(400).json({ message: "MissingInputException: PLO ID(s are) required" });
+    }
+
     //Fuck the guy who made this request
+    console.log(obj);
 
     db.query(
         {
@@ -66,12 +71,45 @@ const createCLO = (req, res) => {
                                     ],
                                 },
                                 (errors, results, fields) => {
-                                    
+
                                     if (errors) {
-                                        return res.status(500).json({ message: "SQLSkill_IssueException: Learn2SQL Dumb fuck." });
+                                        return res.status(500).json(
+                                            {
+                                                message: "SQLSkill_IssueException: Learn2SQL Dumb fuck."
+                                            }
+                                        );
                                     }
-                                    
-                                    return res.status(200).json({ message: `CLO [ID : ${obj.cloId}] was added successfully and bound to course [ID : ${obj.courseId}]`, EC: 1 });
+
+                                    var k = 0;
+
+                                    for (var i = 0; i < obj.ploIds.length; i++) {
+
+                                        db.query(
+                                            {
+                                                sql: "INSERT INTO ?? (??,??) VALUES (?,?)",
+                                                values: ["PLO_CLO", "PLO_ID", "CLO_ID", obj.ploIds[i], obj.cloId]
+                                            }, (errors, results, fields) => {
+
+                                                if (errors) {
+                                                    return res.status(500).json(
+                                                        {
+                                                            message: "SQLSkill_IssueException: Learn2SQL Dumb fuck."
+                                                        }
+                                                    );
+                                                }
+                                                k++;
+                                                if (k == obj.ploIds.length) {
+                                                    return res.status(200).json(
+                                                        {
+                                                            message: `Succesfully assigned CLO [ID : ${obj.cloId}] for course [ID : ${obj.courseId}] and PLOS [${obj.ploIds.toString()}]`,
+                                                            EC:1
+                                                        }
+                                                    );
+                                                }
+                                            }
+                                        )
+
+                                    }
 
                                 }
                             );
