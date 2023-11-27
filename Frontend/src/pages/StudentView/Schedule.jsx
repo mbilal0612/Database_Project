@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { decryptToken } from '../../apis/auth/getUserType';
 import SimpleBackdrop from '../../components/util-components/Loader';
 import StudentNavbar from "../../components/Navbars/StudentNavbar";
+import ScheduleTable from '../../components/StudentComponents/ScheduleTable';
 
 const Schedule = () => {
   const [render, setRender] = useState(false);
@@ -21,12 +22,21 @@ const Schedule = () => {
     checkUserType();
   });
 
+  const schedule = [
+    ['Math', 'English', 'Science', 'History', 'Gym', 'CS', 'Art', 'Arabic'],
+    ['English', 'Science', 'History', 'Math', 'Arabic', 'ITC', 'Gym', 'Art'],
+    ['Math', 'English', 'Science', 'History', 'Gym', 'CS', 'Art', 'Arabic'],
+    ['English', 'Science', 'History', 'Math', 'Arabic', 'ITC', 'Gym', 'Art'],
+    ['Math', 'English', 'Science', 'History', 'Gym', 'CS', 'Art', 'Arabic']
+  ];
   
   return (
     <>{render ? (
     <div className="div1">
       <StudentNavbar />
-      Schedule</div>): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+      <ScheduleTable schedule={schedule} />
+    </div>
+      ): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
     
   )
 }

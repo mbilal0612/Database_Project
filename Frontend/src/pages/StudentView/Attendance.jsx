@@ -3,11 +3,15 @@ import { decryptToken } from '../../apis/auth/getUserType';
 import {Button, Card, CardContent, Grid, Typography} from '@mui/material';
 import SimpleBackdrop from '../../components/util-components/Loader';
 import StudentNavbar from "../../components/Navbars/StudentNavbar";
+import GuardianTabs from "../../components/GuardianComponents/GuardianAttendanceTabs";
+import { getAllChildren } from "../../apis/guardian/getAllChildren";
 
 const Attendance = () => {
   const [render, setRender] = useState(false);
-  useEffect(()=>{
+  const [children, setChildren] = useState([]);
+  const [userid, setId] = useState("");
 
+  useEffect(()=>{
     const checkUserType = async () =>{
       const token = sessionStorage.getItem("token");
       const decryptedToken = await decryptToken(token);
@@ -22,14 +26,35 @@ const Attendance = () => {
     checkUserType();
   });
 
+  useEffect(() => {
+    const handleChildren = async () => {
+        getAllChildren(userid).then((res) => {
+            setChildren(res.data.results);
+        });
+        console.log(children);
+    };
+
+    handleChildren();
+},[userid]);
   
   return (
     <>{render ? (
-      <>
       <div className="div1">
       <StudentNavbar />
-      Attendance</div>
-      <div className="S1">
+      <GuardianTabs children={children} />
+      </div>
+      ): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
+  )
+}
+
+export default Attendance
+
+
+
+
+
+
+{/* <div className="S1">
       Your Attendance <br></br>
       Report
       </div>  
@@ -53,10 +78,4 @@ const Attendance = () => {
         </Grid>
       </CardContent>
     </Card>
-      </>
-
-      ): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
-  )
-}
-
-export default Attendance
+      </> */}
