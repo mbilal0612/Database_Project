@@ -25,7 +25,7 @@ const columns = [
     { field: "ACADEMIC_YEAR", headerName: "Academic Year", width: 150 },
 ];
 
-export default function Attendance2({ studentId, showrows }) {
+export default function Attendance2({ studentId }) {
 
     const [dis,setDis] = useState([]);
 

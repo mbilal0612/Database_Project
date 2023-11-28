@@ -3,6 +3,7 @@ import { decryptToken } from '../../apis/auth/getUserType';
 import SimpleBackdrop from '../../components/util-components/Loader';
 import StudentNavbar from "../../components/Navbars/StudentNavbar";
 import ScheduleTable from '../../components/StudentComponents/ScheduleTable';
+import { Paper } from '@mui/material';
 
 const Schedule = () => {
   const [render, setRender] = useState(false);
@@ -34,7 +35,9 @@ const Schedule = () => {
     <>{render ? (
     <div className="div1">
       <StudentNavbar />
-      <ScheduleTable schedule={schedule} />
+      <Paper sx={{m:2, height:"100%"}} elevation={24}> 
+        <ScheduleTable schedule={schedule} />
+      </Paper>
     </div>
       ): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
     

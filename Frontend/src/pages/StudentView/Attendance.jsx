@@ -3,12 +3,11 @@ import { decryptToken } from '../../apis/auth/getUserType';
 import {Button, Card, CardContent, Grid, Typography} from '@mui/material';
 import SimpleBackdrop from '../../components/util-components/Loader';
 import StudentNavbar from "../../components/Navbars/StudentNavbar";
-import GuardianTabs from "../../components/GuardianComponents/GuardianAttendanceTabs";
-import { getAllChildren } from "../../apis/guardian/getAllChildren";
+import Attendance2 from '../../components/GuardianComponents/AttendanceTable2';
+import { Paper } from '@mui/material';
 
 const Attendance = () => {
   const [render, setRender] = useState(false);
-  const [children, setChildren] = useState([]);
   const [userid, setId] = useState("");
 
   useEffect(()=>{
@@ -16,7 +15,7 @@ const Attendance = () => {
       const token = sessionStorage.getItem("token");
       const decryptedToken = await decryptToken(token);
       const userType = decryptedToken.data["userType"];
-      // console.log(userType);
+      setId(decryptedToken.data.id)
       if( userType !== "STUDENT"){
         window.location.assign("/UNATHORIZEDACCESS");
       }
@@ -26,22 +25,15 @@ const Attendance = () => {
     checkUserType();
   });
 
-  useEffect(() => {
-    const handleChildren = async () => {
-        getAllChildren(userid).then((res) => {
-            setChildren(res.data.results);
-        });
-        console.log(children);
-    };
-
-    handleChildren();
-},[userid]);
+  
   
   return (
     <>{render ? (
       <div className="div1">
-      <StudentNavbar />
-      <GuardianTabs children={children} />
+        <StudentNavbar />
+        <Paper sx={{m:2, height:"100%"}} elevation={24}> 
+          <Attendance2 studentId={userid} />
+        </Paper>
       </div>
       ): (<SimpleBackdrop currentOpenState={true} handleClose={() => {}}></SimpleBackdrop>)}</>
   )
