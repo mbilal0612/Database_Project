@@ -11,6 +11,7 @@ var courseService = require("../services/courseService");
 var auth = require("../middleware/auth");
 var facultyAuth = require("../middleware/facultyAuth");
 var studentService = require("../services/studentService");
+var classService = require("../services/classService");
 
 router.get("/getAllQuestions",[auth, facultyAuth],tryCatch(questionService.getAllQuestions));
 router.get("/getQuestion/:questionId", [auth, facultyAuth],tryCatch(questionService.getQuestionById));
@@ -29,6 +30,7 @@ router.get("/getStudentPerformance/:studentId/:classId/:courseId",[auth, faculty
 router.get("/getAssessmentsByCourseId/:courseId/:facultyId", [auth, facultyAuth],tryCatch(facultyService.getAssessmentsByCourseId));
 router.get("/getAssessmentQuestions/:assessmentId", [auth, facultyAuth], tryCatch(questionService.getAssessmentQuestions));
 router.get("/getAllPlo",[auth, facultyAuth], tryCatch(ploService.getPLOs));
+router.get("/getClassMarks/:assessmentId/:classId", [auth, facultyAuth], tryCatch(classService.getClassMarks));
 
 router.post("/linkCLOtoQuestion", [auth, facultyAuth],tryCatch(questionService.assignCLOToQuestion));
 router.post("/createQuestionType", [auth, facultyAuth],tryCatch(questionTypeService.createQuestionType));

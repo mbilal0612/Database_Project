@@ -26,7 +26,6 @@ import CreateArrears from "./pages/AdminView/CreateArrears";
 import ClassDetails from "./pages/FacultyView/ClassDetails";
 import StudentDetails from "./pages/FacultyView/StudentDetails";
 import AssessmentCourse from "./pages/FacultyView/AssessmentCourse";
-import AddAssessment from "./pages/FacultyView/AddAssessment";
 import AssessmentDetails from "./pages/FacultyView/AssessmentDetails";
 import CreateAcademicYear from "./pages/AdminView/CreateAcademicYear";
 import StudentFeeInquiry from "./pages/AdminView/StudentFeeInquiry";
@@ -37,6 +36,8 @@ import CreateProgram from "./pages/AdminView/CreateProgram";
 import AssignClassTeacher from "./pages/AdminView/AssignClassTeacher";
 import CreateCLO from "./pages/AdminView/CreateCLO";
 import CreatePLO from "./pages/AdminView/CreatePLO";
+import AssessmentMarks from "./pages/FacultyView/AssessmentMarks";
+import StudentList from "./pages/FacultyView/AMStudentList";
 
 function App() {
 
@@ -94,12 +95,13 @@ function App() {
                     <Route path="/FacultyHome" element={<FacultyHome />} />
                     <Route path="/Courses" element={<Courses />} />
                     <Route path="/EnterMarks" element={<EnterMarks />} />
+                    <Route path="/EnterMarks/AssessmentList" element={<AssessmentMarks />} />
                     <Route path="/ClassDetails" element={<ClassDetails />} />
                     <Route path="/ClassDetails/StudentDetails" element={<StudentDetails />} />
                     <Route path="/APCreation" element={<APCreation />} />
                     <Route path="/APCreation/AssessmentCourse" element={<AssessmentCourse />} />
-                    <Route path="/AssessmentCreation/AddAssessment" element={<AddAssessment />}/>
                     <Route path="/AssessmentCourse/AssessmentDetails" element={<AssessmentDetails />}/>
+                    <Route path="/AssessmentCourse/AssessmentDetails/StudentList" element={<StudentList />}/>
                     //not FOUND
                     <Route path="*" Component={NotFound} />
                 </Routes>

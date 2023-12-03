@@ -24,8 +24,6 @@ const createCLO = (req, res) => {
       .json({ message: "MissingInputException: PLO ID(s are) required" });
   }
 
-  //Fuck the guy who made this request
-  console.log(obj);
 
   db.query(
     {
