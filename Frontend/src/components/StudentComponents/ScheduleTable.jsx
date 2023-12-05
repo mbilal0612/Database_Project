@@ -33,15 +33,15 @@ function createData(day, monday, tuesday, wednesday, thursday, friday) {
   }
   
 const rows = [
-  createData('1st Block', 159, 6.0, 24, 4.0, 4.0),
-  createData('2nd Block', 237, 9.0, 37, 4.3, 4.0),
-  createData('3rd Block', 262, 16.0, 24, 6.0, 4.0),
-  createData('4th Block', 305, 3.7, 67, 4.3, 4.0),
+  createData('1st Block', 'Maths', 'English', 'Maths', 'English', 'Urdu'),
+  createData('2nd Block', 'Arabic', 'ITP', 'Arabic', 'ITP', 'Urdu'),
+  createData('3rd Block', 'English', 'Maths', 'English', 'Maths', 'Physics'),
+  createData('4th Block', 'Physics', 'Biology', 'Physics', 'Biology', 'Biology'),
   createData('Break', "free", "free", "free", "free" ,"free"),
-  createData('5th Block', 305, 3.7, 67, 4.3, 4.0),
-  createData('6th Block', 305, 3.7, 67, 4.3, 4.0),
-  createData('7th Block', 305, 3.7, 67, 4.3, 4.0),
-  createData('8th Block', 305, 3.7, 67, 4.3, 4.0),
+  createData('5th Block', 'ITP', 'ITC', 'ITP','ITC', 'Physics'),
+  createData('6th Block', 'ITC', 'Chemistry', 'ITC', 'Chemistry', 'ITC'),
+  createData('7th Block', 'PE', 'Arabic', 'PE', 'Arabic', 'ITP'),
+  createData('8th Block', 'Art', 'Urdu', 'Art', 'Urdu', 'English'),
 ];
 
 const ScheduleTable = ({ schedule }) => {
@@ -57,6 +57,7 @@ const ScheduleTable = ({ schedule }) => {
             <StyledTableCell style={{ fontWeight: 'bolder' }} align="right">Wednesday</StyledTableCell>
             <StyledTableCell style={{ fontWeight: 'bolder' }} align="right">Thursday</StyledTableCell>
             <StyledTableCell style={{ fontWeight: 'bolder' }} align="right">Friday</StyledTableCell>
+            <StyledTableCell> </StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -66,11 +67,12 @@ const ScheduleTable = ({ schedule }) => {
                 {row.name}
               </StyledTableCell>
               <StyledTableCell style={{ fontWeight: 'bolder' }} >{row.day}</StyledTableCell>
-              <StyledTableCell align="right">{schedule[1][1]}</StyledTableCell>
+              <StyledTableCell align="right">{row.monday}</StyledTableCell>
               <StyledTableCell align="right">{row.tuesday}</StyledTableCell>
               <StyledTableCell align="right">{row.wednesday}</StyledTableCell>
               <StyledTableCell align="right">{row.thursday}</StyledTableCell>
               <StyledTableCell align="right">{row.friday}</StyledTableCell>
+              <StyledTableCell> </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

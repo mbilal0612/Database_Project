@@ -11,7 +11,7 @@ import Assignments from "./pages/StudentView/Assignments";
 import Attendance from "./pages/StudentView/Attendance";
 import Grades from "./pages/StudentView/Grades";
 import Schedule from "./pages/StudentView/Schedule";
-import Course from "./pages/StudentView/Course";
+import StudentCourseDetails from "./pages/StudentView/StudentCourseDetails";
 import AssignmentPage from "./pages/StudentView/AssignmentPage";
 import GuardianHome from "./pages/GuardianView/GuardianHome";
 import Ledger from "./pages/GuardianView/Ledger";
@@ -84,7 +84,7 @@ function App() {
                     <Route path="/Attendance" element={<Attendance />} />
                     <Route path="/Grades" element={<Grades />} />
                     <Route path="/Schedule" element={<Schedule />} />
-                    <Route path="/Course" element={<Course />} />
+                    <Route path="/StudentCourseDetails" element={<StudentCourseDetails />} />
                     <Route path="/AssignmentPage" element={<AssignmentPage />} />
                     //routes for guardian view
                     <Route path="/GuardianHome" element={<GuardianHome />} />

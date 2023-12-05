@@ -76,7 +76,7 @@ export default function StudentHomeCard({
                         }}
                     >
                         <Button
-                            href="/Course"
+                            href="/StudentCourseDetails"
                             sx={{
                                 backgroundColor: "black",
                                 color: "white",

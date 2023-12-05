@@ -32,9 +32,6 @@ export const StudentNavbar = () => {
             <NavLink to='/Grades'>GRADES</NavLink>
         </li>
         <li>
-            <NavLink to='/Assignments'>ASSIGNMENTS</NavLink>
-        </li> 
-        <li>
             <Link onClick={handleLogout} to='/' className="logout">LOGOUT</Link>
         </li>
     </ul>
