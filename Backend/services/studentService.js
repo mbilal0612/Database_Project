@@ -30,7 +30,9 @@ const createStudent = (req, res) => {
         return res.status(400).json({ message: "admissionDate is required!" });
     }
     if (!obj.emergencyContact) {
-        return res.status(400).json({ message: "emergency contact is required!" });
+        return res
+            .status(400)
+            .json({ message: "emergency contact is required!" });
     }
 
     //TODO: QUERY INTO DATABASE
@@ -100,22 +102,30 @@ const createStudent = (req, res) => {
                                             ],
                                         },
                                         (error, results, fields) => {
-                                            if (error) return res.status(500).send(error);
+                                            if (error)
+                                                return res
+                                                    .status(500)
+                                                    .send(error);
                                             else {
                                                 return res.json({
-                                                    message: "successfully created and added to users",
+                                                    message:
+                                                        "successfully created and added to users",
                                                     username: userName,
                                                     password: defaultPass,
                                                     student: {
                                                         studentID: userName,
                                                         CNIC: obj.CNIC,
-                                                        firstName: obj.firstName,
+                                                        firstName:
+                                                            obj.firstName,
                                                         lastName: obj.lastName,
                                                         DOB: obj.dateOfBirth,
                                                         gender: obj.gender,
-                                                        emergencyContact: obj.emergenceyContact,
-                                                        admissionDate: obj.admissionDate,
-                                                        nationality: obj.nationality,
+                                                        emergencyContact:
+                                                            obj.emergenceyContact,
+                                                        admissionDate:
+                                                            obj.admissionDate,
+                                                        nationality:
+                                                            obj.nationality,
                                                         religion: obj.religion,
                                                     },
                                                 });
@@ -144,59 +154,63 @@ const getStudentPerformance = (req, res) => {
     if (!obj.classId)
         return res.status(400).json({ message: "Year is required" });
 
-  db.query(
-    {
-      sql: "SELECT * FROM ?? JOIN ?? ON ??=?? JOIN ?? USING(??) JOIN ?? USING (??) WHERE ??=? AND ??=? AND ??= ?",
-      values: [
-        "USERS",
-        "STUDENT_ACADEMIC_HISTORY",
-        "USER_ID",
-        "STUDENT_ID",
-        "STD_ASMNT",
-        "STUDENT_ID",
-        "ASSESSMENT",
-        "ASSESSMENT_ID",
-        "COURSE_ID",
-        obj.courseId,
-        "USER_ID",
-        obj.studentId,
-        "CLASS_ID",
-        obj.classId,
-      ],
-    },
-    (error, results, fields) => {
-      if (error)
-        return res.status(500).json({ message: "unkown error occured" });
-      var sum = 0;
-      var total = 0;
-      for (var i = 0; i < results.length; i++) {
-        total += results[i].MAX_MARKS;
-        sum += results[i].OBTAINED_MARKS;
-      }
-      var avg;
-      if (total == 0) avg = 0;
-      else avg = sum / total;
-      var tbr = { details: results, average: avg * 100 };
-      if (results.length > 0) {
-        return res.status(200).json(tbr);
-      } else {
-        db.query(
-          {
-            sql: "SELECT * FROM ?? WHERE ?? = ?",
-            values: ["USERS", "USER_ID", obj.studentId],
-          },
-          (error, resu, fields) => {
-            if (error) {
-              console.log(error);
-              return res.status(500).json({ message: "unkown error occured" });
+    db.query(
+        {
+            sql: "SELECT * FROM ?? JOIN ?? ON ??=?? JOIN ?? USING(??) JOIN ?? USING (??) WHERE ??=? AND ??=? AND ??= ?",
+            values: [
+                "USERS",
+                "STUDENT_ACADEMIC_HISTORY",
+                "USER_ID",
+                "STUDENT_ID",
+                "STD_ASMNT",
+                "STUDENT_ID",
+                "ASSESSMENT",
+                "ASSESSMENT_ID",
+                "COURSE_ID",
+                obj.courseId,
+                "USER_ID",
+                obj.studentId,
+                "CLASS_ID",
+                obj.classId,
+            ],
+        },
+        (error, results, fields) => {
+            if (error)
+                return res
+                    .status(500)
+                    .json({ message: "unkown error occured" });
+            var sum = 0;
+            var total = 0;
+            for (var i = 0; i < results.length; i++) {
+                total += results[i].MAX_MARKS;
+                sum += results[i].OBTAINED_MARKS;
             }
-            tbr.details.push(resu[0]);
-            return res.status(200).json(tbr);
-          }
-        );
-      }
-    }
-  );
+            var avg;
+            if (total == 0) avg = 0;
+            else avg = sum / total;
+            var tbr = { details: results, average: avg * 100 };
+            if (results.length > 0) {
+                return res.status(200).json(tbr);
+            } else {
+                db.query(
+                    {
+                        sql: "SELECT * FROM ?? WHERE ?? = ?",
+                        values: ["USERS", "USER_ID", obj.studentId],
+                    },
+                    (error, resu, fields) => {
+                        if (error) {
+                            console.log(error);
+                            return res
+                                .status(500)
+                                .json({ message: "unkown error occured" });
+                        }
+                        tbr.details.push(resu[0]);
+                        return res.status(200).json(tbr);
+                    }
+                );
+            }
+        }
+    );
 };
 
 const getStudentById = (req, res) => {
@@ -215,14 +229,14 @@ const getStudentById = (req, res) => {
         },
         (error, results, fields) => {
             if (error) {
-                return res
-                    .status(500)
-                    .json({ message: "Something went wrong please try again later..." });
+                return res.status(500).json({
+                    message: "Something went wrong please try again later...",
+                });
             } else {
                 if (results.length === 0)
-                    return res
-                        .status(400)
-                        .json({ message: "This ID does not belong to any student" });
+                    return res.status(400).json({
+                        message: "This ID does not belong to any student",
+                    });
                 return res.status(200).json({
                     results: results,
                 });
@@ -240,7 +254,9 @@ const getAllStudents = (req, res) => {
         },
         (error, results, fields) => {
             if (error) {
-                return res.status(500).json({ message: "student_id is required" });
+                return res
+                    .status(500)
+                    .json({ message: "student_id is required" });
             }
 
             return res.status(200).send(results);
@@ -268,7 +284,9 @@ const assignStudentECA = (req, res) => {
 
         (error, results, fields) => {
             if (error) {
-                return res.status(500).json({ message: "student_id is required" });
+                return res
+                    .status(500)
+                    .json({ message: "student_id is required" });
             }
 
             return res.status(200).json({ message: "successful entry" });
@@ -308,7 +326,6 @@ const getStudentECA = (req, res) => {
 };
 
 const getStudentInfo = (req, res) => {
-
     const obj = req.params;
 
     if (!obj.ID) {
@@ -328,16 +345,22 @@ const getStudentInfo = (req, res) => {
                 "ROLE_ID",
                 "STUDENT",
                 "USER_ID",
-                obj.ID
-            ]
-        }, (errors, results, fields) => {
-
+                obj.ID,
+            ],
+        },
+        (errors, results, fields) => {
             if (errors) {
-                res.status(400).json({ message: "BadRequestException: SQL Skill Issue!", EC: -1 });
+                res.status(400).json({
+                    message: "BadRequestException: SQL Skill Issue!",
+                    EC: -1,
+                });
             }
 
             if (results.length == 0) {
-                res.status(200).json({ message: "BadRequestException: Student Does Not Exist!", EC: -1 });
+                res.status(200).json({
+                    message: "BadRequestException: Student Does Not Exist!",
+                    EC: -1,
+                });
             } else {
                 var personal_data = results[0];
 
@@ -349,23 +372,117 @@ const getStudentInfo = (req, res) => {
                             "STUDENT_ACADEMIC_HISTORY",
                             "STUDENT_ID",
                             obj.ID,
-                            "ENROLLMENT_DATE"]
-                    }, (errors, results, fields) => {
-
+                            "ENROLLMENT_DATE",
+                        ],
+                    },
+                    (errors, results, fields) => {
                         if (errors) {
-                            res.status(400).json({ message: "BadRequestException: SQL Skill Issue!", EC: -1 });
-                        }else{
-
+                            res.status(400).json({
+                                message:
+                                    "BadRequestException: SQL Skill Issue!",
+                                EC: -1,
+                            });
+                        } else {
                             let enrolled_class = results[0];
 
-                            return res.status(200).json({ EC: 1, class: enrolled_class, data: personal_data });
+                            return res.status(200).json({
+                                EC: 1,
+                                class: enrolled_class,
+                                data: personal_data,
+                            });
                         }
                     }
-                )
+                );
             }
         }
-    )
-}
+    );
+};
+
+const assignMarks = (req, res) => {
+    var obj = req.body;
+    if (!obj.marks) {
+        return res.status(400).json({ message: "Obtained Marks are required" });
+    }
+    if (!obj.studentId) {
+        return res.status(400).json({ message: "Student ID is required" });
+    }
+    if (!obj.assessmentId) {
+        return res.status(400).json({ message: "Assessment ID is required" });
+    }
+    db.query(
+        {
+            sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
+            values: [
+                "STD_ASMNT",
+                "STUDENT_ID",
+                obj.studentId,
+                "ASSESSMENT_ID",
+                obj.assessmentId,
+            ],
+        },
+        (error, results, fields) => {
+            if (error) {
+                console.log(error);
+                return res
+                    .status(500)
+                    .json({ message: "Unkown error occured" });
+            }
+            if (results.length == 0) {
+                db.query(
+                    {
+                        sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
+                        values: [
+                            "STD_ASMNT",
+                            "STUDENT_ID",
+                            "ASSESSMENT_ID",
+                            "OBTAINED_MARKS",
+                            obj.studentId,
+                            obj.assessmentId,
+                            obj.marks,
+                        ],
+                    },
+                    (error, results, fields) => {
+                        if (error) {
+                            console.log(error);
+                            return res
+                                .status(500)
+                                .json({ message: "Unkown error occured" });
+                        }
+                        return res
+                            .status(200)
+                            .json({ message: "insertion successful" });
+                    }
+                );
+            } else {
+                db.query(
+                    {
+                        sql: "UPDATE ?? SET ?? = ? WHERE ?? = ? AND ?? = ?",
+                        values: [
+                            "STD_ASMNT",
+                            "OBTAINED_MARKS",
+                            obj.marks,
+                            "STUDENT_ID",
+                            obj.studentId,
+                            "ASSESSMENT_ID",
+                            obj.assessmentId,
+                        ],
+                    },
+                    (error, results, fields) => {
+                        if (error) {
+                            console.log(error);
+                            return res
+                                .status(500)
+                                .json({ message: "Unkown error occured" });
+                        }
+                        return res
+                            .status(200)
+                            .json({ message: "updation successful" });
+                    }
+                );
+            }
+        }
+    );
+};
 
 module.exports = {
     createStudent,
@@ -375,4 +492,5 @@ module.exports = {
     assignStudentECA,
     getStudentECA,
     getStudentPerformance,
+    assignMarks,
 };

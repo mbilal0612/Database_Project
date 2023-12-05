@@ -31,6 +31,7 @@ router.get("/getAssessmentsByCourseId/:courseId/:facultyId", [auth, facultyAuth]
 router.get("/getAssessmentQuestions/:assessmentId", [auth, facultyAuth], tryCatch(questionService.getAssessmentQuestions));
 router.get("/getAllPlo",[auth, facultyAuth], tryCatch(ploService.getPLOs));
 router.get("/getClassMarks/:assessmentId/:classId", [auth, facultyAuth], tryCatch(classService.getClassMarks));
+router.get("/getCloProgress/:studentId/:courseId", [auth,facultyAuth], tryCatch(cloService.getStudentProgress));
 
 router.post("/linkCLOtoQuestion", [auth, facultyAuth],tryCatch(questionService.assignCLOToQuestion));
 router.post("/createQuestionType", [auth, facultyAuth],tryCatch(questionTypeService.createQuestionType));
@@ -44,6 +45,7 @@ router.put("/updateQuestion", [auth, facultyAuth],tryCatch(questionService.updat
 router.put("/updateClo", [auth, facultyAuth],tryCatch(cloService.updateClo));
 router.put("/updateQuestionType", [auth, facultyAuth],tryCatch(questionTypeService.updateQuestionType));
 router.put("/updatePlo",[auth, facultyAuth],tryCatch(ploService.updatePLO));
+router.put("/updateMarks",[auth,facultyAuth], tryCatch(studentService.assignMarks));
 
 
 router.delete("/deleteQuestionType", [auth, facultyAuth],tryCatch(questionTypeService.deleteQuestionType));
