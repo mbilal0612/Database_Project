@@ -34,7 +34,7 @@ export default function Attendance2({ studentId }) {
             getChildrenAttendance(studentId).then((res)=>{
                 console.log(res);
                 setDis(res.data);
-                console.log(studentId)
+                console.log(studentId);
             })
            
         }

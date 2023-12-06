@@ -68,7 +68,7 @@ const StudentDetails = () => {
                                 <div key={i++} className="spacingCards">
                                     <PerformanceCard
                                         label={row.ASSESSMENT_TYPE}
-                                        percentage={(row.OBTAINED_MARKS / row.MAX_MARKS) * 100}
+                                        percentage={parseInt((row.OBTAINED_MARKS / row.MAX_MARKS) * 100)}
                                     />
                                 </div>
                             );

@@ -22,9 +22,9 @@ const StudentHome = () => {
         decryptedToken.data.id,
         sessionStorage.getItem("token")
       );
-
+      console.log(decryptedToken);
       setName(res.data.results[0].FIRST_NAME);
-
+      sessionStorage.setItem("studentId", decryptedToken.data.id);
       var apiCourses = await getStudentCourses(decryptedToken.data.id, token);
 
       console.log(apiCourses.data);

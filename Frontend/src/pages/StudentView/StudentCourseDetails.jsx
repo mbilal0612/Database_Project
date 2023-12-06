@@ -4,8 +4,8 @@ import SimpleBackdrop from "../../components/util-components/Loader";
 import StudentNavbar from "../../components/Navbars/StudentNavbar";
 import PerformanceCard from "../../components/FacultyComponents/PerformanceCard";
 import TypographyTheme from "../../components/FacultyComponents/HeadingTheme";
-import { getStudentPerformance } from "../../apis/Faculty/getStudentPerformance";
 import { getAttendanceReport } from "../../apis/Faculty/getAttendanceReport";
+import { getMyPerformance } from "../../apis/Student/studentPerformance";
 
 const StudentCourseDetails = () => {
     const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ const StudentCourseDetails = () => {
             if (decryptedToken.data.userType != "STUDENT") {
                 window.location.assign("/notfound");
             }
-            const res = await getStudentPerformance(
+            const res = await getMyPerformance(
                 sessionStorage.getItem("studentId"),
                 sessionStorage.getItem("classId"),
                 sessionStorage.getItem("courseId"),
@@ -68,7 +68,7 @@ const StudentCourseDetails = () => {
                                 <div key={i++} className="spacingCards">
                                     <PerformanceCard
                                         label={row.ASSESSMENT_TYPE}
-                                        percentage={(row.OBTAINED_MARKS / row.MAX_MARKS) * 100}
+                                        percentage={parseInt((row.OBTAINED_MARKS / row.MAX_MARKS) * 100)}
                                     />
                                 </div>
                             );
