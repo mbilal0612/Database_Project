@@ -86,11 +86,13 @@ function App() {
                     <Route path="/Schedule" element={<Schedule />} />
                     <Route path="/StudentCourseDetails" element={<StudentCourseDetails />} />
                     <Route path="/AssignmentPage" element={<AssignmentPage />} />
+
                     //routes for guardian view
                     <Route path="/GuardianHome" element={<GuardianHome />} />
                     <Route path="/Ledger" element={<Ledger />} />
                     <Route path="/GuardianAttendance" element={<GuardianAttendance />} />
                     <Route path="/GuardianGrade" element={<GuardianGrade />} />
+                    
                     //routes for faculty view
                     <Route path="/FacultyHome" element={<FacultyHome />} />
                     <Route path="/Courses" element={<Courses />} />
