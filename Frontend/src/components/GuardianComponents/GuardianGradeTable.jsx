@@ -14,10 +14,12 @@ import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import CloRow from "./clorow";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { getClassCourse } from "../../apis/guardian/getClassCourse";
 import { getChildrenCourseAssessment } from "../../apis/guardian/getChildrenAssessment";
-
+import { getCloIds } from "../../apis/guardian/getCloIds";
+import { getCloDetails } from "../../apis/guardian/cloDetails";
 
 // function createData(name, calories, fat, carbs, protein, price) {
 //     return {
@@ -47,7 +49,8 @@ function Row({ row }) {
     const [open, setOpen] = React.useState(false);
     const [course, setCourse] = useState([]);
     const [ass, setAss] = useState([]);
-    console.log("c", row);
+    const [clo, setClo] = useState([]);
+    //console.log("c", row);
 
     useEffect(() => {
         const handleCourse = async () => {
@@ -57,11 +60,20 @@ function Row({ row }) {
 
             getChildrenCourseAssessment(row.STUDENT_ID, row.COURSE_ID).then((res) => { 
                 setAss(res.data);
-             })
+
+            });
+
+            var temp = await getCloIds(row.STUDENT_ID, row.COURSE_ID);
+            setClo(temp.data);
+
+            console.log(temp.data);
+            
         };
-        console.log("row", row);
+        //console.log("row", row);
         handleCourse();
-    },[]);
+        console.log("clo", clo);
+        
+    },[row]);
 
     return (
         <React.Fragment>
@@ -115,30 +127,8 @@ function Row({ row }) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {/* {row.history.map((historyRow) => (
-                                        <TableRow key={historyRow.date}>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                            >
-                                                {historyRow.date}
-                                            </TableCell>
-                                            <TableCell>
-                                                {historyRow.customerId}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {historyRow.amount}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {Math.round(
-                                                    historyRow.amount *
-                                                        row.price *
-                                                        100
-                                                ) / 100}
-                                            </TableCell>
-                                        </TableRow>
-                                    ))} */}
-                                    {ass.map((as) => (
+                                    
+                                {ass.map((as) => (
                                         <TableRow key={as.ASSESSMENT_ID}>
                                             <TableCell
                                                 component="th"
@@ -166,21 +156,11 @@ function Row({ row }) {
                                             >
                                                 {as.OBTAINED_MARKS}
                                             </TableCell>
-                                            {/* <TableCell>
-                                                {historyRow.customerId}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {historyRow.amount}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {Math.round(
-                                                    historyRow.amount *
-                                                        row.price *
-                                                        100
-                                                ) / 100}
-                                            </TableCell> */}
+                                            
                                         </TableRow>
                                     ))}
+                                    
+                                        
                                 </TableBody>
                             </Table>
                             
@@ -207,72 +187,42 @@ function Row({ row }) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {/* {row.history.map((historyRow) => (
-                                        <TableRow key={historyRow.date}>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                            >
-                                                {historyRow.date}
+                                    
+
+                                    {clo.map((cl) => (
+                                        //<CloRow clo={cl} studentId={row.STUDENT_ID} courseId={row.COURSE_ID}/>
+                                        <TableRow key={cl.CLO_ID}>
+                                            <TableCell component="th" scope="row">
+                                                {cl.CLO_ID}
+                                                {/* {as.ASSESSMENT_ID} */}
                                             </TableCell>
-                                            <TableCell>
-                                                {historyRow.customerId}
+                                            <TableCell component="th" scope="row">
+                                                {cl.CLO_NAME}
+                                                {/* {as.ASSESSMENT_TYPE} */}
                                             </TableCell>
-                                            <TableCell align="right">
-                                                {historyRow.amount}
+                                            <TableCell component="th" scope="row" align="right">
+                                                {/* {as.MAX_MARKS} */}
+                                                {cl.OBTAINED}
                                             </TableCell>
-                                            <TableCell align="right">
-                                                {Math.round(
-                                                    historyRow.amount *
-                                                        row.price *
-                                                        100
-                                                ) / 100}
+                                            <TableCell component="th" scope="row" align="right">
+                                                {cl.OBTAINED}
+                                                {/* {as.OBTAINED_MARKS} */}
                                             </TableCell>
-                                        </TableRow>
-                                    ))} */}
-                                    {ass.map((as) => (
-                                        <TableRow key={as.ASSESSMENT_ID}>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                            >
-                                                {as.ASSESSMENT_ID}
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                            >
-                                             {as.ASSESSMENT_TYPE}   
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                align="right"
-                                            >
-                                                {as.MAX_MARKS}
-                                            </TableCell>
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                align="right"
-                                            >
-                                                {as.OBTAINED_MARKS}
-                                            </TableCell>
-                                            {/* <TableCell>
-                                                {historyRow.customerId}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {historyRow.amount}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {Math.round(
-                                                    historyRow.amount *
-                                                        row.price *
-                                                        100
-                                                ) / 100}
-                                            </TableCell> */}
-                                        </TableRow>
+                                    </TableRow>
                                     ))}
+
+                                    {/* {clo.map( async (cl) => {
+                                        let res = await getCloDetails(cl.CLO_ID,row.STUDENT_ID,row.COURSE_ID)
+                                        return (
+                                            <TableRow>
+                                                <TableCell>  nello</TableCell>
+                                            </TableRow>
+                                        )
+                                    }
+                                        
+                                    )} */}
+                                   
+                                   
                                 </TableBody>
                             </Table>
                         </Box>

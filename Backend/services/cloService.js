@@ -344,20 +344,84 @@ const getStudentProgress = (req, res) => {
                 obj.courseId,
             ],
         },
-        async (error, results, fields) => {
+        async (error, results1, fields) => {
             if (error) {
                 return res.status(500).json({ message: "Unknown error!" });
             }
-            var tbr = await funcCaller(results, obj.studentId);
+          //  var tbr = await funcCaller(results, obj.studentId);
             // for (let i = 0; i < results.length; i++) {
             //     results[i] = { ...results[i], OBTAINED_MARKS: 0, MAX_MARKS: 0 };
             //     results[i] = await cloHelper(results[i], obj.studentId);
             // }
-            if (tbr == null)
-                return res
-                    .status(500)
-                    .json({ message: "unkown error occured" });
-            else return res.status(200).json(tbr);
+            // if (tbr == null)
+            //     return res
+            //         .status(500)
+            //         .json({ message: "unkown error occured" });
+
+
+            data = []
+            results1.forEach((clo) => {
+                console.log(clo);
+                db.query(
+                    {
+                        sql: "SELECT ??,??,??,SUM(??) AS TOTAL, SUM(??) AS OBTAINED FROM ?? JOIN ?? USING(??) JOIN ?? USING(??) JOIN ?? USING(??) WHERE ?? = ? AND ?? = ? AND ?? = ?",
+                        values: [
+                            "COURSE_ID","STUDENT_ID","CLO_ID",
+                            "MAX_MARKS",
+                            "OBTAINED_MARKS",
+                            "QUESTION_ASSESSMENT",
+                            "STD_ASMNT",
+                            "ASSESSMENT_ID",
+                            "QUESTION_CLO",
+                            "QUESTION_ID",
+                            "ASSESSMENT",
+                            "ASSESSMENT_ID",
+                            "CLO_ID",
+                            clo.CLO_ID,
+                            "STUDENT_ID",
+                            obj.studentId,
+                            "COURSE_ID",
+                            obj.courseId
+                        ],
+                    },
+                    (error, results, fields) => {
+                        if (error) {
+                            console.log(error);
+                            return ;
+                        } else {
+                            // if (results.length == 0) return tbr;
+                            // obj.OBTAINED_MARKS = results[0].OBTAINED;
+                            // obj.MAX_MARKS = results[0].TOTAL;
+                            // console.log("first");
+                            console.log(results);
+                            data.push({
+                                CLO_ID: clo.CLO_ID,
+                                CLO_NAME: clo.CLO_NAME,
+                                OBTAINED: results[0].OBTAINED,
+                                MAX_MARKS: results[0].TOTAL,
+                                hello : "hello"
+
+                            })
+                            
+                            if(results1.length == data.length){
+                                console.timeLog(data);
+                                return res.status(200).json(data);
+                            }
+                            
+                            
+                        }
+                    }
+                );
+
+                // if(results1.length == data.length){
+                //     return res.status(200).json(data);
+                // }
+                
+            });
+            // if(results1.length == data.length){
+            //     return res.status(200).json(data);
+            // }
+            //return res.status(200).json(results);
         }
     );
 };
@@ -368,6 +432,62 @@ const getCloProgess = (req, res) => {
 
   return res.status(200).json({ message: "success" });
 };
+
+
+const clohelper2 = (req, res) => {
+    const obj = req.params;
+    console.log(req.body)
+
+    if(!obj.cloId){
+        return res.status(400).json({ message: "CLO ID is required" });
+    }
+
+    if(!obj.studentId){
+        return res.status(400).json({ message: "Student ID is required" });
+    }
+
+    if(!obj.courseId){
+        return res.status(400).json({ message: "course ID is required" });
+    }
+
+    db.query(
+        {
+            sql: "SELECT ??,??,??,SUM(??) AS TOTAL, SUM(??) AS OBTAINED FROM ?? JOIN ?? USING(??) JOIN ?? USING(??) JOIN ?? USING(??) WHERE ?? = ? AND ?? = ? AND ?? = ?",
+            values: [
+                "COURSE_ID","STUDENT_ID","CLO_ID",
+                "MAX_MARKS",
+                "OBTAINED_MARKS",
+                "QUESTION_ASSESSMENT",
+                "STD_ASMNT",
+                "ASSESSMENT_ID",
+                "QUESTION_CLO",
+                "QUESTION_ID",
+                "ASSESSMENT",
+                "ASSESSMENT_ID",
+                "CLO_ID",
+                obj.cloId,
+                "STUDENT_ID",
+                obj.studentId,
+                "COURSE_ID",
+                obj.courseId
+            ],
+        },
+        async (error, results, fields) => {
+            if (error) {
+                console.log(error);
+                return null;
+            } else {
+                // if (results.length == 0) return tbr;
+                obj.OBTAINED_MARKS = results[0].OBTAINED;
+                obj.MAX_MARKS = results[0].TOTAL;
+                console.log("first");
+                return res.status(200).json(results);
+            }
+        }
+    );
+};
+
+
 module.exports = {
     createCLO,
     getCloById,
@@ -376,4 +496,5 @@ module.exports = {
     assignToPlo,
     getCloByCourse,
     getStudentProgress,
+    clohelper2,
 };
