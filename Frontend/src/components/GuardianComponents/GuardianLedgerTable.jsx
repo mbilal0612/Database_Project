@@ -21,7 +21,7 @@ function CustomColumnMenu(props) {
 }
 
 const columns = [
-    { field: "T_DATE", headerName: "Date", width: 200 },
+    { field: "T_DATE", headerName: "Date", width: 200, valueGetter: ({ value }) => value && new Date(value), type:'date'},
     { field: "T_NAME", headerName: "Details", width: 300 },
     { field: "T_AMOUNT", headerName: "Amount", width: 140 },
 ];
@@ -48,6 +48,8 @@ export default function GuardianLedgerTable({ studentId, showrows }) {
             <DataGrid
                 rows={dis}
                 columns={columns}
+                pagination
+                
                 slots={{
                     columnMenu: CustomColumnMenu,
                 }}

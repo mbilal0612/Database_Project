@@ -4,6 +4,8 @@ const tryCatch = require("../middleware/tryCatch");
 var router = express.Router();
 var guardianService = require("../services/guardianService");
 var financeService = require("../services/financeService");
+let courseService = require("../services/courseService");
+let attendanceService = require("../services/attendanceService");
 
 router.post("/createGuardian", tryCatch(guardianService.createGuardian));
 router.post("/createGuardianPayment", tryCatch(financeService.createGuardianPayment));
@@ -15,5 +17,7 @@ router.get("/getStudentLedger/:id", tryCatch(financeService.generateStudentLedge
 router.get("/getChildrenClass/:studentId", tryCatch(guardianService.getChildrenClass));
 router.get("/getClassCourse/:classId", tryCatch(guardianService.getClassCourse));
 router.get("/getChildrenCourseAssessment/:studentId/:courseId", tryCatch(guardianService.getChildrenCourseAssessment));
-
+router.get("/getRecentChildrenClass/:studentId", tryCatch(guardianService.getRecentChildrenClass));
+router.get("/getChildrenEca/:studentId", tryCatch(guardianService.getChildrenECA));
+router.get("/getChildrenAttendanceSummary/:studentID", tryCatch(attendanceService.getAttendanceSummary));
 module.exports = router;

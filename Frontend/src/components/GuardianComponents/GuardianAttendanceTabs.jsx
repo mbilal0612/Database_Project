@@ -6,6 +6,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { Paper } from "@mui/material";
 import Attendance2 from "./AttendanceTable2";
+import AttendanceTableUpdate from "./UpdatedAttendanceTable";
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -72,7 +73,10 @@ export default function GuardianTabs({ children }) {
             {children.map((c) => (
                 <CustomTabPanel value={value} index={c.STUDENT_ID}>
                     {/* <EnhancedTable/> */}
-                    <Attendance2 studentId={c.STUDENT_ID} />
+                    {/* <Attendance2 studentId={c.STUDENT_ID} /> */}
+                    <AttendanceTableUpdate studentId={c.STUDENT_ID}/>
+                    {/* <CustomDataGrid/> */}
+                    {/* <GuardianAttendanceTable2/> */}
                 </CustomTabPanel>
             ))}
         </Paper>

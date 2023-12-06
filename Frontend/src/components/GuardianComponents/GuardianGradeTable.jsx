@@ -59,7 +59,7 @@ function Row({ row }) {
                 setAss(res.data);
              })
         };
-
+        console.log("row", row);
         handleCourse();
     },[]);
 
@@ -93,7 +93,7 @@ function Row({ row }) {
                     colSpan={6}
                 >
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{ margin: 1 }}>
+                        <Box sx={{ margin: 3 }}>
                             <Typography
                                 variant="h6"
                                 gutterBottom
@@ -101,11 +101,103 @@ function Row({ row }) {
                             >
                                 Assessments
                             </Typography>
-                            <Table size="small" aria-label="purchases">
+                            <Table size="small" aria-label="assessment marks">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell sx={{fontWeight:"bolder"}}>Assessment_ID</TableCell>
                                         <TableCell sx={{fontWeight:"bolder"}}>Assessment Type</TableCell>
+                                        <TableCell sx={{fontWeight:"bolder"}} align="right">
+                                            Max Marks
+                                        </TableCell>
+                                        <TableCell sx={{fontWeight:"bolder"}} align="right">
+                                            Obtained Marks
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {/* {row.history.map((historyRow) => (
+                                        <TableRow key={historyRow.date}>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                            >
+                                                {historyRow.date}
+                                            </TableCell>
+                                            <TableCell>
+                                                {historyRow.customerId}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {historyRow.amount}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {Math.round(
+                                                    historyRow.amount *
+                                                        row.price *
+                                                        100
+                                                ) / 100}
+                                            </TableCell>
+                                        </TableRow>
+                                    ))} */}
+                                    {ass.map((as) => (
+                                        <TableRow key={as.ASSESSMENT_ID}>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                            >
+                                                {as.ASSESSMENT_ID}
+                                            </TableCell>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                            >
+                                             {as.ASSESSMENT_TYPE}   
+                                            </TableCell>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                align="right"
+                                            >
+                                                {as.MAX_MARKS}
+                                            </TableCell>
+                                            <TableCell
+                                                component="th"
+                                                scope="row"
+                                                align="right"
+                                            >
+                                                {as.OBTAINED_MARKS}
+                                            </TableCell>
+                                            {/* <TableCell>
+                                                {historyRow.customerId}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {historyRow.amount}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                {Math.round(
+                                                    historyRow.amount *
+                                                        row.price *
+                                                        100
+                                                ) / 100}
+                                            </TableCell> */}
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                            
+                        </Box>
+                        <Box sx={{margin: 3}}>
+                            <Typography
+                                variant="h6"
+                                gutterBottom
+                                component="div"
+                            >
+                                CLO Progress
+                            </Typography>
+                            <Table size="small" aria-label="clo progress">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell sx={{fontWeight:"bolder"}}>CLO_ID</TableCell>
+                                        <TableCell sx={{fontWeight:"bolder"}}>CLO Type</TableCell>
                                         <TableCell sx={{fontWeight:"bolder"}} align="right">
                                             Max Marks
                                         </TableCell>

@@ -362,6 +362,102 @@ const getStudentProgress = (req, res) => {
     );
 };
 
+const cloHelper = async (obj, studentId) => {
+    db.query(
+        {
+            sql: "SELECT SUM(??) AS TOTAL, SUM(??) AS OBTAINED FROM ?? JOIN ?? USING(??) JOIN ?? USING(??) JOIN ?? USING(??) WHERE ?? = ? AND ?? = ?",
+            values: [
+                "MAX_MARKS",
+                "OBTAINED_MARKS",
+                "QUESTION_ASSESSMENT",
+                "STD_ASMNT",
+                "ASSESSMENT_ID",
+                "QUESTION_CLO",
+                "QUESTION_ID",
+                "ASSESSMENT",
+                "ASSESSMENT_ID",
+                "CLO_ID",
+                obj.CLO_ID,
+                "STUDENT_ID",
+                studentId,
+            ],
+        },
+        async (error, results, fields) => {
+            if (error) {
+                console.log(error);
+                return null;
+            } else {
+                if (results.length == 0) return tbr;
+                obj.OBTAINED_MARKS = results[0].OBTAINED;
+                obj.MAX_MARKS = results[0].TOTAL;
+                console.log("first");
+                return obj;
+            }
+        }
+    );
+};
+
+const funcCaller = async (arr, studentId) => {
+
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = { ...arr[i], OBTAINED_MARKS: 0, MAX_MARKS: 0 };
+        arr[i] = await cloHelper(arr[i], studentId);
+        // if (arr[i] == null) {
+        //   console.log("second");
+        //   return null;
+        // }
+    }
+    return arr;
+};
+
+const getStudentProgress = (req, res) => {
+    var obj = req.params;
+    if (!obj.studentId) {
+        return res.status(400).json({ message: "Student ID is required" });
+    }
+    if (!obj.courseId) {
+        return res.status(400).json({ message: "course ID is required" });
+    }
+    db.query(
+        {
+            sql: "SELECT DISTINCT(??), ?? FROM ?? JOIN ?? USING(??) JOIN ?? USING(??) join ?? using(??) WHERE ?? = ?",
+            values: [
+                "CLO_ID",
+                "CLO_NAME",
+                "QUESTION_ASSESSMENT",
+                "ASSESSMENT",
+                "ASSESSMENT_ID",
+                "QUESTION_CLO",
+                "QUESTION_ID",
+                "CLO",
+                "CLO_ID",
+                "ASSESSMENT.COURSE_ID",
+                obj.courseId,
+            ],
+        },
+        async (error, results, fields) => {
+            if (error) {
+                return res.status(500).json({ message: "Unknown error!" });
+            }
+            var tbr = await funcCaller(results, obj.studentId);
+            // for (let i = 0; i < results.length; i++) {
+            //     results[i] = { ...results[i], OBTAINED_MARKS: 0, MAX_MARKS: 0 };
+            //     results[i] = await cloHelper(results[i], obj.studentId);
+            // }
+            if (tbr == null)
+                return res
+                    .status(500)
+                    .json({ message: "unkown error occured" });
+            else return res.status(200).json(tbr);
+        }
+    );
+};
+
+const getCloProgess = (req, res) => {
+  const obj = req.body;
+
+  return res.status(200).json({ message: "success" });
+};
 module.exports = {
     createCLO,
     getCloById,

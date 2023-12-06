@@ -59,13 +59,10 @@ const createGuardian = (req, res) => {
         },
         (error, results, fields) => {
             if (error) {
-                return res
-                    .status(500)
-                    .json({
-                        message:
-                            "Something went wrong please try again later...",
-                        error: error,
-                    });
+                return res.status(500).json({
+                    message: "Something went wrong please try again later...",
+                    error: error,
+                });
             } else {
                 db.query(
                     {
@@ -75,13 +72,11 @@ const createGuardian = (req, res) => {
                     },
                     (error, results, fields) => {
                         if (error) {
-                            return res
-                                .status(500)
-                                .json({
-                                    message:
-                                        "Something went wrong please try again later...",
-                                    error: error,
-                                });
+                            return res.status(500).json({
+                                message:
+                                    "Something went wrong please try again later...",
+                                error: error,
+                            });
                         }
                         bcrypt.hash(defaultpass, 10, (err, hash) => {
                             let username = "G" + results[0].GUARDIAN_ID;
@@ -101,12 +96,10 @@ const createGuardian = (req, res) => {
                                 },
                                 (error, results, fields) => {
                                     if (error) {
-                                        return res
-                                            .status(500)
-                                            .json({
-                                                message:
-                                                    "Something went wrong please try again later...",
-                                            });
+                                        return res.status(500).json({
+                                            message:
+                                                "Something went wrong please try again later...",
+                                        });
                                     } else {
                                         return res.json({
                                             message: "Parent Created",
@@ -178,9 +171,10 @@ const getChildren = (req, res) => {
 
     db.query(
         {
-            sql: "SELECT * FROM USERS AS U1 JOIN STUDENT_GUARDIAN ON U1.USER_ID = STUDENT_GUARDIAN.GUARDIAN_ID JOIN USERS AS U2 ON U2.USER_ID = STUDENT_GUARDIAN.STUDENT_ID LEFT JOIN STUDENT_ACADEMIC_HISTORY USING (STUDENT_ID)  WHERE U1.USER_ID=? ORDER BY ENROLLMENT_DATE DESC;",
+            // sql: "WITH children AS ( SELECT * FROM USERS JOIN STUDENT_GUARDIAN ON USERS.USER_ID = STUDENT_GUARDIAN.STUDENT_ID WHERE GUARDIAN_ID = ?), SELECT  * FROM children ORDER BY ENROLLMENT_DATE DESC ;",
+            sql: "SELECT * FROM USERS AS U1 JOIN STUDENT_GUARDIAN ON U1.USER_ID = STUDENT_GUARDIAN.GUARDIAN_ID JOIN USERS AS U2 ON U2.USER_ID = STUDENT_GUARDIAN.STUDENT_ID  WHERE U1.USER_ID=? ",
             timeout: 40000,
-            values: [obj.guardianId],   
+            values: [obj.guardianId],
         },
         (error, results, fields) => {
             if (error) {
@@ -238,10 +232,10 @@ const getChildrenClass = (req, res) => {
         },
         (error, result, fields) => {
             if (error) {
-                console.log(error)
+                console.log(error);
                 return res.status(500).json("error");
             }
-            
+
             return res.status(200).json(result);
         }
     );
@@ -266,17 +260,16 @@ const getClassCourse = (req, res) => {
             return res.status(200).json(result);
         }
     );
-} 
+};
 
-const getChildrenCourseAssessment = (req,res) =>{
-
+const getChildrenCourseAssessment = (req, res) => {
     const obj = req.params;
 
     if (!obj.studentId) {
         return res.status(400).json({ message: "studentId is required!" });
     }
 
-    if(!obj.courseId){
+    if (!obj.courseId) {
         return res.status(400).json({ message: "courseId is required!" });
     }
 
@@ -284,7 +277,7 @@ const getChildrenCourseAssessment = (req,res) =>{
         {
             sql: "SELECT * FROM STD_ASMNT JOIN ASSESSMENT USING (ASSESSMENT_ID) WHERE STUDENT_ID = ? AND COURSE_ID = ?;",
             timeout: 40000,
-            values: [obj.studentId,obj.courseId],
+            values: [obj.studentId, obj.courseId],
         },
         (error, result, fields) => {
             if (error) {
@@ -293,6 +286,48 @@ const getChildrenCourseAssessment = (req,res) =>{
             return res.status(200).json(result);
         }
     );
+};
+
+const getRecentChildrenClass = (req, res) => {
+    const obj = req.params;
+
+    if (!obj.studentId) {
+        return res.status(400).json({ message: "studentId is required!" });
+    }
+
+    db.query({
+        sql: "SELECT * FROM STUDENT_ACADEMIC_HISTORY WHERE STUDENT_ID = ? ORDER BY ENROLLMENT_DATE DESC LIMIT 1;",
+        timeout: 40000,
+        values: [obj.studentId],
+    },
+    (error, result, fields) => {
+        if(error){
+            return res.status(400).json("error");
+        }
+
+        return res.status(200).json(result);
+    });
+};
+
+const getChildrenECA = (req,res) => {
+    const obj = req.params;
+
+    if(!obj.studentId){
+        return res.status(400).json({message:"studentId is required!"});
+    }
+
+    db.query({
+        sql:"SELECT * FROM STUDENT_ECA JOIN ECA USING (ECA_ID) WHERE STUDENT_ID = ?;",
+        timeout:40000,
+        values:[obj.studentId]
+    }, 
+    (error,result,fields) => {
+        
+        if(error) {
+            return res.status(500).json("error");
+        }
+        return res.status(200).json(result);
+    })
 }
 
 module.exports = {
@@ -303,5 +338,7 @@ module.exports = {
     getChildrenAttendance,
     getChildrenClass,
     getClassCourse,
-    getChildrenCourseAssessment
+    getChildrenCourseAssessment,
+    getRecentChildrenClass,
+    getChildrenECA,
 };

@@ -17,7 +17,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
     },
 }));
 
-export default function OutlinedCard({ title = 'Outlined', domain = 'default content', desc = 'This card takes you some place', status = false, Click }) {
+export default function Kard({ title = 'Outlined', domain = 'default content', desc = 'This card takes you some place', status = false, Click }) {
     return (
         <Box sx={{ minWidth: 275, maxWidth: 275, marginRight: "0.5%", marginTop: "1%", boxShadow: 3, borderRadius: 3}}>
             <Card variant="outlined">
@@ -47,6 +47,7 @@ export default function OutlinedCard({ title = 'Outlined', domain = 'default con
                     }
                 </React.Fragment>
             </Card>
+       
         </Box>
     );
 }
