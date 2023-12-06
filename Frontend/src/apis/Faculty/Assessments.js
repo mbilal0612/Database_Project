@@ -26,6 +26,13 @@ export async function createAssessment(data, token){
             "Content-Type": "application/json",
         };
 
+        //child["T_DATE"] = child["T_DATE"].split("T")[0];
+        console.log("data",data);
+        var temp = data.assessmentDate;
+        // data["assessmentDate"]=data["assessmentDate"].split("T")[0];
+        // console.log(temp.split("T")[0]); 
+        console.log("data2",data);
+
         const res = await axiosInstance.post('/faculty/insertAssessment', data, { headers: headers });
         if (res.status === 200) {
             console.log("SUCCESS");
@@ -39,7 +46,7 @@ export async function createAssessment(data, token){
 
 export async function createQuestion(data,token){
     try {
-
+        console.log(data);
         let headers = {
             "Authorization": token,
             "Content-Type": "application/json",
@@ -51,7 +58,9 @@ export async function createQuestion(data,token){
         } else {
             console.log("Something's wrong I can feel it");
         }
+        console.log(res);
     } catch (ex) {
+        console.log('ex',ex)
         return ex;
     }
 }

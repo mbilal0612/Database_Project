@@ -32,6 +32,7 @@ const createQuestion = (req, res) => {
     },
     (error, results, fields) => {
       if (error) {
+        console.log(error);
         return res.status(500).send(error);
       }
       var quesId = results.insertId;

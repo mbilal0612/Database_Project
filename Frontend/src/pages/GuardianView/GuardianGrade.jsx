@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { decryptToken } from "../../apis/auth/getUserType";
 import SimpleBackdrop from "../../components/util-components/Loader";
 import GuardianNavbar from "../../components/Navbars/GuardianNavbar";
-import CustomizedTables from "../../components/GuardianComponents/GuardianAttendanceTable";
-import GuardianTabs from "../../components/GuardianComponents/GuardianAttendanceTabs";
 import { getAllChildren } from "../../apis/guardian/getAllChildren";
 import GuardianGradeTabs from "../../components/GuardianComponents/GuardianGradeTabs";
 

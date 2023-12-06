@@ -83,8 +83,13 @@ const GuardianHome = () => {
               {children.map((child)=>(
                 <Paper  sx={{ minWidth: "90%", mt: 2, display: "block" }}  elavation={24}>
                 <OutlinedCard name={child.FIRST_NAME+ " "+ child.LAST_NAME} 
-                dob={child.DOB.substring(0,10)}
+                dob={new Date(child.DOB.substring(0,10)).toDateString()}
                 id={child.STUDENT_ID}
+                classId={child.CLASS_ID}
+                nationality= {child.NATIONALITY}
+                email= {child.EMAIL_ADDRESS}
+                gender= {child.GENDER}
+                emergencyContact = {child.EMERGENCY_CONTACT}
                 
                 />
                 </Paper>

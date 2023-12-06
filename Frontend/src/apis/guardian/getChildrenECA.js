@@ -1,11 +1,12 @@
 import { axiosInstance } from "../axios";
 
-export const getAllChildren = async (guardianId) => {
+export const getChildrenECA = async (studentId) => {
     try {
+        
         const res = await axiosInstance.get(
-            `/guardian/getAllChildren/${guardianId}`
+            `/guardian/getChildrenECA/${studentId}`
         );
-        console.log(res);
+        console.log('eca',res);
         return res;
     } catch (ex) {
         return ex;

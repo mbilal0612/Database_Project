@@ -362,6 +362,12 @@ const getStudentProgress = (req, res) => {
     );
 };
 
+
+const getCloProgess = (req, res) => {
+  const obj = req.body;
+
+  return res.status(200).json({ message: "success" });
+};
 module.exports = {
     createCLO,
     getCloById,

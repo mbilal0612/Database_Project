@@ -4,6 +4,7 @@ import SimpleBackdrop from "../../components/util-components/Loader";
 import GuardianNavbar from "../../components/Navbars/GuardianNavbar";
 import GuardianTabs from "../../components/GuardianComponents/GuardianAttendanceTabs";
 import { getAllChildren } from "../../apis/guardian/getAllChildren";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const GuardianAttendance = () => {
     const [render, setRender] = useState(false);
@@ -42,6 +43,7 @@ const GuardianAttendance = () => {
                 <div className="div1">
                     <GuardianNavbar />
                     <GuardianTabs children={children} />
+                    {/* <GuardianAttendanceTable2 children={children} /> */}
                 </div>
             ) : (
                 <SimpleBackdrop

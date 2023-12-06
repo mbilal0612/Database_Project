@@ -10,7 +10,7 @@ Backend/.env
 Umlet/
 
 #files
-
+.env
 trashService.js
 
 # IMPORTANT: in unix based systems "trashService.js" & "trashservice.js" are different files.

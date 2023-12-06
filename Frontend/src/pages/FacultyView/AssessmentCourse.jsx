@@ -42,10 +42,11 @@ const AssessmentCourse = () => {
   const assessmentAdded = async () => {
     
     if (title && maxMarks > 0) {
+      
       var obj = {
         assessmentTitle: title,
         maxMarks: maxMarks,
-        assessmentDate: date,
+        assessmentDate: date. format('YYYY-MM-DD'),
         facultyId: sessionStorage.getItem("facultyId"),
         courseId: sessionStorage.getItem("courseId"),
         classId: sessionStorage.getItem("classId")
