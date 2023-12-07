@@ -179,10 +179,10 @@ function Row({ row }) {
                                         <TableCell sx={{fontWeight:"bolder"}}>CLO_ID</TableCell>
                                         <TableCell sx={{fontWeight:"bolder"}}>CLO Type</TableCell>
                                         <TableCell sx={{fontWeight:"bolder"}} align="right">
-                                            Max Marks
+                                            Percentage
                                         </TableCell>
                                         <TableCell sx={{fontWeight:"bolder"}} align="right">
-                                            Obtained Marks
+                                            
                                         </TableCell>
                                     </TableRow>
                                 </TableHead>
@@ -194,19 +194,19 @@ function Row({ row }) {
                                         <TableRow key={cl.CLO_ID}>
                                             <TableCell component="th" scope="row">
                                                 {cl.CLO_ID}
-                                                {/* {as.ASSESSMENT_ID} */}
+                                                
                                             </TableCell>
                                             <TableCell component="th" scope="row">
                                                 {cl.CLO_NAME}
-                                                {/* {as.ASSESSMENT_TYPE} */}
+                                                
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="right">
-                                                {/* {as.MAX_MARKS} */}
+                                               
                                                 {cl.OBTAINED}
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="right">
-                                                {cl.OBTAINED}
-                                                {/* {as.OBTAINED_MARKS} */}
+                                                {cl.MAX_MARKS >= 70 ?"PASS":"FAIL"}
+                                               
                                             </TableCell>
                                     </TableRow>
                                     ))}

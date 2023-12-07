@@ -389,17 +389,14 @@ const getStudentProgress = (req, res) => {
                             console.log(error);
                             return ;
                         } else {
-                            // if (results.length == 0) return tbr;
-                            // obj.OBTAINED_MARKS = results[0].OBTAINED;
-                            // obj.MAX_MARKS = results[0].TOTAL;
-                            // console.log("first");
+
                             console.log(results);
                             data.push({
                                 CLO_ID: clo.CLO_ID,
                                 CLO_NAME: clo.CLO_NAME,
-                                OBTAINED: results[0].OBTAINED,
+                                OBTAINED: results[0].OBTAINED/results[0].TOTAL * 100.0,
                                 MAX_MARKS: results[0].TOTAL,
-                                hello : "hello"
+                                
 
                             })
                             
@@ -413,15 +410,9 @@ const getStudentProgress = (req, res) => {
                     }
                 );
 
-                // if(results1.length == data.length){
-                //     return res.status(200).json(data);
-                // }
-                
+
             });
-            // if(results1.length == data.length){
-            //     return res.status(200).json(data);
-            // }
-            //return res.status(200).json(results);
+
         }
     );
 };
