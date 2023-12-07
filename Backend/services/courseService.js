@@ -20,17 +20,17 @@ const createCourse = (req, res) => {
             ]
         }, (errors, results, fields) => {
 
-            if(errors){
+            if (errors) {
                 res.status(400).json(
                     {
                         message: "SQLException: Learn2SQL dog!"
                     }
                 )
-            }   
+            }
 
-            if(results.length > 0){
-                return res.status(200).json({ message: `A duplicate course with ID [${obj.courseId}] exists!`, EC:-1 });
-            }else{
+            if (results.length > 0) {
+                return res.status(200).json({ message: `A duplicate course with ID [${obj.courseId}] exists!`, EC: -1 });
+            } else {
 
                 //Learn2Code
                 db.query(
@@ -46,15 +46,15 @@ const createCourse = (req, res) => {
                         ],
                     },
                     (error, results, fields) => {
-                        if(errors){
+                        if (errors) {
                             res.status(400).json(
                                 {
                                     message: "SQLException: Learn2SQL dog!"
                                 }
                             )
-                        }  
-            
-                        return res.status(200).json({ message: `Successfully added course ${obj.courseName} [${obj.courseId}]!`, EC:1 });
+                        }
+
+                        return res.status(200).json({ message: `Successfully added course ${obj.courseName} [${obj.courseId}]!`, EC: 1 });
                     }
                 );
             }
@@ -247,6 +247,183 @@ const getCourseDetails = (req, res) => {
     );
 };
 
+const assignCourseToClass = (req, res) => {
+
+    var obj = req.body;
+
+    if (!obj.courseID) {
+        return res.status(400).json({ message: "MissingInputException: CourseID is missing!", EC: -1 });
+    }
+
+    if (!obj.classID) {
+        return res.status(400).json({ message: "MissingInputException: ClassID is missing!", EC: -1 });
+    }
+
+    if (!obj.facultyID) {
+        return res.status(400).json({ message: "MissingInputException: FacultyID is missing!", EC: -1 });
+    }
+
+    if (!obj.startTime) {
+        return res.status(400).json({ message: "MissingInputException: Start TIme is missing!", EC: -1 });
+    }
+
+    if (!obj.endTime) {
+        return res.status(400).json({ message: "MissingInputException: End Time is missing!", EC: -1 });
+    }
+
+    if (!obj.day) {
+        return res.status(400).json({ message: "MissingInputException: Day is missing!", EC: -1 });
+    }
+
+    db.query(
+        {
+            sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
+            values: ["USERS", "USER_ID", obj.facultyID, "ROLE_ID", "FACULTY"]
+        }, (errors, results, fields) => {
+
+            if (errors) {
+                return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [1]", EC: -1 });
+            }
+
+            if (results.length == 1) {
+
+                db.query(
+                    {
+                        sql: "SELECT * FROM ?? WHERE ?? = ?",
+                        values: ["COURSE", "COURSE_ID", obj.courseID]
+                    }, (errors, results, fields) => {
+
+                        if (errors) {
+                            return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [2]", EC: -1 });
+                        }
+
+                        if (results.length == 1) {
+
+                            db.query(
+                                {
+                                    sql: "SELECT * FROM ?? WHERE ?? = ?",
+                                    values: ["CLASS", "CLASS_ID", obj.classID]
+                                }, (errors, results, fields) => {
+
+                                    if (errors) {
+                                        return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [3]", EC: -1 });
+                                    }
+
+                                    if (results.length == 1) {
+
+                                        db.query(
+                                            {
+                                                sql: "SELECT * FROM ?? WHERE ?? BETWEEN ? AND ? AND ?? = ? AND ?? =?",
+                                                values: ["CLASS_COURSE", "START_TIME", obj.startTime, obj.endTime, "CLASS_ID", obj.classID, "DAY", obj.day]
+                                            }, (errors, results, fields) => {
+
+                                                if (errors) {
+                                                    return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [4]", EC: -1 });
+                                                }
+
+                                                if (results.length == 0) {
+
+                                                    db.query(
+                                                        {
+                                                            sql: "SELECT * FROM ?? WHERE ?? BETWEEN ? AND ? AND ?? = ? AND ?? = ?",
+                                                            values: ["CLASS_COURSE", "END_TIME", obj.startTime, obj.endTime, "CLASS_ID", obj.classID, "DAY", obj.day]
+                                                        }, (errors, results, fields) => {
+
+                                                            if (errors) {
+                                                                return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [5]", EC: -1 });
+                                                            }
+
+                                                            if (results.length == 0) {
+
+                                                                db.query(
+                                                                    {
+                                                                        sql: " SELECT * FROM ?? WHERE ?? = ? AND ?? BETWEEN ? AND ? AND ?? = ?",
+                                                                        values: ["CLASS_COURSE", "FACULTY_ID", obj.facultyID, "START_TIME", obj.startTime, obj.endTime, "DAY", obj.day]
+                                                                    }, (errors, results, fields) => {
+
+                                                                        if (errors) {
+                                                                            return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [6]", EC: -1 });
+                                                                        }
+
+                                                                        if (results.length == 0) {
+
+                                                                            db.query(
+                                                                                {
+                                                                                    sql: " SELECT * FROM ?? WHERE ?? = ? AND ?? BETWEEN ? AND ? AND ?? = ?",
+                                                                                    values: ["CLASS_COURSE", "FACULTY_ID", obj.facultyID, "END_TIME", obj.startTime, obj.endTime,"DAY", obj.day]
+                                                                                }, (errors, results, fields) => {
+
+                                                                                    if (errors) {
+                                                                                        return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [7]", EC: -1 });
+                                                                                    }
+
+                                                                                    if (results.length == 0) {
+
+                                                                                        db.query(
+                                                                                            {
+                                                                                                sql: "INSERT INTO ?? (??,??,??,??,??,??) VALUES (?,?,?,?,?,?)",
+                                                                                                values: ["CLASS_COURSE", "CLASS_ID", "COURSE_ID", "FACULTY_ID", "START_TIME", "END_TIME", "DAY",
+                                                                                                    obj.classID, obj.courseID, obj.facultyID, obj.startTime, obj.endTime, obj.day]
+                                                                                            }, (errors, results, fields) => {
+
+                                                                                                if (errors) {
+                                                                                                    return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!!"[8], EC: -1 });
+                                                                                                }
+
+                                                                                                return res.status(200).json({ message: "Successfully assigned Faculty and Class to Course!", EC: 1 });
+
+                                                                                            }
+                                                                                        )
+
+                                                                                    } else {
+                                                                                        return res.status(200).json({ message: "ScheduleConflict: Faculty not available at end time!", EC: -1 });
+                                                                                    }
+
+                                                                                }
+                                                                            )
+
+                                                                        } else {
+                                                                            return res.status(200).json({ message: "ScheduleConflict: Faculty not available at the start time!", EC: -1 });
+                                                                        }
+
+                                                                    }
+                                                                )
+                                                            } else {
+                                                                return res.status(200).json({ message: "ScheduleConflict: Course has conflicting end time!", EC: -1 });
+                                                            }
+
+                                                        }
+                                                    )
+
+                                                } else {
+                                                    return res.status(200).json({ message: "ScheduleConflict: Course has conflicting start time!", EC: -1 });
+                                                }
+
+                                            }
+                                        )
+
+                                    } else {
+                                        return res.status(200).json({ message: "DataIntegrityException: Input ClassID not found in database!", EC: -1 });
+                                    }
+
+                                }
+                            )
+
+                        } else {
+                            return res.status(200).json({ message: "DataIntegrityException: Input CourseID not found in database!", EC: -1 });
+                        }
+
+                    }
+                )
+
+            } else {
+                return res.status(200).json({ message: "DataIntegrityException: Input FacultyID not found in database!", EC: -1 });
+            }
+        }
+    )
+
+};
+
 module.exports = {
     createCourse,
     getCourseById,
@@ -256,4 +433,5 @@ module.exports = {
     getFacultyCourses,
     getStudentCourses,
     getCourseDetails,
+    assignCourseToClass,
 };

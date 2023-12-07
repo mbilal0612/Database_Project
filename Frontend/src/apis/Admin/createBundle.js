@@ -180,6 +180,25 @@ export async function createProgram(data, token) {
     }
 }
 
+export async function CourseTeacher(data, token) {
+    try {
+
+        let headers = {
+            "Authorization": token,
+            "Content-Type": "application/json",
+        };
+
+        const res = await axiosInstance.post('admin/AssignCourseTeacher', data, { headers: headers });
+        if (res.status === 200) {
+            return res.data;
+        } else {
+            console.log("Something's wrong I can feel it");
+        }
+    } catch (ex) {
+        return ex;
+    }
+}
+
 //adminService
 export async function ClassTeacher(data, token) {
 
@@ -199,7 +218,7 @@ export async function ClassTeacher(data, token) {
 }
 
 //cloService
-export async function CLO(data, token){
+export async function CLO(data, token) {
     let headers = {
         "Authorization": token,
         "Content-Type": "application/json",
@@ -215,7 +234,7 @@ export async function CLO(data, token){
 }
 
 //ploService
-export async function PLO(data, token){
+export async function PLO(data, token) {
     let headers = {
         "Authorization": token,
         "Content-Type": "application/json",
@@ -223,6 +242,37 @@ export async function PLO(data, token){
 
     const res = await axiosInstance.post(`/admin/createPLO`, data, { headers: headers });
     //console.log(res.data.results);
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Something's wrong I can feel it");
+    }
+}
+
+//enrollmentService
+export async function StudentToClass(data, token) {
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.post(`/admin/enrollStudentToClass`, data, { headers: headers });
+
+    if (res.status == 200) {
+        return res.data;
+    } else {
+        console.log("Something's wrong I can feel it");
+    }
+}
+
+export async function StudentOuttaClass(data, token) {
+    let headers = {
+        "Authorization": token,
+        "Content-Type": "application/json",
+    };
+
+    const res = await axiosInstance.patch(`/admin/denrollStudentFromClass`, data, { headers: headers });
+
     if (res.status == 200) {
         return res.data;
     } else {

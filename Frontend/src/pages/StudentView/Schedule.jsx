@@ -28,7 +28,7 @@ const Schedule = () => {
     ['English', 'Science', 'History', 'Math', 'Arabic', 'ITC', 'Gym', 'Art'],
     ['Math', 'English', 'Science', 'History', 'Gym', 'CS', 'Art', 'Arabic'],
     ['English', 'Science', 'History', 'Math', 'Arabic', 'ITC', 'Gym', 'Art'],
-    ['Math', 'English', 'Science', 'History', 'Gym', 'CS', 'Art', 'Arabic']
+    ['Math', 'English', 'Science', 'History', 'Gym', 'CS', 'Art', 'Arabic'] 
   ];
   
   return (

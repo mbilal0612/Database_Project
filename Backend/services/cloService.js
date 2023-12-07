@@ -272,49 +272,52 @@ const getCloByCourse = (req, res) => {
 };
 
 const cloHelper = async (obj, studentId) => {
-    db.query(
-        {
-            sql: "SELECT SUM(??) AS TOTAL, SUM(??) AS OBTAINED FROM ?? JOIN ?? USING(??) JOIN ?? USING(??) JOIN ?? USING(??) WHERE ?? = ? AND ?? = ?",
-            values: [
-                "MAX_MARKS",
-                "OBTAINED_MARKS",
-                "QUESTION_ASSESSMENT",
-                "STD_ASMNT",
-                "ASSESSMENT_ID",
-                "QUESTION_CLO",
-                "QUESTION_ID",
-                "ASSESSMENT",
-                "ASSESSMENT_ID",
-                "CLO_ID",
-                obj.CLO_ID,
-                "STUDENT_ID",
-                studentId,
-            ],
-        },
-        async (error, results, fields) => {
-            if (error) {
-                console.log(error);
-                return null;
-            } else {
-                if (results.length == 0) return tbr;
-                obj.OBTAINED_MARKS = results[0].OBTAINED;
-                obj.MAX_MARKS = results[0].TOTAL;
-                console.log("first");
-                return obj;
-            }
-        }
-    );
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            db.query(
+                {
+                    sql: "SELECT SUM(??) AS TOTAL, SUM(??) AS OBTAINED FROM ?? JOIN ?? USING(??) JOIN ?? USING(??) JOIN ?? USING(??) WHERE ?? = ? AND ?? = ?",
+                    values: [
+                        "MAX_MARKS",
+                        "OBTAINED_MARKS",
+                        "QUESTION_ASSESSMENT",
+                        "STD_ASMNT",
+                        "ASSESSMENT_ID",
+                        "QUESTION_CLO",
+                        "QUESTION_ID",
+                        "ASSESSMENT",
+                        "ASSESSMENT_ID",
+                        "CLO_ID",
+                        obj.CLO_ID,
+                        "STUDENT_ID",
+                        studentId,
+                    ],
+                },
+                async (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                        resolve(null);
+                    } else {
+                        if (results.length == 0) return tbr;
+                        obj.OBTAINED_MARKS = results[0].OBTAINED;
+                        obj.MAX_MARKS = results[0].TOTAL;
+                        console.log(obj);
+                        resolve(obj);
+                    }
+                }
+            );
+        }, 0);
+    });
 };
 
 const funcCaller = async (arr, studentId) => {
-
     for (let i = 0; i < arr.length; i++) {
         arr[i] = { ...arr[i], OBTAINED_MARKS: 0, MAX_MARKS: 0 };
         arr[i] = await cloHelper(arr[i], studentId);
-        // if (arr[i] == null) {
-        //   console.log("second");
-        //   return null;
-        // }
+        if (arr[i] == null) {
+            console.log("second");
+            return null;
+        }
     }
     return arr;
 };

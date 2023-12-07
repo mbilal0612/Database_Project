@@ -35,9 +35,11 @@ import CreateCourse from "./pages/AdminView/CreateCourse";
 import CreateProgram from "./pages/AdminView/CreateProgram";
 import AssignClassTeacher from "./pages/AdminView/AssignClassTeacher";
 import CreateCLO from "./pages/AdminView/CreateCLO";
-import CreatePLO from "./pages/AdminView/CreatePLO";
 import AssessmentMarks from "./pages/FacultyView/AssessmentMarks";
 import StudentList from "./pages/FacultyView/AMStudentList";
+import AssignCourseTeacher from "./pages/AdminView/AssignCourseTeacher";
+import EnrollStudent from "./pages/AdminView/EnrollStudent";
+import DeenrollStudent from "./pages/AdminView/DeenrollStudent";
 
 function App() {
 
@@ -75,7 +77,9 @@ function App() {
                     <Route path="/AdminHome/CreateProgram" element={<CreateProgram />}></Route>
                     <Route path="/AdminHome/AssignClassTeacher" element={<AssignClassTeacher />}></Route>
                     <Route path="/AdminHome/CreateCLO" element={<CreateCLO/>}></Route>
-                    <Route path="/AdminHome/CreatePLO" element={<CreatePLO/>}></Route>
+                    <Route path="/AdminHome/AssignCourseTeacher" element={<AssignCourseTeacher/>}></Route>
+                    <Route path="/AdminHome/EnrollStudent" element={<EnrollStudent/>}></Route>
+                    <Route path="/AdminHome/DeenrollStudent" element={<DeenrollStudent/>}></Route>
 
                     
                     //routes for student view
@@ -86,11 +90,13 @@ function App() {
                     <Route path="/Schedule" element={<Schedule />} />
                     <Route path="/StudentCourseDetails" element={<StudentCourseDetails />} />
                     <Route path="/AssignmentPage" element={<AssignmentPage />} />
+
                     //routes for guardian view
                     <Route path="/GuardianHome" element={<GuardianHome />} />
                     <Route path="/Ledger" element={<Ledger />} />
                     <Route path="/GuardianAttendance" element={<GuardianAttendance />} />
                     <Route path="/GuardianGrade" element={<GuardianGrade />} />
+                    
                     //routes for faculty view
                     <Route path="/FacultyHome" element={<FacultyHome />} />
                     <Route path="/Courses" element={<Courses />} />

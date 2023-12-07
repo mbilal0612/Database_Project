@@ -52,6 +52,7 @@ router.post("/createTFAKey", tryCatch(tfaService.createTFAKey));
 router.post("/assignClassTeacher",[auth, adminAuth], tryCatch(adminService.assignClassTeacher));
 router.post("/createCLO",[auth, adminAuth], tryCatch(cloService.createCLO));
 router.post("/createPLO",[auth, adminAuth], tryCatch(ploService.createPLO));
+router.post("/AssignCourseTeacher",[auth, adminAuth], tryCatch(courseService.assignCourseToClass)); 
 
 router.patch("/deleteTransactionByID",[auth,adminAuth] , tryCatch(financeService.deleteTransactionByID));
 router.patch("/restoreTransactionByID",[auth,adminAuth] , tryCatch(financeService.restoreTransactionByID));
