@@ -155,7 +155,8 @@ const CreateCLO = () => {
                                 name != '' ? <TextField label="CLO Description" value={desc} inputProps={{ maxLength: 1024 }} onChange={(data) => { setDesc(data.target.value) }} style={{ marginTop: "5%" }}></TextField> : <></>
                             }
                             {
-                                desc != '' ? <MultipleSelectChip plos={plos} setter = {setsplos}></MultipleSelectChip> : <></>
+                                desc != '' ?
+                                        <MultipleSelectChip plos={plos} setter={setsplos}></MultipleSelectChip>: <></>
                             }
                         </FormControl>
 

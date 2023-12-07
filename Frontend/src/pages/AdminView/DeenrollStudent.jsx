@@ -2,28 +2,26 @@ import { useEffect, useState } from 'react';
 import AdminNavbar from '../../components/Navbars/AdminNavbar';
 import SimpleBackdrop from '../../components/util-components/Loader';
 import { decryptToken } from '../../apis/auth/getUserType';
-import { FormControl, FormLabel, Button, Box, Select } from '@mui/material';
+import { FormControl, FormLabel, Button, Box, Select, TextField } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import { ClassTeacher } from '../../apis/Admin/createBundle';
+import { StudentOuttaClass } from '../../apis/Admin/createBundle';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
-import { Faculty, AllClasses } from '../../apis/Admin/getBundle';
+import { AllClasses } from '../../apis/Admin/getBundle';
 
-
-const AssignClassTeacher = () => {
+const DeenrollStudent = () => {
 
     //System States
     const [render, setRender] = useState(false);
 
     //Form States
     const [xclass, setxClass] = useState('');
-    const [id, setid] = useState('');
+    const [studentID, setStudentID] = useState('');
 
     //Map States
     const [classes, setClasses] = useState([]);
-    const [faculty, setFaculty] = useState([]);
 
     const [verificado, setVerificado] = useState(
         {
@@ -50,7 +48,7 @@ const AssignClassTeacher = () => {
     const DrawLists = () => {
 
         return (
-            <div style={{display:"flex", flexDirection:"column", justifyContent:"center", alignContent:"center"}}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center" }}>
                 {classes.length > 0 ?
                     <FormControl style={{ width: '100%', justifyContent: 'center', marginTop: '3%' }}>
                         <InputLabel id="class-select">ClassID</InputLabel>
@@ -71,26 +69,6 @@ const AssignClassTeacher = () => {
                             }
                         </Select>
                     </FormControl> : <Typography style={{ marginTop: "3%" }} color="grey"> No Classes Exist! </Typography>}
-                {faculty.length > 0 ?
-                    <FormControl style={{ width: '100%', justifyContent: 'space-between', marginTop: '3%' }}>
-                        <InputLabel id="class-select">Faculty ID</InputLabel>
-                        <Select
-                            value={id}
-                            labelId="class-select"
-                            label="Faculty ID"
-                            onChange={(newvalue) => {
-                                setid(newvalue.target.value);
-                            }}
-                        >
-                            {
-                                faculty.map(
-                                    (item) => (
-                                        <MenuItem key={item.USER_ID} value={item.USER_ID}>{item.NAME + `[${item.USER_ID}]`}</MenuItem>
-                                    )
-                                )
-                            }
-                        </Select>
-                    </FormControl> : <Typography style={{ marginTop: "3%" }} color="grey"> No Teachers Exist! </Typography>}
             </div>
         )
 
@@ -99,12 +77,12 @@ const AssignClassTeacher = () => {
     const handleAssignClassTeacher = async () => {
 
         var req = {
-            id: id,
+            studentID: studentID,
             classID: xclass
         };
 
         setRender(false);
-        let x = await ClassTeacher(req, sessionStorage.getItem('token'));
+        let x = await StudentOuttaClass(req, sessionStorage.getItem('token'));
         setVerificado(x);
         setRender(true);
 
@@ -116,10 +94,8 @@ const AssignClassTeacher = () => {
             const token = sessionStorage.getItem('token');
             const decryptedToken = await decryptToken(token);
 
-            let x = await Faculty(sessionStorage.getItem('token'));
             let y = await AllClasses(sessionStorage.getItem('token'));
             setClasses(y.results);
-            setFaculty(x.results);
 
             if (decryptedToken.data["userType"] !== 'ADMIN') {
                 window.location.assign("/UNAUTHORIZEDACCESS");
@@ -142,12 +118,24 @@ const AssignClassTeacher = () => {
             <Box sx={{ display: 'flex', minWidth: '30%', marginTop: "10%", boxShadow: 3, borderRadius: 3, justifyContent: 'center' }}>
                 <CardContent variant="outlined" style={{ justifyContent: 'space-between', minWidth: '60%' }}>
                     <div>
-                        <FormLabel>Create Program</FormLabel>
-                        <DrawLists></DrawLists>
+                        <FormLabel>De-Enroll Student</FormLabel>
+                        <div>
+                            <DrawLists></DrawLists>
+                            <FormControl style={{minWidth:"100%"}}>
+                                <TextField style={{ marginTop: '3%' }} type='Number'
+                                    label="StudentID" size='large' onChange={(data) => {
+                                        if(data.target.value<1){
+                                            data.target.value = '';
+                                        }
+                                        setStudentID(data.target.value)
+                                    }}></TextField>
+                            </FormControl>
+                        </div>
+
                         {
-                            xclass != '' && id != '' ?
+                            xclass != '' && studentID != '' ?
                                 <Button variant='contained' style={{ marginTop: '2%' }} onClick={handleAssignClassTeacher}>Submit</Button>
-                                : <Typography style={{ marginTop: "3%" }} color="grey">Faculty & Class not selected</Typography>
+                                : <Typography style={{ marginTop: "3%" }} color="grey">Student & Class not selected</Typography>
                         }
                         <div style={{ marginTop: '3%' }}>
                             <DrawAlert></DrawAlert>
@@ -163,4 +151,4 @@ const AssignClassTeacher = () => {
 }
 
 
-export default AssignClassTeacher;
+export default DeenrollStudent;

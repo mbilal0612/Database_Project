@@ -358,7 +358,6 @@ const getQuestionsByAssessmentId = (req, res) => {
     );
 };
 
-
 //exports
 module.exports = {
     createFaculty,

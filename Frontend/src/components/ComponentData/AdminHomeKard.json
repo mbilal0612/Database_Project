@@ -33,10 +33,11 @@
         "status": true
     },
     {
-        "title": "Add Classroom",
-        "domain": "Architecture",
-        "desc": "Creates an assignable classroom.",
-        "url": "404"
+        "title": "De-Enroll Student",
+        "domain": "Academics",
+        "desc": "Remove student from class roster",
+        "url": "/AdminHome/DeenrollStudent",
+        "status": true
     },
     {
         "title": "Create Academic Year",
@@ -52,10 +53,11 @@
         "status": true
     },
     {
-        "title": "Delete System32",
-        "domain": "Operating System",
-        "desc": "Press Proceed if have balls!",
-        "url": "404"
+        "title": "Enroll Student",
+        "domain": "Academics",
+        "desc": "Enrolls student to a Class!",
+        "url": "/AdminHome/EnrollStudent",
+        "status":true
     },
     {
         "title": "Inquire Student Fee",
@@ -90,6 +92,13 @@
         "domain": "Academics",
         "desc": "Creates a PLO for a Program",
         "url": "/AdminHome/CreatePLO",
+        "status": true
+    },
+    {
+        "title": "Assign Course to Class",
+        "domain": "Academics",
+        "desc": "Class and Faculty Assignment",
+        "url": "/AdminHome/AssignCourseTeacher",
         "status": true
     }
 ]
