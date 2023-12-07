@@ -282,7 +282,7 @@ const assignCourseToClass = (req, res) => {
         }, (errors, results, fields) => {
 
             if (errors) {
-                return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [1]", EC: -1 });
+                return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL! [1]", EC: -1 });
             }
 
             if (results.length == 1) {
@@ -294,7 +294,7 @@ const assignCourseToClass = (req, res) => {
                     }, (errors, results, fields) => {
 
                         if (errors) {
-                            return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [2]", EC: -1 });
+                            return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL!! [2]", EC: -1 });
                         }
 
                         if (results.length == 1) {
@@ -306,7 +306,7 @@ const assignCourseToClass = (req, res) => {
                                 }, (errors, results, fields) => {
 
                                     if (errors) {
-                                        return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [3]", EC: -1 });
+                                        return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL !! [3]", EC: -1 });
                                     }
 
                                     if (results.length == 1) {
@@ -318,7 +318,7 @@ const assignCourseToClass = (req, res) => {
                                             }, (errors, results, fields) => {
 
                                                 if (errors) {
-                                                    return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [4]", EC: -1 });
+                                                    return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL ! [4]", EC: -1 });
                                                 }
 
                                                 if (results.length == 0) {
@@ -330,7 +330,7 @@ const assignCourseToClass = (req, res) => {
                                                         }, (errors, results, fields) => {
 
                                                             if (errors) {
-                                                                return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [5]", EC: -1 });
+                                                                return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL !! [5]", EC: -1 });
                                                             }
 
                                                             if (results.length == 0) {
@@ -342,7 +342,7 @@ const assignCourseToClass = (req, res) => {
                                                                     }, (errors, results, fields) => {
 
                                                                         if (errors) {
-                                                                            return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [6]", EC: -1 });
+                                                                            return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL !! [6]", EC: -1 });
                                                                         }
 
                                                                         if (results.length == 0) {
@@ -354,7 +354,7 @@ const assignCourseToClass = (req, res) => {
                                                                                 }, (errors, results, fields) => {
 
                                                                                     if (errors) {
-                                                                                        return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!! [7]", EC: -1 });
+                                                                                        return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL !! [7]", EC: -1 });
                                                                                     }
 
                                                                                     if (results.length == 0) {
@@ -367,7 +367,7 @@ const assignCourseToClass = (req, res) => {
                                                                                             }, (errors, results, fields) => {
 
                                                                                                 if (errors) {
-                                                                                                    return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL nigga!!"[8], EC: -1 });
+                                                                                                    return res.status(400).json({ message: "SQLSkill_IssueException: Learn 2 SQL !!"[8], EC: -1 });
                                                                                                 }
 
                                                                                                 return res.status(200).json({ message: "Successfully assigned Faculty and Class to Course!", EC: 1 });

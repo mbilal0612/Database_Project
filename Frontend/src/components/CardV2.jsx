@@ -85,9 +85,9 @@ export default function OutlinedCard({name,id,dob, classId, email,nationality, e
                     </Typography>
                 </CardContent>
                 <CardActions sx={{}}>
-                    <Button size="small">View Attendance</Button>
+                    {/* <Button size="small">View Attendance</Button>
                     <Button size="small">View Marks</Button>
-                    <Button size="small">View Legder</Button>
+                    <Button size="small">View Legder</Button> */}
                 </CardActions>
             </Card>
         </ThemeProvider>

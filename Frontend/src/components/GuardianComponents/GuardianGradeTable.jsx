@@ -205,7 +205,7 @@ function Row({ row }) {
                                                 {cl.OBTAINED}
                                             </TableCell>
                                             <TableCell component="th" scope="row" align="right">
-                                                {cl.MAX_MARKS >= 70 ?"PASS":"FAIL"}
+                                                {(cl.OBTAINED >= 70) ?"PASS":"FAIL"}
                                                
                                             </TableCell>
                                     </TableRow>

@@ -139,7 +139,7 @@ const StudentDetails = () => {
                                     <PerformanceCard
                                         label={row.CLO_ID}
                                         percentage={parseInt(
-                                            (row.OBTAINED_MARKS /
+                                            (row.OBTAINED /
                                                 row.MAX_MARKS) *
                                                 100
                                         )}

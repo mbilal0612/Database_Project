@@ -209,12 +209,12 @@ const createUser = (req, res) => {
 
 													if (errors) {
 														console.log(errors);
-														return res.status(500).json({ message: "SQLSkill_Issue Exception: Get good nigga!" });
+														return res.status(500).json({ message: "SQLSkill_Issue Exception: Get good !" });
 													}
 
 													if (results.length == 0) {
 														console.log(errors);
-														return res.status(500).json({ message: "ConsistencyMismatchException: Fuckup in dataentry or SQL!" });
+														return res.status(500).json({ message: "ConsistencyMismatchException: in dataentry or SQL!" });
 													}
 
 													var mx = {
@@ -274,12 +274,12 @@ const createUser = (req, res) => {
 
 													if (errors) {
 														console.log(errors);
-														return res.status(500).json({ message: "SQLSkill_Issue Exception: Get good nigga!" });
+														return res.status(500).json({ message: "SQLSkill_Issue Exception: Get good !" });
 													}
 
 													if (results.length == 0) {
 														console.log(errors);
-														return res.status(500).json({ message: "ConsistencyMismatchException: Fuckup in dataentry or SQL!" });
+														return res.status(500).json({ message: "ConsistencyMismatchException: in dataentry or SQL!" });
 													}
 
 													var mx = {
@@ -317,12 +317,12 @@ const createUser = (req, res) => {
 
 											if (errors) {
 												console.log(errors);
-												return res.status(500).json({ message: "SQLSkill_Issue Exception: Get good nigga!" });
+												return res.status(500).json({ message: "SQLSkill_Issue Exception: Get good !" });
 											}
 
 											if (results.length == 0) {
 												console.log(errors);
-												return res.status(500).json({ message: "ConsistencyMismatchException: Fuckup in dataentry or SQL!" });
+												return res.status(500).json({ message: "ConsistencyMismatchException:in dataentry or SQL!" });
 											}
 
 											var mx = {
@@ -738,7 +738,7 @@ const developmentForcePasswordReset = (req, res) => {
 		}, (errors, results, fields) => {
 
 			if (errors) {
-				return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga!", EC: -1 });
+				return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my !", EC: -1 });
 			}
 
 			if (results.length == 0) {
@@ -778,7 +778,7 @@ const developmentForcePasswordReset = (req, res) => {
 						}, (errors, results, fields) => {
 
 							if (errors) {
-								return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga!", EC: -1 });
+								return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my !", EC: -1 });
 							} else {
 
 								var mx = {
@@ -792,7 +792,7 @@ const developmentForcePasswordReset = (req, res) => {
 									if (err) {
 										console.log(err);
 										return res.status(400).json({
-											message: "DumbFuckException: SMTP Failure because no ENV_VARS added",
+											message: "Exception: SMTP Failure because no ENV_VARS added",
 											EC: -1
 										}
 										);
@@ -829,7 +829,7 @@ const getFaculty = (req, res) => {
 			if (errors) {
 				console.log(errors);
 				if (errors) {
-					return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my nigga! [1]", EC: -1 });
+					return res.status(500).json({ message: "SQLSkill_IssueException: Get better at it my ! [1]", EC: -1 });
 				}
 			}
 

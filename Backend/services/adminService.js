@@ -159,7 +159,7 @@ const assignClassTeacher = (req, res) => {
 
 					return res.status(500).json(
 						{
-							message: "DatabaseInconsistencyException: Zero or More users with the same id found, db is fucked?",
+							message: "DatabaseInconsistencyException: Zero or More users with the same id found",
 							EC: -1
 						}
 					);
@@ -184,7 +184,7 @@ const assignClassTeacher = (req, res) => {
 
 									return res.status(200).json(
 										{
-											message: "DatabaseInconsistencyException: Zero or More classes with the same id found, db is fucked?",
+											message: "DatabaseInconsistencyException: Zero or More classes with the same id found?",
 											EC: -1
 										}
 									);

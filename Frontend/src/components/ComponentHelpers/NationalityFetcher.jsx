@@ -29,7 +29,7 @@ async function handleNats() {
             )
         }
         </>
-    ) : <div>FUCK YOU</div>;
+    ) : <div></div>;
 
 }
 

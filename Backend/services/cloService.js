@@ -32,7 +32,7 @@ const createCLO = (req, res) => {
         (errors, results, fields) => {
             if (errors) {
                 return res.status(500).json({
-                    message: "SQLSkill_IssueException: Learn2SQL Dumb fuck.",
+                    message: "SQLSkill_IssueException: Learn2SQL Dumb ",
                 });
             }
 
@@ -51,7 +51,7 @@ const createCLO = (req, res) => {
                         if (errors) {
                             return res.status(500).json({
                                 message:
-                                    "SQLSkill_IssueException: Learn2SQL Dumb fuck.",
+                                    "SQLSkill_IssueException: Learn2SQL ",
                             });
                         }
 
@@ -76,7 +76,7 @@ const createCLO = (req, res) => {
                                     if (errors) {
                                         return res.status(500).json({
                                             message:
-                                                "SQLSkill_IssueException: Learn2SQL Dumb fuck.",
+                                                "SQLSkill_IssueException: Learn2SQL Dumb",
                                         });
                                     }
 
@@ -104,7 +104,7 @@ const createCLO = (req, res) => {
                                                         .status(500)
                                                         .json({
                                                             message:
-                                                                "SQLSkill_IssueException: Learn2SQL Dumb fuck.",
+                                                                "SQLSkill_IssueException: Learn2SQL Dumb ",
                                                         });
                                                 }
                                                 k++;

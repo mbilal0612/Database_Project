@@ -13,7 +13,7 @@ const getReligions = (req,res) =>{
         }, (errors, results, fields) =>{
 
             if(errors){
-                return res.status(400).json({message:"Damn Nigga, religions can't be fetched like this dawg!"})
+                return res.status(400).json({message:"Damn , religions can't be fetched like this dawg!"})
             }
             return res.status(200).json({data:results});
         }

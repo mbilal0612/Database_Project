@@ -54,7 +54,7 @@ export default function StudentHomeCard({
             <p>Teacher: {FACULTY_NAME}</p>
             <p>Class: {CLASS_ID}</p>
           </Grid>
-          <Grid
+          {/* <Grid
             sx={{
               textAlign: "start",
               fontSize: 24,
@@ -64,7 +64,7 @@ export default function StudentHomeCard({
             }}
           >
             <p>Marks: {MARKS}</p>
-          </Grid>
+          </Grid> */}
           <Grid
             sx={{
               display: "flex",

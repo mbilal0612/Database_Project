@@ -62,6 +62,7 @@ const createTFAKey = (req, res) => {
                                 }, (errors, results, fields) => {
 
                                     if (errors) {
+                                        console.log(errors);
                                         res.status(400).json(
                                             {
                                                 message: "SQLException: Learn2SQL dog!"
@@ -81,7 +82,7 @@ const createTFAKey = (req, res) => {
                                             console.log(err);
                                             return res.status(400).json(
                                                 {
-                                                    message: "DumbFuckException: SMTP Failure because no ENV_VARS added",
+                                                    message: "Exception: SMTP Failure because no ENV_VARS added",
                                                     EC: -1
                                                 }
                                             );
@@ -213,7 +214,7 @@ const queryTFA = (req, res) => {
                                                 console.log(err);
                                                 return res.status(400).json(
                                                     {
-                                                        message: "DumbFuckException: SMTP Failure because no ENV_VARS added",
+                                                        message: "Exception: SMTP Failure because no ENV_VARS added",
                                                         EC: -1
                                                     }
                                                 );

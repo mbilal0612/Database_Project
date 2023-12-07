@@ -73,7 +73,7 @@ const AssignCourseTeacher = () => {
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignContent: "center" }}>
                 {classes.length > 0 ?
                     <FormControl style={{ width: '100%', justifyContent: 'center', marginTop: '3%' }}>
-                        <InputLabel id="class-select">Course</InputLabel>
+                        <InputLabel id="class-select">Class</InputLabel>
                         <Select
                             value={xclass}
                             labelId="class-select"

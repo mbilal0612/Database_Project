@@ -96,7 +96,7 @@ const createArrearsByGrade = (req,res) =>{
             ]
         }, (errors, results, fields)=>{
             if(errors){
-                return res.status(400).json("SQLSkill_IssueException: Learn 2 SQL Nigga!");
+                return res.status(400).json("SQLSkill_IssueException: Learn 2 SQL !");
             }
 
             if(results.length == 0){

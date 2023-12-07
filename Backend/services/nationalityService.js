@@ -15,7 +15,7 @@ const getNationalities = (req,res) =>{
         }, (errors, results, fields) =>{
 
             if(errors){
-                return res.status(400).json({message:"Damn Nigga, nationalities can't be fetched dawg!"})
+                return res.status(400).json({message:"Damn , nationalities can't be fetched dawg!"})
             }
             return res.status(200).json({data:results});
         }
