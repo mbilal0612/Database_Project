@@ -7,7 +7,7 @@ const getNationalities = (req,res) =>{
             sql:"SELECT ?? FROM ?? WHERE ?? = ? ORDER BY ??",
             values:[
                 "NAT_ID",
-                "NATIONALITIES",
+                "nationalities",
                 "BLOCKED",
                 0,
                 "NAT_ID"

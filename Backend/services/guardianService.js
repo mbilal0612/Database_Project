@@ -7,6 +7,7 @@ const defaultpass = "12345678";
 const createGuardian = (req, res) => {
     const obj = req.body;
 
+
     if (!obj.firstName) {
         return res.status(400).json({ message: "firstName is required!" });
     }
@@ -40,7 +41,7 @@ const createGuardian = (req, res) => {
             sql: "INSERT INTO ?? (??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?)",
             timeout: 40000, // 40s
             values: [
-                "GUARDIAN",
+                "guardian",
                 "FIRST_NAME",
                 "LAST_NAME",
                 "CNIC",
@@ -59,6 +60,7 @@ const createGuardian = (req, res) => {
         },
         (error, results, fields) => {
             if (error) {
+                //logger.error(error.message);
                 return res.status(500).json({
                     message: "Something went wrong please try again later...",
                     error: error,
@@ -68,10 +70,11 @@ const createGuardian = (req, res) => {
                     {
                         sql: "SELECT * FROM ?? WHERE ??=?",
                         timeout: 40000, // 40s
-                        values: ["GUARDIAN", "CNIC", obj.CNIC],
+                        values: ["guardian", "CNIC", obj.CNIC],
                     },
                     (error, results, fields) => {
                         if (error) {
+                            //logger.error(error.message);
                             return res.status(500).json({
                                 message:
                                     "Something went wrong please try again later...",
@@ -85,7 +88,7 @@ const createGuardian = (req, res) => {
                                     sql: "INSERT INTO ?? (??,??,??) VALUES (?,?,?)",
                                     timeout: 40000, // 40s
                                     values: [
-                                        "USERS",
+                                        "users",
                                         "USERNAME",
                                         "PASSWORD",
                                         "GUARDIAN_ID",
@@ -96,6 +99,7 @@ const createGuardian = (req, res) => {
                                 },
                                 (error, results, fields) => {
                                     if (error) {
+                                        //logger.error(error.message);
                                         return res.status(500).json({
                                             message:
                                                 "Something went wrong please try again later...",
@@ -123,10 +127,11 @@ const getGuardians = (req, res) => {
         {
             sql: "SELECT * FROM ??",
             timeout: 40000, // 40s
-            values: ["GUARDIAN"],
+            values: ["guardian"],
         },
         (error, results, fields) => {
             if (error) {
+                
                 return res.status(500).send(error);
             }
             return res.status(200).json({
@@ -148,10 +153,11 @@ const getGuardianById = (req, res) => {
         {
             sql: "SELECT * FROM ?? WHERE ??=?",
             timeout: 40000,
-            values: ["GUARDIAN", "GUARDIAN_ID", gId],
+            values: ["guardian", "GUARDIAN_ID", gId],
         },
         (error, results, fields) => {
             if (error) {
+                //logger.error(error.message);
                 return res.status(500).send(error);
             }
             return res.status(200).json({
@@ -164,20 +170,22 @@ const getGuardianById = (req, res) => {
 // get details of a guardian's children
 const getChildren = (req, res) => {
     const obj = req.params;
-    console;
+    // //logger.info(`API request to ${req.originalUrl} with data: ${JSON.stringify(req.body)}`);
+    //logger.info("getting all children")
     if (!obj.guardianId) {
         return res.status(400).json({ message: "guardianId is required!" });
     }
 
     db.query(
         {
-            // sql: "WITH children AS ( SELECT * FROM USERS JOIN STUDENT_GUARDIAN ON USERS.USER_ID = STUDENT_GUARDIAN.STUDENT_ID WHERE GUARDIAN_ID = ?), SELECT  * FROM children ORDER BY ENROLLMENT_DATE DESC ;",
-            sql: "SELECT * FROM USERS AS U1 JOIN STUDENT_GUARDIAN ON U1.USER_ID = STUDENT_GUARDIAN.GUARDIAN_ID JOIN USERS AS U2 ON U2.USER_ID = STUDENT_GUARDIAN.STUDENT_ID  WHERE U1.USER_ID=? ",
+            // sql: "WITH children AS ( SELECT * FROM users JOIN student_guardian ON users.USER_ID = student_guardian.STUDENT_ID WHERE GUARDIAN_ID = ?), SELECT  * FROM children ORDER BY ENROLLMENT_DATE DESC ;",
+            sql: "SELECT * FROM users AS U1 JOIN student_guardian ON U1.USER_ID = student_guardian.GUARDIAN_ID JOIN users AS U2 ON U2.USER_ID = student_guardian.STUDENT_ID  WHERE U1.USER_ID=? ",
             timeout: 40000,
             values: [obj.guardianId],
         },
         (error, results, fields) => {
             if (error) {
+                //logger.error(error.message);
                 return res.status(500).send(error);
             }
             return res.status(200).json({
@@ -202,7 +210,7 @@ const getChildrenAttendance = (req, res) => {
 
     db.query(
         {
-            //sql:" WITH children AS ( SELECT STUDENT_ID, GUARDIAN_ID FROM STUDENT_GUARDIAN WHERE GUARDIAN_ID = ?),attendance AS ( SELECT STUDENT_ID, P_DATE, PRESENT, ACADEMIC_YEAR FROM ATTENDANCE WHERE STUDENT_ID IN (SELECT STUDENT_ID FROM children)) SELECT * FROM attendance ORDER BY STUDENT_ID, ACADEMIC_YEAR DESC, P_DATE DESC;",
+            //sql:" WITH children AS ( SELECT STUDENT_ID, GUARDIAN_ID FROM student_guardian WHERE GUARDIAN_ID = ?),attendance AS ( SELECT STUDENT_ID, P_DATE, PRESENT, ACADEMIC_YEAR FROM ATTENDANCE WHERE STUDENT_ID IN (SELECT STUDENT_ID FROM children)) SELECT * FROM attendance ORDER BY STUDENT_ID, ACADEMIC_YEAR DESC, P_DATE DESC;",
             //sql:" SELECT * FROM ATTENDANCE WHERE STUDENT_ID = ?;",
             sql: "SELECT  ROW_NUMBER() OVER(ORDER BY P_DATE) AS id,P_DATE,PRESENT,ACADEMIC_YEAR   FROM ATTENDANCE WHERE STUDENT_ID = ?;",
             timeout: 40000,
@@ -210,6 +218,7 @@ const getChildrenAttendance = (req, res) => {
         },
         (error, result, fields) => {
             if (error) {
+                //logger.error(error.message);
                 return res.status(500).json("error");
             }
             return res.status(200).json(result);
@@ -226,13 +235,14 @@ const getChildrenClass = (req, res) => {
 
     db.query(
         {
-            sql: "SELECT * FROM STUDENT_ACADEMIC_HISTORY JOIN CLASS_COURSE ON CLASS_COURSE.CLASS_ID = STUDENT_ACADEMIC_HISTORY.CLASS_ID JOIN COURSE USING (COURSE_ID) WHERE STUDENT_ID = ? ORDER BY ENROLLMENT_DATE DESC;",
+            sql: "SELECT * FROM student_academic_history JOIN class_course ON class_course.CLASS_ID = student_academic_history.CLASS_ID JOIN COURSE USING (COURSE_ID) WHERE STUDENT_ID = ? ORDER BY ENROLLMENT_DATE DESC;",
             timeout: 40000,
             values: [obj.studentId],
         },
         (error, result, fields) => {
+
             if (error) {
-                console.log(error);
+                //logger.error(error.message);
                 return res.status(500).json("error");
             }
 
@@ -249,12 +259,13 @@ const getClassCourse = (req, res) => {
 
     db.query(
         {
-            sql: "SELECT * FROM CLASS_COURSE JOIN COURSE ON COURSE.COURSE_ID = CLASS_COURSE.COURSE_ID WHERE CLASS_ID = ?;",
+            sql: "SELECT * FROM class_course JOIN COURSE ON COURSE.COURSE_ID = class_course.COURSE_ID WHERE CLASS_ID = ?;",
             timeout: 40000,
             values: [obj.classId],
         },
         (error, result, fields) => {
             if (error) {
+                //logger.error(error.message);
                 return res.status(500).json("error");
             }
             return res.status(200).json(result);
@@ -275,12 +286,13 @@ const getChildrenCourseAssessment = (req, res) => {
 
     db.query(
         {
-            sql: "SELECT * FROM STD_ASMNT JOIN ASSESSMENT USING (ASSESSMENT_ID) WHERE STUDENT_ID = ? AND COURSE_ID = ?;",
+            sql: "SELECT * FROM std_asmnt JOIN ASSESSMENT USING (ASSESSMENT_ID) WHERE STUDENT_ID = ? AND COURSE_ID = ?;",
             timeout: 40000,
             values: [obj.studentId, obj.courseId],
         },
         (error, result, fields) => {
             if (error) {
+                //logger.error(error.message);
                 return res.status(500).json("error");
             }
             return res.status(200).json(result);
@@ -296,12 +308,14 @@ const getRecentChildrenClass = (req, res) => {
     }
 
     db.query({
-        sql: "SELECT * FROM STUDENT_ACADEMIC_HISTORY WHERE STUDENT_ID = ? ORDER BY ENROLLMENT_DATE DESC LIMIT 1;",
+        sql: "SELECT * FROM student_academic_history WHERE STUDENT_ID = ? ORDER BY ENROLLMENT_DATE DESC LIMIT 1;",
         timeout: 40000,
         values: [obj.studentId],
     },
     (error, result, fields) => {
+       
         if(error){
+            //logger.error(error.message);
             return res.status(400).json("error");
         }
 
@@ -317,7 +331,7 @@ const getChildrenECA = (req,res) => {
     }
 
     db.query({
-        sql:"SELECT * FROM STUDENT_ECA JOIN ECA USING (ECA_ID) WHERE STUDENT_ID = ?;",
+        sql:"SELECT * FROM student_eca JOIN ECA USING (ECA_ID) WHERE STUDENT_ID = ?;",
         timeout:40000,
         values:[obj.studentId]
     }, 

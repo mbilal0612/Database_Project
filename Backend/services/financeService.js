@@ -22,7 +22,7 @@ const createArrearsByGradeID = (req, res) =>{
             timeout: 40000,
             values :[
                 "STUDENT_ID",
-                "STUDENT_ACADEMIC_HISTORY",
+                "student_academic_history",
                 "CLASS_ID",
                 obj.gradeID,
             ]
@@ -38,7 +38,7 @@ const createArrearsByGradeID = (req, res) =>{
                         sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
                         timeout:40000,
                         values: [
-                            "TRANSACTION",
+                            "transaction",
                             "STUDENT_ID",
                             "T_NAME",
                             "T_DATE",
@@ -87,7 +87,7 @@ const createArrearsByGrade = (req,res) =>{
             sql:"SELECT ?? FROM ?? NATURAL JOIN ?? WHERE ?? = ? AND ?? = ?",
             values: [
                 "STUDENT_ID",
-                "STUDENT_ACADEMIC_HISTORY",
+                "student_academic_history",
                 "CLASS",
                 "YEAR",
                 grade[0],
@@ -113,7 +113,7 @@ const createArrearsByGrade = (req,res) =>{
                     sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
                     timeout:40000,
                     values: [
-                        "TRANSACTION",
+                        "transaction",
                         "STUDENT_ID",
                         "T_NAME",
                         "T_DATE",
@@ -185,7 +185,7 @@ const createArrearsByStudentID = (req, res) =>{
                 sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
                 timeout:40000,
                 values: [
-                    "TRANSACTION",
+                    "transaction",
                     "STUDENT_ID",
                     "T_NAME",
                     "T_DATE",
@@ -231,7 +231,7 @@ const createArrearsByAcademicYear = (req, res) =>{
             timeout: 40000,
             values :[
                 "STUDENT_ID",
-                "STUDENT_ACADEMIC_HISTORY",
+                "student_academic_history",
                 "CLASS_ID",
                 quer
             ]
@@ -248,7 +248,7 @@ const createArrearsByAcademicYear = (req, res) =>{
                         sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
                         timeout:40000,
                         values: [
-                            "TRANSACTION",
+                            "transaction",
                             "STUDENT_ID",
                             "T_NAME",
                             "T_DATE",
@@ -287,7 +287,7 @@ const getStudentFee = (req, res) =>{
     db.query({sql: "SELECT * FROM ?? WHERE ?? = ?",
             timeout: 40000,
             values :[
-                "TRANSACTION",
+                "transaction",
                 "STUDENT_ID",
                 obj.id,
             ]
@@ -327,7 +327,7 @@ const generateStudentLedger = (req,res) =>{
     db.query({sql: "SELECT TRANSACTION_ID AS id,T_NAME,T_AMOUNT,T_DATE FROM ?? WHERE ?? = ? AND ?? = ?",
             timeout: 40000,
             values :[
-                "TRANSACTION",
+                "transaction",
                 "STUDENT_ID",
                 obj.id,
                 "T_FLAG",
@@ -367,7 +367,7 @@ const createGuardianPayment = (req,res) =>{
             sql: "SELECT * FROM ?? WHERE ?? = ?",
             timeout: 40000,
             values :[
-                "TRANSACTION",
+                "transaction",
                 "STUDENT_ID",
                 obj.studentID,
             ]
@@ -386,7 +386,7 @@ const createGuardianPayment = (req,res) =>{
                         sql: "INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)",
                         timeout:40000,
                         values: [
-                            "TRANSACTION",
+                            "transaction",
                             "STUDENT_ID",
                             "T_NAME",
                             "T_DATE",
@@ -421,7 +421,7 @@ const deleteTransactionByID = (req,res) =>{
         sql: "SELECT * FROM ?? WHERE ?? = ?",
         timeout:40000,
         values:[
-            "TRANSACTION",
+            "transaction",
             "TRANSACTION_ID",
             obj.transactionID
         ]
@@ -445,7 +445,7 @@ const deleteTransactionByID = (req,res) =>{
             sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
             timeout:40000,
             values:[
-                "TRANSACTION",
+                "transaction",
                 "T_FLAG",
                 0,
                 "TRANSACTION_ID",
@@ -477,7 +477,7 @@ const restoreTransactionByID = (req,res) =>{
         sql: "SELECT * FROM ?? WHERE ?? = ?",
         timeout:40000,
         values:[
-            "TRANSACTION",
+            "transaction",
             "TRANSACTION_ID",
             obj.transactionID
         ]
@@ -499,7 +499,7 @@ const restoreTransactionByID = (req,res) =>{
             sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
             timeout:40000,
             values:[
-                "TRANSACTION",
+                "transaction",
                 "T_FLAG",
                 1,
                 "TRANSACTION_ID",
@@ -530,7 +530,7 @@ const deleteTransactionByName = (req, res) =>{
         sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
         timeout : 40000,
         values:[
-            "TRANSACTION",
+            "transaction",
             "T_FLAG",
             1,
             "T_NAME",
@@ -550,7 +550,7 @@ const deleteTransactionByName = (req, res) =>{
             sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
             timeout : 40000,
             values:[
-                "TRANSACTION",
+                "transaction",
                 "T_FLAG",
                 0,
                 "T_NAME",
@@ -580,7 +580,7 @@ const restoreTransactionByName = (req, res) =>{
         sql: "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?",
         timeout : 40000,
         values:[
-            "TRANSACTION",
+            "transaction",
             "T_FLAG",
             0,
             "T_NAME",
@@ -600,7 +600,7 @@ const restoreTransactionByName = (req, res) =>{
             sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
             timeout : 40000,
             values:[
-                "TRANSACTION",
+                "transaction",
                 "T_FLAG",
                 1,
                 "T_NAME",

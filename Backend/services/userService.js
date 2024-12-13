@@ -81,7 +81,7 @@ const createUser = (req, res) => {
 	db.query(
 		{
 			sql: "SELECT * FROM ?? WHERE ?? = ? OR ?? = ?",
-			values: ["USERS", "EMAIL_ADDRESS", obj.email, "CNIC", obj.CNIC],
+			values: ["users", "EMAIL_ADDRESS", obj.email, "CNIC", obj.CNIC],
 		},
 		(errors, results) => {
 			if (errors) {
@@ -94,7 +94,7 @@ const createUser = (req, res) => {
 			if (results.length > 0) {
 				return res.status(400).json({
 					message:
-						"DuplicateUserException: A user with similar unique fields exists!",
+						"DuplicateUserException: A users with similar unique fields exists!",
 				});
 			}
 
@@ -137,7 +137,7 @@ const createUser = (req, res) => {
 							{
 								sql: "INSERT INTO ?? (??,??,??,??,??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 								values: [
-									"USERS",
+									"users",
 									"CNIC",
 									"FIRST_NAME",
 									"LAST_NAME",
@@ -185,7 +185,7 @@ const createUser = (req, res) => {
 												"GUARDIAN_ID",
 												"OCCUPATION",
 												"USER_ID",
-												"USERS",
+												"users",
 												"CNIC",
 												obj.CNIC,
 												obj.occupation,
@@ -203,7 +203,7 @@ const createUser = (req, res) => {
 												{
 													sql: "SELECT ?? FROM ?? WHERE ?? = ?",
 													values: [
-														"USER_ID", "USERS", "EMAIL_ADDRESS", obj.email
+														"USER_ID", "users", "EMAIL_ADDRESS", obj.email
 													]
 												}, (errors, results, fields) => {
 
@@ -249,7 +249,7 @@ const createUser = (req, res) => {
 												"SALARY",
 												"FULLTIME",
 												"USER_ID",
-												"USERS",
+												"users",
 												"CNIC",
 												obj.CNIC,
 												obj.salary,
@@ -268,7 +268,7 @@ const createUser = (req, res) => {
 												{
 													sql: "SELECT ?? FROM ?? WHERE ?? = ?",
 													values: [
-														"USER_ID", "USERS", "EMAIL_ADDRESS", obj.email
+														"USER_ID", "users", "EMAIL_ADDRESS", obj.email
 													]
 												}, (errors, results, fields) => {
 
@@ -311,7 +311,7 @@ const createUser = (req, res) => {
 										{
 											sql: "SELECT ?? FROM ?? WHERE ?? = ?",
 											values: [
-												"USER_ID", "USERS", "EMAIL_ADDRESS", obj.email
+												"USER_ID", "users", "EMAIL_ADDRESS", obj.email
 											]
 										}, (errors, results, fields) => {
 
@@ -380,7 +380,7 @@ const changeUserPassword = (req, res) => {
 	db.query(
 		{
 			sql: "SELECT ?? FROM ?? WHERE ?? = ?",
-			values: ["P_HASH", "USERS", "USER_ID", obj.id],
+			values: ["P_HASH", "users", "USER_ID", obj.id],
 		},
 		(errors, results, fields) => {
 			if (errors) {
@@ -404,7 +404,7 @@ const changeUserPassword = (req, res) => {
 							db.query(
 								{
 									sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
-									values: ["USERS", "P_HASH", result, "USER_ID", obj.id],
+									values: ["users", "P_HASH", result, "USER_ID", obj.id],
 								},
 								(errors, results, fields) => {
 									if (errors) {
@@ -443,10 +443,11 @@ const queryLogin = (req, res) => {
 	db.query(
 		{
 			sql: "SELECT * FROM ?? WHERE ?? = ?",
-			values: ["USERS", "USER_ID", obj.id],
+			values: ["users", "USER_ID", obj.id],
 		},
 		(errors, results, fields) => {
 			if (errors) {
+				console.log(errors);
 				return res
 					.status(400)
 					.json({ message: "Skill_IssueException: Learn 2 SQL!" });
@@ -550,7 +551,7 @@ const developmentCreateUser = (req, res) => {
 	db.query(
 		{
 			sql: "SELECT * FROM ?? WHERE ?? = ? OR ?? = ?",
-			values: ["USERS", "EMAIL_ADDRESS", obj.email, "CNIC", obj.CNIC],
+			values: ["users", "EMAIL_ADDRESS", obj.email, "CNIC", obj.CNIC],
 		},
 		(errors, results) => {
 			if (errors) {
@@ -563,7 +564,7 @@ const developmentCreateUser = (req, res) => {
 			if (results.length > 0) {
 				return res.status(400).json({
 					message:
-						"DuplicateUserException: A user with similar unique fields exists!",
+						"DuplicateUserException: A users with similar unique fields exists!",
 				});
 			}
 
@@ -604,7 +605,7 @@ const developmentCreateUser = (req, res) => {
 							{
 								sql: "INSERT INTO ?? (??,??,??,??,??,??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
 								values: [
-									"USERS",
+									"users",
 									"CNIC",
 									"FIRST_NAME",
 									"LAST_NAME",
@@ -652,7 +653,7 @@ const developmentCreateUser = (req, res) => {
 												"GUARDIAN_ID",
 												"OCCUPATION",
 												"USER_ID",
-												"USERS",
+												"users",
 												"CNIC",
 												obj.CNIC,
 												obj.occupation,
@@ -684,7 +685,7 @@ const developmentCreateUser = (req, res) => {
 												"SALARY",
 												"FULLTIME",
 												"USER_ID",
-												"USERS",
+												"users",
 												"CNIC",
 												obj.CNIC,
 												obj.salary,
@@ -707,7 +708,7 @@ const developmentCreateUser = (req, res) => {
 								} else {
 									return res.status(200).json({
 										message:
-											"Successfully created user. Password reset details have been sent to their input email!",
+											"Successfully created users. Password reset details have been sent to their input email!",
 									});
 								}
 							}
@@ -731,7 +732,7 @@ const developmentForcePasswordReset = (req, res) => {
 		{
 			sql: "SELECT * FROM ?? WHERE ?? = ?",
 			values: [
-				"USERS",
+				"users",
 				"EMAIL_ADDRESS",
 				obj.email
 			]
@@ -742,7 +743,7 @@ const developmentForcePasswordReset = (req, res) => {
 			}
 
 			if (results.length == 0) {
-				return res.status(401).json({ message: "MissingDataException: Queried user DNE.", EC: -1 });
+				return res.status(401).json({ message: "MissingDataException: Queried users DNE.", EC: -1 });
 			}
 
 			bcrypt.genSalt(12, function (errors, salt) {
@@ -751,10 +752,10 @@ const developmentForcePasswordReset = (req, res) => {
 					return res.status(500).json({ message: "Skill_IssueException: Learn2Salt", EC: -1 });
 				}
 
-				var USER = results[0];
+				var users = results[0];
 
 				if (!obj.password) {
-					obj.password = USER.ROLE_ID + "@";
+					obj.password = users.ROLE_ID + "@";
 					var seq = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1);
 					obj.password += seq;
 				}
@@ -769,7 +770,7 @@ const developmentForcePasswordReset = (req, res) => {
 						{
 							sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?;",
 							values: [
-								"USERS",
+								"users",
 								"P_HASH",
 								hash,
 								"EMAIL_ADDRESS",
@@ -783,9 +784,9 @@ const developmentForcePasswordReset = (req, res) => {
 
 								var mx = {
 									from: "SchoolDB Team",
-									to: USER.EMAIL_ADDRESS,
+									to: users.EMAIL_ADDRESS,
 									subject: "SchoolDB Password Reset",
-									text: `Dear ${USER.FIRST_NAME} ${USER.LAST_NAME} \r\n\r\nYour password has been changed! Your credentials are as follows: \r\nERP : ${USER.USER_ID}\r\nPassword : ${obj.password}\r\n\r\nRegards,\r\nSchoolDB Team.`,
+									text: `Dear ${users.FIRST_NAME} ${users.LAST_NAME} \r\n\r\nYour password has been changed! Your credentials are as follows: \r\nERP : ${users.USER_ID}\r\nPassword : ${obj.password}\r\n\r\nRegards,\r\nSchoolDB Team.`,
 								};
 
 								mailer.transporter.sendMail(mx, function (err, result) {
@@ -799,7 +800,7 @@ const developmentForcePasswordReset = (req, res) => {
 									}
 									return res.status(200).json({
 										message:
-											`Successfully changed password. Password reset details have been sent to ${USER.EMAIL_ADDRESS}.`,
+											`Successfully changed password. Password reset details have been sent to ${users.EMAIL_ADDRESS}.`,
 										EC: 1,
 									});
 								})
@@ -823,7 +824,7 @@ const getFaculty = (req, res) => {
 	db.query(
 		{
 			sql: "SELECT ??, CONCAT(??,' ',??) AS ?? FROM ?? WHERE ?? = ? AND ?? = ?",
-			values: ["USER_ID", "FIRST_NAME", "LAST_NAME", "NAME", "USERS", "BLOCK", 0, "ROLE_ID", "FACULTY"]
+			values: ["USER_ID", "FIRST_NAME", "LAST_NAME", "NAME", "users", "BLOCK", 0, "ROLE_ID", "FACULTY"]
 		}, (errors, results, fields) => {
 
 			if (errors) {

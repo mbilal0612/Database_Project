@@ -19,7 +19,7 @@ const createTFAKey = (req, res) => {
         {
             sql: "SELECT ?? FROM ?? WHERE ?? = ? AND ?? = ?",
             values: [
-                "EMAIL_ADDRESS", "USERS", "USER_ID", obj.id, "EMAIL_ADDRESS", obj.email
+                "EMAIL_ADDRESS", "users", "USER_ID", obj.id, "EMAIL_ADDRESS", obj.email
             ]
         }, (errors, results, fields) => {
 
@@ -191,7 +191,7 @@ const queryTFA = (req, res) => {
                                 db.query(
                                     {
                                         sql: "UPDATE ?? SET ?? = ? WHERE ?? = ?",
-                                        values: ["USERS", "P_HASH", hash, "USER_ID", obj.id]
+                                        values: ["users", "P_HASH", hash, "USER_ID", obj.id]
                                     }, (errors, results, fields) => {
 
                                         if (errors) {
