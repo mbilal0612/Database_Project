@@ -1,6 +1,7 @@
 //connect to db
 const { hashPassword } = require("mysql/lib/protocol/Auth");
 const db = require("../config/db").connection;
+const logger = require("../index").logger;
 const bcrypt = require("bcrypt");
 const defaultpass = "12345678";
 
@@ -170,8 +171,7 @@ const getGuardianById = (req, res) => {
 // get details of a guardian's children
 const getChildren = (req, res) => {
     const obj = req.params;
-    // //logger.info(`API request to ${req.originalUrl} with data: ${JSON.stringify(req.body)}`);
-    //logger.info("getting all children")
+    logger.info("getChildren request received");
     if (!obj.guardianId) {
         return res.status(400).json({ message: "guardianId is required!" });
     }
