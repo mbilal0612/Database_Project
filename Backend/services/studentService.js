@@ -41,7 +41,7 @@ const createStudent = (req, res) => {
             sql: "INSERT INTO ?? (??,??,??,??,??,??,??,??,??) VALUES (?,?,?,?,?,?,?,?,?)",
             timeout: 40000, //40s
             values: [
-                "STUDENT",
+                "student",
                 "CNIC",
                 "FIRST_NAME",
                 "LAST_NAME",
@@ -73,7 +73,7 @@ const createStudent = (req, res) => {
                     {
                         sql: "SELECT ?? FROM ?? WHERE ?? = ?",
                         timeout: 40000,
-                        values: ["STUDENT_ID", "STUDENT", "CNIC", obj.CNIC],
+                        values: ["STUDENT_ID", "student", "CNIC", obj.CNIC],
                     },
                     (error1, results1, fields1) => {
                         if (error1) {
@@ -148,7 +148,7 @@ const createStudent = (req, res) => {
 const getStudentPerformance = (req, res) => {
     var obj = req.params;
     if (!obj.studentId)
-        return res.status(400).json({ message: "Student ID is required" });
+        return res.status(400).json({ message: "student ID is required" });
     if (!obj.courseId)
         return res.status(400).json({ message: "Course ID is required" });
     if (!obj.classId)
@@ -225,7 +225,7 @@ const getStudentById = (req, res) => {
         {
             sql: "SELECT * FROM ?? WHERE ??=? AND ?? = ?",
             timeout: 4000,
-            values: ["USERS", "USER_ID", obj.id, "ROLE_ID", "STUDENT"],
+            values: ["USERS", "USER_ID", obj.id, "ROLE_ID", "student"],
         },
         (error, results, fields) => {
             if (error) {
@@ -309,7 +309,7 @@ const getStudentECA = (req, res) => {
                 "STUDENT_ECA",
                 "ECA",
                 "ECA_ID",
-                "STUDENT",
+                "student",
                 "STUDENT_ID",
                 "STUDENT_ID",
                 obj.id,
@@ -343,7 +343,7 @@ const getStudentInfo = (req, res) => {
                 "EMAIL_ADDRESS",
                 "USERS",
                 "ROLE_ID",
-                "STUDENT",
+                "student",
                 "USER_ID",
                 obj.ID,
             ],
@@ -358,7 +358,7 @@ const getStudentInfo = (req, res) => {
 
             if (results.length == 0) {
                 res.status(200).json({
-                    message: "BadRequestException: Student Does Not Exist!",
+                    message: "BadRequestException: student Does Not Exist!",
                     EC: -1,
                 });
             } else {
@@ -404,7 +404,7 @@ const assignMarks = (req, res) => {
         return res.status(400).json({ message: "Obtained Marks are required" });
     }
     if (!obj.studentId) {
-        return res.status(400).json({ message: "Student ID is required" });
+        return res.status(400).json({ message: "student ID is required" });
     }
     if (!obj.assessmentId) {
         return res.status(400).json({ message: "Assessment ID is required" });

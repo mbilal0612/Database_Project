@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const privateKey = "NOONEcanCRACKthis";
 const mailer = require("./mailer");
+const { logger } = require("../config/logger");
 
 const createUser = (req, res) => {
 
@@ -69,6 +70,7 @@ const createUser = (req, res) => {
 			.json({ message: "MissingInputException: address is required!" });
 	}
 	if (!obj.phone) {
+		
 		return res
 			.status(400)
 			.json({ message: "MissingInputException: phone is required!" });
@@ -85,6 +87,7 @@ const createUser = (req, res) => {
 		},
 		(errors, results) => {
 			if (errors) {
+				logger.error(errors.message);
 				return res.status(400).json({
 					message: "SQLSkillIssue: Get good! [0]",
 					data: errors,
@@ -92,6 +95,7 @@ const createUser = (req, res) => {
 			}
 
 			if (results.length > 0) {
+				logger.error(errors.message);
 				return res.status(400).json({
 					message:
 						"DuplicateUserException: A users with similar unique fields exists!",
@@ -434,6 +438,7 @@ const changeUserPassword = (req, res) => {
 const queryLogin = (req, res) => {
 	var obj = req.body;
 	if (!obj.id) {
+
 		return res.status(400).json({ message: "ID is required!" });
 	}
 	if (!obj.password) {
@@ -448,6 +453,7 @@ const queryLogin = (req, res) => {
 		(errors, results, fields) => {
 			if (errors) {
 				console.log(errors);
+				logger.error(errors.message);
 				return res
 					.status(400)
 					.json({ message: "Skill_IssueException: Learn 2 SQL!" });
@@ -465,7 +471,7 @@ const queryLogin = (req, res) => {
 						userType: results[0].ROLE_ID,
 					});
 				}
-
+				logger.error("login attempt with incorrect password");
 				return res.status(400).json({ message: "Incorrect Password" });
 			});
 		}

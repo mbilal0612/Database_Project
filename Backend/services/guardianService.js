@@ -1,9 +1,11 @@
 //connect to db
 const { hashPassword } = require("mysql/lib/protocol/Auth");
+const { logger } = require("../config/logger");
 const db = require("../config/db").connection;
-const logger = require("../index").logger;
+// const logger = require("../index").logger;
 const bcrypt = require("bcrypt");
 const defaultpass = "12345678";
+
 
 const createGuardian = (req, res) => {
     const obj = req.body;
@@ -185,7 +187,7 @@ const getChildren = (req, res) => {
         },
         (error, results, fields) => {
             if (error) {
-                //logger.error(error.message);
+                logger.error(error.message);
                 return res.status(500).send(error);
             }
             return res.status(200).json({
@@ -218,7 +220,7 @@ const getChildrenAttendance = (req, res) => {
         },
         (error, result, fields) => {
             if (error) {
-                //logger.error(error.message);
+                logger.error(error.message);
                 return res.status(500).json("error");
             }
             return res.status(200).json(result);
@@ -242,7 +244,7 @@ const getChildrenClass = (req, res) => {
         (error, result, fields) => {
 
             if (error) {
-                //logger.error(error.message);
+                logger.error(error.message);
                 return res.status(500).json("error");
             }
 
@@ -265,7 +267,7 @@ const getClassCourse = (req, res) => {
         },
         (error, result, fields) => {
             if (error) {
-                //logger.error(error.message);
+                logger.error(error.message);
                 return res.status(500).json("error");
             }
             return res.status(200).json(result);
@@ -292,7 +294,7 @@ const getChildrenCourseAssessment = (req, res) => {
         },
         (error, result, fields) => {
             if (error) {
-                //logger.error(error.message);
+                logger.error(error.message);
                 return res.status(500).json("error");
             }
             return res.status(200).json(result);
@@ -315,7 +317,7 @@ const getRecentChildrenClass = (req, res) => {
     (error, result, fields) => {
        
         if(error){
-            //logger.error(error.message);
+            logger.error(error.message);
             return res.status(400).json("error");
         }
 

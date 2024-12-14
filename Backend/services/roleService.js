@@ -12,7 +12,7 @@ const createRole = (req,res) =>{
             {
                sql:"SELECT * FROM ?? WHERE ?? = ?",
                 values :[
-                "ROLES",
+                "roles",
                 "obj.roleName"
                 ]
             }, (errors, results, fields) =>{
@@ -27,7 +27,7 @@ const createRole = (req,res) =>{
                         {
                             sql:"INSERT INTO ?? (??) VALUES (?)",
                             values:[
-                                "ROLES",
+                                "roles",
                                 "ROLE_ID",
                                 obj.roleName
                             ]

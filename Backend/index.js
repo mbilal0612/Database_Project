@@ -52,9 +52,6 @@ app.use("/guardian", guardianRouter);
 
 app.use(errors);
 
-app.use((req, res, next) => {
-    logger.info(`${req.method} ${req.url}`);
-});
 
 app.use(responseTime((req,res,time)=>{
   totalReqCounter.inc(); 
